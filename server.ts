@@ -3,12 +3,14 @@ import mongoose, { Mongoose } from "mongoose";
 import helmet from "helmet";
 import Debug from "debug";
 import dotenv from "dotenv";
+import { genres } from "./routes/genres";
 
 const app = express();
 
 dotenv.config();
 
 const debugDB = Debug("Express:Database:Connection");
+const debugConsole = Debug("Express:Server:Running");
 
 export const connectDB = async () => {
   try {
@@ -25,10 +27,10 @@ connectDB();
 
 app.use(helmet());
 app.use(express.json());
+app.use("/api/genres", genres);
 
 app.get("/", (req: Request, res: Response) => res.send("Hello World"));
 
-const debugConsole = Debug("Express:Server:Running");
 app.listen(process.env.PORT, () =>
   debugConsole(
     `Server is listenning in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`
