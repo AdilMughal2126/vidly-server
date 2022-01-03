@@ -7,6 +7,7 @@ import mongoose, { Mongoose } from "mongoose";
 const debugDB = Debug("Express:Database:Connection");
 
 import { genres } from "./routes/genres";
+import { customers } from "./routes/customers";
 
 // deepcode ignore Sqli: <please specify a reason of ignoring this>
 const app = express();
@@ -28,6 +29,7 @@ void connectDB();
 app.use(helmet());
 app.use(express.json());
 app.use("/api/genres", genres);
+app.use("/api/customers", customers);
 
 const debugConsole = Debug("Express:Server:Running");
 
