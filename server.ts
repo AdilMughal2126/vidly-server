@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
 import helmet from "helmet";
 import Debug from "debug";
@@ -9,7 +10,6 @@ const debugDB = Debug("Express:Database:Connection");
 import { genres } from "./routes/genres";
 import { customers } from "./routes/customers";
 
-// deepcode ignore Sqli: <please specify a reason of ignoring this>
 const app = express();
 
 dotenv.config();

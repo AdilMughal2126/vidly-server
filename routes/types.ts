@@ -2,7 +2,7 @@ export type GenreType = {
   name: string;
 };
 
-export type ParamsDictionary = {
+export type Params = {
   [key: string]: string;
 };
 

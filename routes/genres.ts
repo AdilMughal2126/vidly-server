@@ -1,31 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 // file deepcode ignore Sqli: <please specify a reason of ignoring this>
 import express, { Request, Response } from "express";
-import { model, Schema } from "mongoose";
-import Joi from "joi";
-import { GenreType, ParamsDictionary } from "./types";
+import { Genre, validateGenre } from "../models/genres";
+import { GenreType, Params } from "./types";
 
 const router = express.Router();
-
-const Genre = model(
-  "Genre",
-  new Schema<GenreType>({
-    name: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 50,
-    },
-  })
-);
-
-const validateGenre = (genre: GenreType) => {
-  const schema = Joi.object({
-    name: Joi.string().min(5).max(50).required(),
-  });
-
-  return schema.validate(genre);
-};
 
 router.get("/", async (req: Request, res: Response) => {
   try {
@@ -64,7 +43,7 @@ router.post(
 
 router.put(
   "/:id",
-  async (req: Request<ParamsDictionary, unknown, GenreType>, res: Response) => {
+  async (req: Request<Params, unknown, GenreType>, res: Response) => {
     const { error } = validateGenre(req.body);
     if (error) return res.status(400).json(error.details[0].message);
 
