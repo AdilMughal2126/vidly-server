@@ -37,16 +37,16 @@ router.post(
 
     const { customerId, movieId } = req.body;
 
+    const customer = await Customer.findById(customerId);
+    if (!customer) return res.status(400).json("Invalid Customer");
+
+    const movie = await Movie.findById(movieId);
+    if (!movie) return res.status(400).json("Invalid Movie");
+
+    if (movie.numberInStock === 0)
+      return res.status(404).json("No Movie Found");
+
     try {
-      const customer = await Customer.findById(customerId);
-      if (!customer) return res.status(400).json("Invalid Customer");
-
-      const movie = await Movie.findById(movieId);
-      if (!movie) return res.status(400).json("Invalid Movie");
-
-      if (movie.numberInStock === 0)
-        return res.status(404).json("No Movie Found");
-
       const session = await mongoose.startSession();
 
       await session.withTransaction(async () => {

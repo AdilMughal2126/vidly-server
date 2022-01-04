@@ -60,8 +60,12 @@ export const Rental = model(
 
 export const validateRental = (rental: CustomerRental) => {
   const schema = Joi.object({
-    customerId: Joi.string().required(),
-    movieId: Joi.string().required(),
+    customerId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/, "ObjectId")
+      .required(),
+    movieId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/, "ObjectId")
+      .required(),
   });
 
   return schema.validate(rental);
