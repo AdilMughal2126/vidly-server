@@ -19,3 +19,18 @@ export type MovieType = {
   numberInStock: number;
   dailyRentalRate: number;
 };
+
+type DateType = { type: DateConstructor; default: () => number };
+
+export type RentalType = {
+  customer: CustomerType;
+  movie: Pick<MovieType, "title" | "dailyRentalRate">;
+  dateOut: DateType;
+  dateReturned: Date;
+  rentalFee: number;
+};
+
+export type CustomerRental = {
+  customerId: string;
+  movieId: string;
+};

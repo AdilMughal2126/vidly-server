@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
 import { customers } from "./routes/customers";
+import { rentals } from "./routes/rentals";
 
 const debugDB = Debug("Express:Database:Connection");
 const debugConsole = Debug("Express:Server:Running");
@@ -35,6 +36,7 @@ app.use(express.json());
 app.use("/api/movies", movies);
 app.use("/api/genres", genres);
 app.use("/api/customers", customers);
+app.use("/api/rentals", rentals);
 
 app.listen(process.env.PORT, () =>
   debugConsole(
