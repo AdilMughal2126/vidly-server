@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 // file deepcode ignore Sqli: <please specify a reason of ignoring this>
 import express, { Request, Response } from "express";
-import { Customer, validateCustomer } from "../models/customers";
+import { Customer, validateCustomer } from "../models/customer";
 import { CustomerType, Params } from "./types";
 
 const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const customers = await Customer.find();
-    res.json(customers);
+    const customers = await Customer.find().sort("name");
+    return res.json(customers);
   } catch (err) {
-    res.status(400).json(err);
+    return res.status(400).json(err);
   }
 });
 
@@ -53,19 +53,14 @@ router.put(
     const { name, phone, isGold } = req.body;
 
     try {
-      const customer = await Customer.findById(req.params.id);
+      const customer = await Customer.findByIdAndUpdate(req.params.id, {
+        name,
+        phone,
+        isGold,
+      });
       if (!customer) return res.status(404).json("Customer Not Found");
 
-      const updated = await Customer.updateOne(
-        { _id: req.params.id },
-        {
-          name,
-          phone,
-          isGold,
-        }
-      );
-
-      return res.json(updated);
+      return res.json(customer);
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -74,11 +69,8 @@ router.put(
 
 router.delete("/:id", async (req: Request, res: Response) => {
   try {
-    // const customer = await Customer.findByIdAndRemove(req.params.id);
-    const customer = await Customer.findById(req.params.id);
+    const customer = await Customer.findByIdAndRemove(req.params.id);
     if (!customer) return res.status(404).json("Customer Not Found");
-
-    await Customer.deleteOne({ _id: req.params.id });
 
     return res.json(customer);
   } catch (err) {

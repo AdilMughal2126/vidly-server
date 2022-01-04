@@ -9,7 +9,7 @@ export const Genre = model(
       type: String,
       required: true,
       minlength: 5,
-      maxlength: 50,
+      maxlength: 255,
     },
   })
 );
