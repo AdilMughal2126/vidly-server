@@ -17,7 +17,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:id", async (req: Request, res: Response) => {
   try {
-    const genre = await Genre.findById({ _id: req.params.id });
+    const genre = await Genre.findById(req.params.id);
     if (!genre) return res.status(404).json("Genre Not Found");
 
     return res.json(genre);

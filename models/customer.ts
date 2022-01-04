@@ -8,6 +8,7 @@ export const Customer = model(
     name: {
       type: String,
       required: true,
+      trim: true,
       minlength: 5,
       maxlength: 255,
     },
@@ -26,7 +27,7 @@ export const Customer = model(
 
 export const validateCustomer = (customer: CustomerType) => {
   const schema = Joi.object({
-    name: Joi.string().min(5).max(50).required(),
+    name: Joi.string().trim().min(5).max(50).required(),
     phone: Joi.string().min(8).max(50).required(),
     isGold: Joi.boolean(),
   });

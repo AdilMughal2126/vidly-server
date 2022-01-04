@@ -5,6 +5,7 @@ import Debug from "debug";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
+import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
 import { customers } from "./routes/customers";
 
@@ -31,6 +32,7 @@ void connectDB();
 app.use(helmet());
 app.use(express.json());
 
+app.use("/api/movies", movies);
 app.use("/api/genres", genres);
 app.use("/api/customers", customers);
 

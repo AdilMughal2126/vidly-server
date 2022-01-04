@@ -11,3 +11,11 @@ export type CustomerType = {
   phone: string;
   isGold: boolean;
 };
+
+export type MovieType = {
+  title: string;
+  genre?: GenreType;
+  genreId?: string;
+  numberInStock: number;
+  dailyRentalRate: number;
+};
