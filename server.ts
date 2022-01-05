@@ -9,6 +9,7 @@ import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
 import { customers } from "./routes/customers";
 import { rentals } from "./routes/rentals";
+import { users } from "./routes/users";
 
 const debugDB = Debug("Express:Database:Connection");
 const debugConsole = Debug("Express:Server:Running");
@@ -37,6 +38,7 @@ app.use("/api/movies", movies);
 app.use("/api/genres", genres);
 app.use("/api/customers", customers);
 app.use("/api/rentals", rentals);
+app.use("/api/users", users);
 
 app.listen(process.env.PORT, () =>
   debugConsole(

@@ -34,3 +34,10 @@ export type CustomerRental = {
   customerId: string;
   movieId: string;
 };
+
+export type UserType = {
+  name: string;
+  email: string;
+  password: string;
+  hash?: string;
+};
