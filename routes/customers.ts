@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-// file deepcode ignore Sqli: <please specify a reason of ignoring this>
 import express, { Request, Response } from "express";
 import { Customer, validateCustomer } from "../models/customer";
 import { CustomerType, Params } from "./types";
@@ -53,11 +52,15 @@ router.put(
     const { name, phone, isGold } = req.body;
 
     try {
-      const customer = await Customer.findByIdAndUpdate(req.params.id, {
-        name,
-        phone,
-        isGold,
-      });
+      const customer = await Customer.findByIdAndUpdate(
+        req.params.id,
+        {
+          name,
+          phone,
+          isGold,
+        },
+        { new: true }
+      );
       if (!customer) return res.status(404).json("Customer Not Found");
 
       return res.json(customer);

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-// file deepcode ignore Sqli: <please specify a reason of ignoring this>
 import express, { Request, Response } from "express";
 import { Genre } from "../models/genre";
 import { Movie, validateMovie } from "../models/movie";
@@ -66,13 +65,17 @@ router.put(
     if (!genre) return res.status(400).json("Invalid Genre");
 
     try {
-      const movie = await Movie.findByIdAndUpdate(req.params.id, {
-        title,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        genre: { _id: genre._id, name: genre.name },
-        numberInStock,
-        dailyRentalRate,
-      });
+      const movie = await Movie.findByIdAndUpdate(
+        req.params.id,
+        {
+          title,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          genre: { _id: genre._id, name: genre.name },
+          numberInStock,
+          dailyRentalRate,
+        },
+        { new: true }
+      );
       if (!movie) return res.status(404).json("Movie Not Found");
 
       return res.json(movie);

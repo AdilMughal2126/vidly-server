@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-// file deepcode ignore Sqli: <please specify a reason of ignoring this>
 import express, { Request, Response } from "express";
 import _ from "lodash";
 import bcrypt from "bcryptjs";
@@ -36,6 +35,9 @@ router.post(
 
     const { name, email } = req.body;
 
+    const isEmail = await User.findOne({ email });
+    if (isEmail) return res.status(400).json("Email already registered");
+
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
 
@@ -61,11 +63,15 @@ router.put(
     const hash = await bcrypt.hash(req.body.password, salt);
 
     try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
-        name,
-        email,
-        hash,
-      });
+      const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          name,
+          email,
+          hash,
+        },
+        { new: true }
+      );
       if (!user) return res.status(404).json("User Not Found");
 
       return res.json(user);

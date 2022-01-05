@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-// file deepcode ignore Sqli: <please specify a reason of ignoring this>
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import { Customer } from "../models/customer";
