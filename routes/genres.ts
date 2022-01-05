@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import express, { Request, Response } from "express";
-import { requireAuth, validateAuth } from "../middleware/auth";
+import { requireAdmin, requireAuth } from "../middleware/auth";
 import { Genre, validateGenre } from "../models/genre";
 import { GenreType, Params } from "./types";
 
@@ -45,6 +45,7 @@ router.post(
 
 router.put(
   "/:id",
+  requireAuth,
   async (req: Request<Params, unknown, GenreType>, res: Response) => {
     const { error } = validateGenre(req.body);
     if (error) return res.status(400).json(error.details[0].message);
@@ -66,7 +67,7 @@ router.put(
   }
 );
 
-router.delete("/:id", validateAuth, async (req: Request, res: Response) => {
+router.delete("/:id", requireAdmin, async (req: Request, res: Response) => {
   try {
     const genre = await Genre.findByIdAndRemove(req.params.id);
     if (!genre) return res.status(404).json("Genre Not Found");
