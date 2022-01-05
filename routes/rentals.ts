@@ -21,7 +21,7 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/:id", async (req: Request, res: Response) => {
   try {
     const rental = await Rental.findById(req.params.id);
-    if (!rental) return res.status(404).json("rental Not Found");
+    if (!rental) return res.status(404).json("Rental Not Found");
 
     return res.json(rental);
   } catch (err) {

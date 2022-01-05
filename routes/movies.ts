@@ -35,10 +35,10 @@ router.post(
 
     const { title, genreId, numberInStock, dailyRentalRate } = req.body;
 
-    try {
-      const genre = await Genre.findById(genreId);
-      if (!genre) return res.status(400).json("Invalid Genre");
+    const genre = await Genre.findById(genreId);
+    if (!genre) return res.status(400).json("Invalid Genre");
 
+    try {
       const movie = await Movie.create({
         title,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -62,7 +62,7 @@ router.put(
 
     const { title, genreId, numberInStock, dailyRentalRate } = req.body;
 
-    const genre = await Genre.findById({ _id: genreId });
+    const genre = await Genre.findById(genreId);
     if (!genre) return res.status(400).json("Invalid Genre");
 
     try {

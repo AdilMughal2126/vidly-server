@@ -35,7 +35,9 @@ export const Movie = model(
 export const validateMovie = (movie: MovieType) => {
   const schema = Joi.object({
     title: Joi.string().trim().min(5).max(50).required(),
-    genreId: Joi.string().required(),
+    genreId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/, "ObjectId")
+      .required(),
     numberInStock: Joi.number().min(0).max(100).required(),
     dailyRentalRate: Joi.number().min(0).max(10).required(),
   });
