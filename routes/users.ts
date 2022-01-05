@@ -4,6 +4,7 @@ import _ from "lodash";
 import bcrypt from "bcryptjs";
 import { User, validateUser } from "../models/user";
 import { UserType, Params } from "./types";
+import { generateAuthToken } from "../helpers/auth";
 
 const router = express.Router();
 
@@ -44,7 +45,11 @@ router.post(
     try {
       const user = await User.create({ name, email, hash });
 
-      return res.json(_.pick(user, ["id", "name", "email"]));
+      const token = generateAuthToken(user);
+
+      return res
+        .header("X-Auth-Token", token)
+        .json(_.pick(user, ["id", "name", "email"]));
     } catch (err) {
       return res.status(400).json(err);
     }

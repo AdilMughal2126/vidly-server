@@ -2,31 +2,31 @@ import { model, Schema } from "mongoose";
 import Joi from "joi";
 import { UserType } from "../routes/types";
 
-export const User = model<UserType>(
-  "User",
-  new Schema<UserType>({
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-      minlength: 5,
-      maxlength: 255,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      minlength: 8,
-      maxlength: 255,
-    },
-    hash: {
-      type: String,
-      required: true,
-      minlength: 8,
-      maxlength: 255,
-    },
-  })
-);
+const userSchema = new Schema<UserType>({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 5,
+    maxlength: 255,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 8,
+    maxlength: 255,
+  },
+  hash: {
+    type: String,
+    required: true,
+    minlength: 8,
+    maxlength: 255,
+  },
+  isAdmin: Boolean,
+});
+
+export const User = model<UserType>("User", userSchema);
 
 export const validateUser = (user: UserType) => {
   const schema = Joi.object({

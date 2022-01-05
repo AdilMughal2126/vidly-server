@@ -3,9 +3,9 @@
 import express, { Request, Response } from "express";
 import Joi from "joi";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { User } from "../models/user";
 import { UserType } from "./types";
+import { generateAuthToken } from "../helpers/auth";
 
 const router = express.Router();
 
@@ -24,11 +24,7 @@ router.post(
       const isValid = await bcrypt.compare(password, user.hash!);
       if (!isValid) return res.status(400).json("Invalid email or password");
 
-      const token = jwt.sign(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        { _id: user._id, name: user.name },
-        process.env.JWT_PRIVATE_KEY!
-      );
+      const token = generateAuthToken(user);
 
       return res.json(token);
     } catch (err) {
