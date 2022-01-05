@@ -49,7 +49,7 @@ router.post(
 
       return res
         .header("X-Auth-Token", token)
-        .json(_.pick(user, ["id", "name", "email"]));
+        .json(_.pick(user, ["_id", "name", "email"]));
     } catch (err) {
       return res.status(400).json(err);
     }
