@@ -7,20 +7,20 @@ specifiers:
   '@types/express-serve-static-core': ^4.17.27
   '@types/jsonwebtoken': ^8.5.6
   '@types/lodash': ^4.14.178
-  '@types/node': ^17.0.6
-  '@typescript-eslint/eslint-plugin': ^5.8.1
-  '@typescript-eslint/parser': ^5.8.1
+  '@types/node': ^17.0.8
+  '@typescript-eslint/eslint-plugin': ^5.9.0
+  '@typescript-eslint/parser': ^5.9.0
   bcryptjs: ^2.4.3
   debug: ^4.3.3
   dotenv: ^10.0.0
   eslint: ^8.6.0
   express: ^4.17.2
-  helmet: ^4.6.0
+  helmet: 5.0.1
   joi: ^17.5.0
   joi-objectid: ^4.0.2
   jsonwebtoken: ^8.5.1
   lodash: ^4.17.21
-  mongoose: ^6.1.4
+  mongoose: ^6.1.5
   nodemon: ^2.0.15
   ts-node: ^10.4.0
   tslib: ^2.3.1
@@ -31,7 +31,7 @@ dependencies:
   debug: 4.3.3
   dotenv: 10.0.0
   express: 4.17.2
-  helmet: 4.6.0
+  helmet: 5.0.1
   joi: 17.5.0
   joi-objectid: 4.0.2
   jsonwebtoken: 8.5.1
@@ -1188,9 +1188,9 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /helmet/4.6.0:
-    resolution: {integrity: sha512-HVqALKZlR95ROkrnesdhbbZJFi/rIVSoNq6f3jA/9u6MIbTsPh3xZwihjeI5+DO/2sOV6HMHooXcEOuwskHpTg==}
-    engines: {node: '>=10.0.0'}
+  /helmet/5.0.1:
+    resolution: {integrity: sha512-iyYpGYH2nbQVaQtauYDnemWg45S2RyGvJ+iKj+V9jp7Dc1NTtAJHmD+hFOSYS7Xdwe1GeyVEYSydggXLOg6TKQ==}
+    engines: {node: '>=12.0.0'}
     dev: false
 
   /http-cache-semantics/4.1.0:
