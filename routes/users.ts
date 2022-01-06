@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import _ from "lodash";
 import bcrypt from "bcryptjs";
 import { User, validateUser } from "../models/user";
 import { UserType, Params } from "./types";
 import { generateAuthToken } from "../helpers/auth";
 import { requireAdmin, requireAuth } from "../middleware/auth";
+import { asyncMiddleware } from "../middleware/async";
 
 const router = express.Router();
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  try {
+router.get(
+  "/",
+  asyncMiddleware(async (req: Request, res: Response) => {
+    throw new Error("Hey what's going on??");
     const users = await User.find().sort("name");
     return res.json(users);
-  } catch (err) {
-    return next(err);
-  }
-});
+  })
+);
 
 router.get("/:id", async (req: Request, res: Response) => {
   try {
