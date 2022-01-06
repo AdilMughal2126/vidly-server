@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { User, validateUser } from "../models/user";
 import { UserType, Params } from "./types";
 import { generateAuthToken } from "../helpers/auth";
+import { requireAdmin, requireAuth } from "../middleware/auth";
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:id", async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).select("-hash");
     if (!user) return res.status(404).json("User Not Found");
 
     return res.json(user);
@@ -58,6 +59,7 @@ router.post(
 
 router.put(
   "/:id",
+  requireAuth,
   async (req: Request<Params, unknown, UserType>, res: Response) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).json(error.details[0].message);
@@ -86,7 +88,7 @@ router.put(
   }
 );
 
-router.delete("/:id", async (req: Request, res: Response) => {
+router.delete("/:id", requireAdmin, async (req: Request, res: Response) => {
   try {
     const user = await User.findByIdAndRemove(req.params.id);
     if (!user) return res.status(404).json("User Not Found");

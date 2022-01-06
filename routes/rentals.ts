@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
+import { requireAuth } from "../middleware/auth";
 import { Customer } from "../models/customer";
 import { Movie } from "../models/movie";
 import { Rental, validateRental } from "../models/rental";
@@ -30,6 +31,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 router.post(
   "/",
+  requireAuth,
   async (req: Request<unknown, unknown, CustomerRental>, res: Response) => {
     const { error } = validateRental(req.body);
     if (error) return res.status(400).json(error.details[0].message);

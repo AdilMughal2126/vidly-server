@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import express, { Request, Response } from "express";
+import { requireAuth } from "../middleware/auth";
 import { Customer, validateCustomer } from "../models/customer";
 import { CustomerType, Params } from "./types";
 
@@ -27,6 +28,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 router.post(
   "/",
+  requireAuth,
   async (req: Request<unknown, unknown, CustomerType>, res: Response) => {
     const { error } = validateCustomer(req.body);
     if (error) return res.status(400).json(error.details[0].message);
@@ -45,6 +47,7 @@ router.post(
 
 router.put(
   "/:id",
+  requireAuth,
   async (req: Request<Params, unknown, CustomerType>, res: Response) => {
     const { error } = validateCustomer(req.body);
     if (error) return res.status(400).json(error.details[0].message);
@@ -70,7 +73,7 @@ router.put(
   }
 );
 
-router.delete("/:id", async (req: Request, res: Response) => {
+router.delete("/:id", requireAuth, async (req: Request, res: Response) => {
   try {
     const customer = await Customer.findByIdAndRemove(req.params.id);
     if (!customer) return res.status(404).json("Customer Not Found");

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import express, { Request, Response } from "express";
+import { requireAdmin, requireAuth } from "../middleware/auth";
 import { Genre } from "../models/genre";
 import { Movie, validateMovie } from "../models/movie";
 import { MovieType, Params } from "./types";
@@ -28,6 +29,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 router.post(
   "/",
+  requireAuth,
   async (req: Request<unknown, unknown, MovieType>, res: Response) => {
     const { error } = validateMovie(req.body);
     if (error) return res.status(400).json(error.details[0].message);
@@ -55,6 +57,7 @@ router.post(
 
 router.put(
   "/:id",
+  requireAdmin,
   async (req: Request<Params, unknown, MovieType>, res: Response) => {
     const { error } = validateMovie(req.body);
     if (error) return res.status(400).json(error.details[0].message);
@@ -85,7 +88,7 @@ router.put(
   }
 );
 
-router.delete("/:id", async (req: Request, res: Response) => {
+router.delete("/:id", requireAdmin, async (req: Request, res: Response) => {
   try {
     const movie = await Movie.findByIdAndRemove(req.params.id);
     if (!movie) return res.status(404).json("Movie Not Found");
