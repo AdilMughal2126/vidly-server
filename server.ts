@@ -11,6 +11,7 @@ import { customers } from "./routes/customers";
 import { rentals } from "./routes/rentals";
 import { users } from "./routes/users";
 import { auth } from "./routes/auth";
+import { errorHandler } from "./middleware/error";
 
 const debugDB = Debug("Express:Database:Connection");
 const debugConsole = Debug("Express:Server:Running");
@@ -41,6 +42,7 @@ app.use("/api/customers", customers);
 app.use("/api/rentals", rentals);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use(errorHandler);
 
 app.listen(process.env.PORT, () =>
   debugConsole(

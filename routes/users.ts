@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import _ from "lodash";
 import bcrypt from "bcryptjs";
 import { User, validateUser } from "../models/user";
@@ -9,12 +9,12 @@ import { requireAdmin, requireAuth } from "../middleware/auth";
 
 const router = express.Router();
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await User.find().sort("name");
     return res.json(users);
   } catch (err) {
-    return res.status(400).json(err);
+    return next(err);
   }
 });
 
