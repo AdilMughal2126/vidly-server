@@ -4,7 +4,6 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "start": "node server",
     "dev": "DEBUG=Express:* nodemon server",
     "lint": "eslint . --ext .ts"
@@ -36,9 +35,14 @@
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "eslint": "^8.6.0",
+    "lint-staged": "^12.1.5",
     "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",
     "typescript": "^4.5.4"
+  },
+  "lint-staged": {
+    "src/**/*": "prettier --write --ignore-unknown"
   }
 }
