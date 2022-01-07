@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "node server",
-    "dev": "DEBUG=Express:* nodemon server",
+    "dev": "nodemon server",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -13,12 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "debug": "^4.3.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "helmet": "5.0.1",
     "joi": "^17.5.0",
-    "joi-objectid": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.1.5",

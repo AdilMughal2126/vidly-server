@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
 import helmet from "helmet";
-import Debug from "debug";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
-import { createLogger, format, transports } from "winston";
-import "winston-mongodb";
-
+//* DB
+import { connectDB } from "./db/db";
+//* Logger
+import { logger } from "./helpers/logger";
+//* Routes
 import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
 import { customers } from "./routes/customers";
@@ -15,51 +15,9 @@ import { users } from "./routes/users";
 import { auth } from "./routes/auth";
 import { errorHandler } from "./middleware/error";
 
-export const logger = createLogger({
-  level: "error",
-  format: format.combine(
-    format.timestamp({
-      format: "YYYY-MM-DD HH:mm:ss",
-    }),
-    format.splat(),
-    format.json()
-  ),
-  defaultMeta: { service: "my-service" },
-  transports: [
-    new transports.File({
-      filename: "logfile.log",
-    }),
-    new transports.MongoDB({
-      db: "mongodb://localhost/vidly-backend",
-      storeHost: true,
-      tryReconnect: true,
-    }),
-  ],
-  exceptionHandlers: [
-    new transports.File({
-      filename: "exceptions.log",
-    }),
-  ],
-});
-
-const debugDB = Debug("Express:Database:Connection");
-const debugConsole = Debug("Express:Server:Running");
-
 const app = express();
 
 dotenv.config();
-
-const connectDB = async () => {
-  try {
-    const connect = await mongoose.connect(process.env.MONGO_URI!);
-    const { host, port, name } = connect.connection;
-    debugDB(`MongoDB Connected: ${host}:${port}/${name}`);
-  } catch (err) {
-    debugDB(err);
-    process.exit(1);
-  }
-};
-
 void connectDB();
 
 app.use(helmet());
@@ -74,7 +32,7 @@ app.use("/api/auth", auth);
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () =>
-  debugConsole(
+  logger.info(
     `Server is listenning in ${process.env.NODE_ENV!} mode on port ${process.env
       .PORT!}`
   )

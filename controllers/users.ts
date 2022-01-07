@@ -13,7 +13,7 @@ import { Params } from "../types/ParamsType";
 
 export const handleGetUsers = asyncMiddleware(
   async (req: Request, res: Response) => {
-    const users = await User.find().sort("name");
+    const users = await User.find().sort("name").select("-hash");
     return res.json(users);
   }
 );

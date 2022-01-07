@@ -11,13 +11,11 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.9.0
   '@typescript-eslint/parser': ^5.9.0
   bcryptjs: ^2.4.3
-  debug: ^4.3.3
   dotenv: ^10.0.0
   eslint: ^8.6.0
   express: ^4.17.2
   helmet: 5.0.1
   joi: ^17.5.0
-  joi-objectid: ^4.0.2
   jsonwebtoken: ^8.5.1
   lodash: ^4.17.21
   mongoose: ^6.1.5
@@ -30,12 +28,10 @@ specifiers:
 
 dependencies:
   bcryptjs: 2.4.3
-  debug: 4.3.3
   dotenv: 10.0.0
   express: 4.17.2
   helmet: 5.0.1
   joi: 17.5.0
-  joi-objectid: 4.0.2
   jsonwebtoken: 8.5.1
   lodash: 4.17.21
   mongoose: 6.1.5
@@ -1442,10 +1438,6 @@ packages:
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
     dev: true
-
-  /joi-objectid/4.0.2:
-    resolution: {integrity: sha512-OjYM+wK/JGo2bSb9ADEyzxxROJPZYtrqIwBbywpJ2a98oKlbLtWTKvpzmrnXzou69Ey9EsjHsFvZYzpjeCdKuA==}
-    dev: false
 
   /joi/17.5.0:
     resolution: {integrity: sha512-R7hR50COp7StzLnDi4ywOXHrBrgNXuUUfJWIR5lPY5Bm/pOD3jZaTwpluUXVLRWcoWZxkrHBBJ5hLxgnlehbdw==}
