@@ -3,11 +3,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import Joi from "joi";
-import bcrypt from "bcryptjs";
 //* Model
 import { User } from "../models/user";
 //* Helper
-import { generateAuthToken } from "../helpers/auth";
+import { generateAuthToken, validateHash } from "../helpers/auth";
 //* Middleware
 import { asyncMiddleware } from "../middleware/async";
 //* Interfaces
@@ -19,16 +18,12 @@ export const handleAuth = asyncMiddleware(
   async (req: Request<unknown, unknown, UserType>, res: Response) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).json(error.details[0].message);
-
     const { email, password } = req.body;
-
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json("Invalid email or password");
-
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const isValid = await bcrypt.compare(password, user.hash!);
+    const isValid = await validateHash(password, user.hash!);
     if (!isValid) return res.status(400).json("Invalid email or password");
-
     const token = generateAuthToken(user);
     return res.json(token);
   }
