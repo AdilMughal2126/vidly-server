@@ -1,3 +1,5 @@
 /node_modules
 .dccache
 .env
+logfile.log
+exceptions.log

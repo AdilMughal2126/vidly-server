@@ -4,6 +4,7 @@ import helmet from "helmet";
 import Debug from "debug";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import { createLogger, format, transports } from "winston";
 
 import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
@@ -12,6 +13,27 @@ import { rentals } from "./routes/rentals";
 import { users } from "./routes/users";
 import { auth } from "./routes/auth";
 import { errorHandler } from "./middleware/error";
+
+export const logger = createLogger({
+  level: "error",
+  format: format.combine(
+    format.timestamp({
+      format: "YYYY-MM-DD HH:mm:ss",
+    }),
+    format.splat(),
+    format.json()
+  ),
+  transports: [
+    new transports.File({
+      filename: "logfile.log",
+    }),
+  ],
+  exceptionHandlers: [
+    new transports.File({
+      filename: "exceptions.log",
+    }),
+  ],
+});
 
 const debugDB = Debug("Express:Database:Connection");
 const debugConsole = Debug("Express:Server:Running");

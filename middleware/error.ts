@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import HttpException from "../helpers/httpException";
+import { logger } from "../server";
 
 export const errorHandler = (
   err: HttpException,
@@ -7,6 +8,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  logger.error(err.message, err);
   const status = err.statusCode || err.status || 500;
   const message = err.message || "Something went wrong";
 
