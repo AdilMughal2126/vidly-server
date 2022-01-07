@@ -14,6 +14,5 @@ export const errorHandler = (
 
   return res.status(status).json({
     error: message,
-    stack: err.stack,
   });
 };

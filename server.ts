@@ -5,6 +5,7 @@ import Debug from "debug";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { createLogger, format, transports } from "winston";
+import "winston-mongodb";
 
 import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
@@ -23,9 +24,15 @@ export const logger = createLogger({
     format.splat(),
     format.json()
   ),
+  defaultMeta: { service: "my-service" },
   transports: [
     new transports.File({
       filename: "logfile.log",
+    }),
+    new transports.MongoDB({
+      db: "mongodb://localhost/vidly-backend",
+      storeHost: true,
+      tryReconnect: true,
     }),
   ],
   exceptionHandlers: [
