@@ -1,81 +1,21 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import express, { Request, Response } from "express";
-import { requireAdmin } from "../middleware/auth";
-import { Genre, validateGenre } from "../models/genre";
-import { GenreType, Params } from "./types";
+import express from "express";
+//* Controller
+import {
+  handleCreateGenre,
+  handleDeleteGenre,
+  handleGetGenre,
+  handleGetGenres,
+  handleUpdateGenre,
+} from "../controllers/genres";
+//* Middleware
+import { requireAdmin, requireAuth } from "../middleware/auth";
 
 const router = express.Router();
 
-router.get("/", async (req: Request, res: Response) => {
-  try {
-    const genres = await Genre.find().sort("name");
-    return res.json(genres);
-  } catch (err) {
-    return res.status(400).json(err);
-  }
-});
-
-router.get("/:id", async (req: Request, res: Response) => {
-  try {
-    const genre = await Genre.findById(req.params.id);
-    if (!genre) return res.status(404).json("Genre Not Found");
-
-    return res.json(genre);
-  } catch (err) {
-    return res.status(400).json(err);
-  }
-});
-
-router.post(
-  "/",
-  requireAdmin,
-  async (req: Request<unknown, unknown, GenreType>, res: Response) => {
-    const { error } = validateGenre(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
-
-    try {
-      const genre = await Genre.create({ name: req.body.name });
-
-      return res.json(genre);
-    } catch (err) {
-      return res.status(400).json(err);
-    }
-  }
-);
-
-router.put(
-  "/:id",
-  requireAdmin,
-  async (req: Request<Params, unknown, GenreType>, res: Response) => {
-    const { error } = validateGenre(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
-
-    try {
-      const genre = await Genre.findByIdAndUpdate(
-        req.params.id,
-        {
-          name: req.body.name,
-        },
-        { new: true }
-      );
-      if (!genre) return res.status(404).json("Genre Not Found");
-
-      return res.json(genre);
-    } catch (err) {
-      return res.status(400).json(err);
-    }
-  }
-);
-
-router.delete("/:id", requireAdmin, async (req: Request, res: Response) => {
-  try {
-    const genre = await Genre.findByIdAndRemove(req.params.id);
-    if (!genre) return res.status(404).json("Genre Not Found");
-
-    return res.json(genre);
-  } catch (err) {
-    return res.status(400).json(err);
-  }
-});
+router.route("/").get(handleGetGenres);
+router.route("/:id").get(handleGetGenre);
+router.post("/", requireAuth, handleCreateGenre);
+router.put("/:id", requireAuth, handleUpdateGenre);
+router.delete("/:id", requireAdmin, handleDeleteGenre);
 
 export { router as genres };

@@ -1,6 +1,7 @@
-import { model, Schema } from "mongoose";
 import Joi from "joi";
-import { CustomerRental, RentalType } from "../routes/types";
+import { model, Schema } from "mongoose";
+import { RentalType } from "../types/RentalType";
+import { CustomerRental } from "../types/CustomerRentalType";
 
 export const Rental = model(
   "Rental",

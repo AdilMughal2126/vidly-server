@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
 import Joi from "joi";
-import { GenreType } from "../routes/types";
+import { model, Schema } from "mongoose";
+import { GenreType } from "../types/GenreType";
 
 export const genreSchema = new Schema<GenreType>({
   name: {

@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
 import Joi from "joi";
-import { UserType } from "../routes/types";
+import { model, Schema } from "mongoose";
+import { UserType } from "../types/UserType";
 
 const userSchema = new Schema<UserType>({
   name: {

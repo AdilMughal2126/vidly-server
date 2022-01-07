@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose";
 import Joi from "joi";
-import { MovieType } from "../routes/types";
+import { model, Schema } from "mongoose";
 import { genreSchema } from "./genre";
+import { MovieType } from "../types/MovieType";
 
 export const Movie = model(
   "Movie",

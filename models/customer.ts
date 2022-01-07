@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
 import Joi from "joi";
-import { CustomerType } from "../routes/types";
+import { model, Schema } from "mongoose";
+import { CustomerType } from "../types/CustomerType";
 
 export const Customer = model(
   "Customer",

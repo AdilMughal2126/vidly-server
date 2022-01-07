@@ -13,7 +13,6 @@ const router = express.Router();
 router.get(
   "/",
   asyncMiddleware(async (req: Request, res: Response) => {
-    throw new Error("Hey what's going on??");
     const users = await User.find().sort("name");
     return res.json(users);
   })
