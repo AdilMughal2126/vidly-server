@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
+  "engines": {
+    "node": "^16.13.0"
+  },
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
+    "test": "jest --watchAll --verbose",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -24,6 +28,9 @@
     "winston-mongodb": "^5.0.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
     "@types/bcryptjs": "^2.4.2",
     "@types/debug": "^4.1.7",
     "@types/express": "^4.17.13",
@@ -35,6 +42,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
+    "babel-jest": "^27.4.6",
     "eslint": "^8.6.0",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15",

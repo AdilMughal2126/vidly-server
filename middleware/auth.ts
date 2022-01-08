@@ -12,13 +12,6 @@ export const requireAuth = (
   try {
     verifyToken(token);
     return next();
-    // if (req.params.id !== undefined) {
-    //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    //   const _id = Object.values(decoded).at(0);
-    //   const isValid = _id === req.params.id;
-
-    //   if (!isValid) return res.status(401).json("Unauthorized");
-    // }
   } catch (err) {
     return res.status(400).json("Invalid token");
   }
@@ -41,26 +34,3 @@ export const requireAdmin = (
     return res.status(400).json("Invalid token");
   }
 };
-
-// export const validateUserAuth = (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const token = getToken(req);
-//   if (!token) return res.status(401).json("Access denied. No token provided");
-
-//   try {
-//     const decoded = verifyToken(token);
-
-//     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-//     const _id = Object.values(decoded).at(0);
-//     const isValid = _id === req.params.id;
-
-//     if (!isValid) return res.status(401).json("Unauthorized");
-
-//     return next();
-//   } catch (err) {
-//     return res.status(400).json("Invalid token");
-//   }
-// };

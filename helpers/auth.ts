@@ -3,6 +3,11 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { Request } from "express";
 import { UserType } from "../types/UserType";
+/**
+ ** For testing
+ */
+dotenv.config();
+import dotenv from "dotenv";
 
 export const generateAuthToken = (user: UserType) => {
   const token = jwt.sign(
