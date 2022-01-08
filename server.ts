@@ -2,11 +2,9 @@
 import express from "express";
 import helmet from "helmet";
 import dotenv from "dotenv";
-//* DB
+
 import { connectDB } from "./db/db";
-//* Logger
 import { logger } from "./helpers/logger";
-//* Routes
 import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
 import { customers } from "./routes/customers";
