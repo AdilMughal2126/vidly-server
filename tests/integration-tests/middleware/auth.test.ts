@@ -1,4 +1,3 @@
-import { Server } from "http";
 import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
@@ -7,12 +6,10 @@ import { User } from "../../../models/user";
 import { app } from "../../../server";
 import { GenreType } from "../../../types/GenreType";
 
-// const agent = supertest(app);
+const agent = supertest(app);
 const user = new User();
 let token: string;
 let name: string;
-let server: Server;
-let agent: supertest.SuperTest<supertest.Test>;
 let genre: mongoose.Document<unknown, unknown, GenreType> &
   GenreType & { _id: mongoose.Types.ObjectId };
 
@@ -20,15 +17,12 @@ describe("Auth Middleware", () => {
   beforeEach(async () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     await mongoose.connect(process.env.MONGO_URI_TEST!);
-    server = app.listen(5000);
-    agent = supertest(server);
     token = generateAuthToken(user);
     genre = await Genre.create({ name: "Genre4" });
   });
   afterEach(async () => {
     await Genre.deleteMany({});
     await mongoose.disconnect();
-    server.close();
   });
 
   describe("Require Auth", () => {

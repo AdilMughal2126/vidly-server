@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import { Server } from "http";
 import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
@@ -9,22 +8,17 @@ import { User } from "../../../models/user";
 import { app } from "../../../server";
 import { GenreType } from "../../../types/GenreType";
 
-// const agent = supertest(app);
+const agent = supertest(app);
 const user = new User();
-let server: Server;
-let agent: supertest.SuperTest<supertest.Test>;
 
 describe("/api/genres", () => {
   beforeEach(async () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     await mongoose.connect(process.env.MONGO_URI_TEST!);
-    server = app.listen(5000);
-    agent = supertest(server);
   });
   afterEach(async () => {
     await Genre.deleteMany({});
     await mongoose.disconnect();
-    server.close();
   });
 
   describe("GET /", () => {
