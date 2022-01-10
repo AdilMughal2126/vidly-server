@@ -13,7 +13,7 @@ import { users } from "./routes/users";
 import { auth } from "./routes/auth";
 import { errorHandler } from "./middleware/error";
 
-const app = express();
+export const app = express();
 
 dotenv.config();
 void connectDB();
@@ -29,9 +29,11 @@ app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () =>
-  logger.info(
-    `Server is listenning in ${process.env.NODE_ENV!} mode on port ${process.env
-      .PORT!}`
-  )
-);
+if (process.env.NODE_ENV !== "test") {
+  app.listen(process.env.PORT, () =>
+    logger.info(
+      `Server is listenning in ${process.env.NODE_ENV!} mode on port ${process
+        .env.PORT!}`
+    )
+  );
+}
