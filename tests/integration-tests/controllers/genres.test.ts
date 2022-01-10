@@ -15,15 +15,15 @@ let server: Server;
 let agent: supertest.SuperTest<supertest.Test>;
 
 describe("/api/genres", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    // await mongoose.connect(process.env.MONGO_URI_TEST!);
+    await mongoose.connect(process.env.MONGO_URI_TEST!);
     server = app.listen(5000);
     agent = supertest(server);
   });
   afterEach(async () => {
     await Genre.deleteMany({});
-    // await mongoose.disconnect();
+    await mongoose.disconnect();
     server.close();
   });
 
