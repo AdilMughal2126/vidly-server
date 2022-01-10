@@ -13,7 +13,7 @@
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "takanome_dev",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
