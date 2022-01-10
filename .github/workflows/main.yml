@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       JWT_PRIVATE_KEY: ${{secrets.JWT_PRIVATE_KEY}}
-      # MONGO_URI_TEST: ${{secrets.MONGO_URI_TEST}}
+      MONGO_URI_TEST: ${{secrets.MONGO_URI_TEST}}
 
     steps:
       - uses: actions/checkout@v2
