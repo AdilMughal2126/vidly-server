@@ -15,7 +15,6 @@ let genre: mongoose.Document<unknown, unknown, GenreType> &
 
 describe("Auth Middleware", () => {
   beforeEach(async () => {
-    jest.setTimeout(30000);
     token = generateAuthToken(user);
     genre = await Genre.create({ name: "Genre4" });
   });
@@ -30,21 +29,21 @@ describe("Auth Middleware", () => {
       const res = await exec();
       expect(res.status).toBe(401);
       expect(res.body).toMatch(/access denied/i);
-    });
+    }, 10000);
 
     it("should return 400 if token is invalid", async () => {
       token = "falsy";
       const res = await exec();
       expect(res.status).toBe(400);
       expect(res.body).toMatch(/invalid token/i);
-    });
+    }, 10000);
 
     it("should return 200 if token is valid", async () => {
       name = "Genre3";
       const res = await exec();
       expect(res.status).toBe(200);
       expect(res.body).toMatchObject({ name: "Genre3" });
-    });
+    }, 10000);
   });
 
   describe("Require Admin", () => {
@@ -58,7 +57,7 @@ describe("Auth Middleware", () => {
       const res = await exec();
       expect(res.status).toBe(403);
       expect(res.body).toMatch(/access denied/i);
-    });
+    }, 10000);
 
     it("should return null if genre is deleted", async () => {
       token = generateAuthToken(new User({ isAdmin: true }));
@@ -66,6 +65,6 @@ describe("Auth Middleware", () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const genre = await Genre.findById(res.body._id);
       expect(genre).toBeNull();
-    });
+    }, 10000);
   });
 });

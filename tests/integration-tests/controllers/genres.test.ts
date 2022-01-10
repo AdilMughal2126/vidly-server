@@ -12,7 +12,7 @@ const request = supertest(app);
 const user = new User();
 
 describe("/api/genres", () => {
-  beforeEach(() => jest.setTimeout(30000));
+  // beforeEach(() => jest.setTimeout(30000));
   afterEach(async () => await Genre.deleteMany({}));
 
   describe("GET /", () => {
@@ -23,7 +23,7 @@ describe("/api/genres", () => {
       expect(res.status).toBe(200);
       expect(res.body[0]).toHaveProperty("name", "Genre1");
       expect(res.body[1]).toHaveProperty("name", "Genre2");
-    });
+    }, 10000);
   });
 
   describe("GET /:id", () => {
@@ -43,20 +43,20 @@ describe("/api/genres", () => {
       const res = await exec();
       expect(res.status).toBe(404);
       expect(res.body).toMatch(/invalid id/i);
-    });
+    }, 10000);
 
     it("should return 404 if genreId is not found", async () => {
       id = "61dbff8ad38ce60479b35a7e";
       const res = await exec();
       expect(res.status).toBe(404);
       expect(res.body).toMatch(/not found/i);
-    });
+    }, 10000);
 
     it("should return genre if id is valid", async () => {
       const res = await exec();
       expect(res.status).toBe(200);
       expect(res.body).toHaveProperty("name", "Genre3");
-    });
+    }, 10000);
   });
 
   describe("POST /", () => {
@@ -76,33 +76,33 @@ describe("/api/genres", () => {
       const res = await exec();
       expect(res.status).toBe(401);
       expect(res.body).toMatch(/access denied/i);
-    });
+    }, 10000);
 
     it("should return 400 if genre.name is less than 5 characters", async () => {
       name = "Genr";
       const res = await exec();
       expect(res.status).toBe(400);
       expect(res.body).toMatch(/must be at least 5/i);
-    });
+    }, 10000);
 
     it("should return 400 if genre.name is greater than 50 characters", async () => {
       name = Array(52).join("a");
       const res = await exec();
       expect(res.status).toBe(400);
       expect(res.body).toMatch(/must be less than or equal to 50/i);
-    });
+    }, 10000);
 
     it("should save genre if it is valid", async () => {
       const res = await exec();
       const genre = await Genre.findById(res.body._id);
       expect(genre).not.toBeNull();
-    });
+    }, 10000);
 
     it("should return genre if it is valid", async () => {
       const res = await exec();
       expect(res.status).toBe(200);
       expect(res.body).toMatchObject({ name: "Genre4" });
-    });
+    }, 10000);
   });
 
   describe("PUT /:id", () => {
@@ -129,42 +129,42 @@ describe("/api/genres", () => {
       const res = await exec();
       expect(res.status).toBe(404);
       expect(res.body).toMatch(/invalid id/i);
-    });
+    }, 10000);
 
     it("should return 401 if user is not logged in", async () => {
       token = "";
       const res = await exec();
       expect(res.status).toBe(401);
       expect(res.body).toMatch(/access denied/i);
-    });
+    }, 10000);
 
     it("should return 400 if genre.name is less than 5 characters", async () => {
       name = "Genr";
       const res = await exec();
       expect(res.status).toBe(400);
       expect(res.body).toMatch(/must be at least 5/i);
-    });
+    }, 10000);
 
     it("should return 400 if genre.name is greater than 50 characters", async () => {
       name = Array(52).join("a");
       const res = await exec();
       expect(res.status).toBe(400);
       expect(res.body).toMatch(/must be less than or equal to 50/i);
-    });
+    }, 10000);
 
     it("should update genre if it is valid", async () => {
       name = "Genre6";
       const res = await exec();
       const updatedGenre = await Genre.findById(res.body._id);
       expect(updatedGenre).not.toBeNull();
-    });
+    }, 10000);
 
     it("should return genre if it is valid", async () => {
       name = "Genre6";
       const res = await exec();
       expect(res.status).toBe(200);
       expect(res.body).toMatchObject({ name });
-    });
+    }, 10000);
   });
 
   describe("DELETE /:id", () => {
@@ -191,27 +191,27 @@ describe("/api/genres", () => {
       const res = await exec();
       expect(res.status).toBe(404);
       expect(res.body).toMatch(/invalid id/i);
-    });
+    }, 10000);
 
     it("should return 401 if user is not logged in", async () => {
       token = "";
       const res = await exec();
       expect(res.status).toBe(401);
       expect(res.body).toMatch(/access denied/i);
-    });
+    }, 10000);
 
     it("should return 401 if user is not logged in", async () => {
       token = "";
       const res = await exec();
       expect(res.status).toBe(401);
       expect(res.body).toMatch(/access denied/i);
-    });
+    }, 10000);
 
     it("should return 403 if user is not admin", async () => {
       const res = await exec();
       expect(res.status).toBe(403);
       expect(res.body).toMatch(/access denied/i);
-    });
+    }, 10000);
 
     it("should return 404 if genre is not found", async () => {
       token = generateAuthToken(new User({ isAdmin: true }));
@@ -219,20 +219,20 @@ describe("/api/genres", () => {
       const res = await exec();
       expect(res.status).toBe(404);
       expect(res.body).toMatch(/not found/i);
-    });
+    }, 10000);
 
     it("should return null if genre is deleted", async () => {
       token = generateAuthToken(new User({ isAdmin: true }));
       const res = await exec();
       const genre = await Genre.findById(res.body._id);
       expect(genre).toBeNull();
-    });
+    }, 10000);
 
     it("should return the genre deleted", async () => {
       token = generateAuthToken(new User({ isAdmin: true }));
       const res = await exec();
       expect(res.status).toBe(200);
       expect(res.body).toMatchObject({ name: "Genre6" });
-    });
+    }, 10000);
   });
 });
