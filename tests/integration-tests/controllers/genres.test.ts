@@ -12,9 +12,7 @@ const request = supertest(app);
 const user = new User();
 
 describe("/api/genres", () => {
-  afterEach(async () => {
-    await Genre.deleteMany({});
-  });
+  afterEach(async () => await Genre.deleteMany({}));
 
   describe("GET /", () => {
     it("should return all the genres", async () => {
