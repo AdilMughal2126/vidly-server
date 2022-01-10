@@ -12,6 +12,7 @@ const request = supertest(app);
 const user = new User();
 
 describe("/api/genres", () => {
+  beforeEach(() => jest.setTimeout(30000));
   afterEach(async () => await Genre.deleteMany({}));
 
   describe("GET /", () => {

@@ -15,6 +15,7 @@ let genre: mongoose.Document<unknown, unknown, GenreType> &
 
 describe("Auth Middleware", () => {
   beforeEach(async () => {
+    jest.setTimeout(30000);
     token = generateAuthToken(user);
     genre = await Genre.create({ name: "Genre4" });
   });

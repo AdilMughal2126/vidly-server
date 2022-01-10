@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
-    "test": "jest --verbose --detectOpenHandles",
+    "test": "jest --detectOpenHandles --verbose",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
