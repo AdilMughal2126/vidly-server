@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import supertest from "supertest";
 import mongoose from "mongoose";
 import { app } from "../../../server";
@@ -14,9 +15,9 @@ describe("Route /api/customers", () => {
 
   describe("GET /", () => {
     it("should return all the customers", async () => {
-      const customers = [
-        { name: "Takanome", phone: "703696056" },
-        { name: "WesBos", phone: "788636071" },
+      const customers: CustomerType[] = [
+        { name: "Takanome", phone: "703696056", isGold: false },
+        { name: "WesBos", phone: "788636071", isGold: false },
       ];
 
       await Customer.create(customers);

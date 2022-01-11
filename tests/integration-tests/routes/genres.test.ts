@@ -11,12 +11,12 @@ import { generateAuthToken } from "../../../helpers/auth";
 const request = supertest(app);
 const user = new User();
 
-describe(" Route /api/genres", () => {
+describe("Route /api/genres", () => {
   afterEach(async () => await Genre.deleteMany({}));
 
   describe("GET /", () => {
     it("should return all the genres", async () => {
-      const genres = [{ name: "Genre1" }, { name: "Genre2" }];
+      const genres: GenreType[] = [{ name: "Genre1" }, { name: "Genre2" }];
       await Genre.create(genres);
       const res = await request.get("/api/genres");
       expect(res.status).toBe(200);

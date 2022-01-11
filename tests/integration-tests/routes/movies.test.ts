@@ -13,12 +13,12 @@ import { GenreType } from "../../../types/GenreType";
 
 const request = supertest(app);
 
-describe(" Route /api/movies", () => {
+describe("Route /api/movies", () => {
   afterEach(async () => await Movie.deleteMany({}));
 
   describe("GET /", () => {
     it("should return all the movies", async () => {
-      const movies = [
+      const movies: MovieType[] = [
         {
           title: "Avengers",
           genre: { name: "Action" },
