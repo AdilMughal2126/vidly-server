@@ -8,24 +8,26 @@ import { User } from "../../../models/user";
 import { app } from "../../../server";
 import { GenreType } from "../../../types/GenreType";
 
-const agent = supertest(app);
+const request = supertest(app);
 const user = new User();
+let connect: mongoose.Connection;
 
 describe("/api/genres", () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    await mongoose.connect(process.env.MONGO_URI_TEST!);
+    connect = mongoose.createConnection(process.env.MONGO_URI_TEST!);
   });
   afterEach(async () => {
     await Genre.deleteMany({});
-    await mongoose.disconnect();
+    // await mongoose.disconnect();
+    await connect.close();
   });
 
   describe("GET /", () => {
     it("should return all the genres", async () => {
       const genres = [{ name: "Genre1" }, { name: "Genre2" }];
       await Genre.create(genres);
-      const res = await agent.get("/api/genres");
+      const res = await request.get("/api/genres");
       expect(res.status).toBe(200);
       expect(res.body[0]).toHaveProperty("name", "Genre1");
       expect(res.body[1]).toHaveProperty("name", "Genre2");
@@ -42,7 +44,7 @@ describe("/api/genres", () => {
       id = genre._id.toHexString();
     });
 
-    const exec = () => agent.get(`/api/genres/${id}`);
+    const exec = () => request.get(`/api/genres/${id}`);
 
     it("should return 404 if genreId is invalid", async () => {
       id = "1";
@@ -70,7 +72,7 @@ describe("/api/genres", () => {
     let name: string;
 
     const exec = () =>
-      agent.post("/api/genres").set("X-Auth-Token", token).send({ name });
+      request.post("/api/genres").set("X-Auth-Token", token).send({ name });
 
     beforeEach(() => {
       token = generateAuthToken(user);
@@ -125,7 +127,10 @@ describe("/api/genres", () => {
     });
 
     const exec = () =>
-      agent.put(`/api/genres/${id}`).set("X-Auth-Token", token).send({ name });
+      request
+        .put(`/api/genres/${id}`)
+        .set("X-Auth-Token", token)
+        .send({ name });
 
     it("should return 404 if ID is invalid", async () => {
       id = "1";
@@ -184,7 +189,7 @@ describe("/api/genres", () => {
     });
 
     const exec = () =>
-      agent
+      request
         .delete(`/api/genres/${id}`)
         .set("X-Auth-Token", token)
         .send({ name });

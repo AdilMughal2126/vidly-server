@@ -6,28 +6,30 @@ import { User } from "../../../models/user";
 import { app } from "../../../server";
 import { GenreType } from "../../../types/GenreType";
 
-const agent = supertest(app);
+const request = supertest(app);
 const user = new User();
 let token: string;
 let name: string;
+let connect: mongoose.Connection;
 let genre: mongoose.Document<unknown, unknown, GenreType> &
   GenreType & { _id: mongoose.Types.ObjectId };
 
 describe("Auth Middleware", () => {
   beforeEach(async () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    await mongoose.connect(process.env.MONGO_URI_TEST!);
+    connect = mongoose.createConnection(process.env.MONGO_URI_TEST!);
     token = generateAuthToken(user);
     genre = await Genre.create({ name: "Genre4" });
   });
   afterEach(async () => {
     await Genre.deleteMany({});
-    await mongoose.disconnect();
+    // await mongoose.disconnect();
+    await connect.close();
   });
 
   describe("Require Auth", () => {
     const exec = () =>
-      agent.post("/api/genres").set("X-Auth-Token", token).send({ name });
+      request.post("/api/genres").set("X-Auth-Token", token).send({ name });
 
     it("should return 401 if user is not logged in", async () => {
       token = "";
@@ -53,7 +55,7 @@ describe("Auth Middleware", () => {
 
   describe("Require Admin", () => {
     const exec = () =>
-      agent
+      request
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         .delete(`/api/genres/${genre._id}`)
         .set("X-Auth-Token", token);
