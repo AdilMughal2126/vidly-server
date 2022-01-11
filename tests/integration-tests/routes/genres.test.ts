@@ -2,11 +2,11 @@
 
 import mongoose from "mongoose";
 import supertest from "supertest";
-import { generateAuthToken } from "../../helpers/auth";
-import { Genre } from "../../models/genre";
-import { User } from "../../models/user";
-import { app } from "../../server";
-import { GenreType } from "../../types/GenreType";
+import { app } from "../../../server";
+import { User } from "../../../models/user";
+import { Genre } from "../../../models/genre";
+import { GenreType } from "../../../types/GenreType";
+import { generateAuthToken } from "../../../helpers/auth";
 
 const request = supertest(app);
 const user = new User();

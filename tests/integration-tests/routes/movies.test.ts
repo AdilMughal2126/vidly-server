@@ -3,13 +3,13 @@
 
 import mongoose from "mongoose";
 import supertest from "supertest";
-import { generateAuthToken } from "../../helpers/auth";
-import { Genre } from "../../models/genre";
-import { Movie } from "../../models/movie";
-import { User } from "../../models/user";
-import { app } from "../../server";
-import { MovieType } from "../../types/MovieType";
-import { GenreType } from "../../types/GenreType";
+import { generateAuthToken } from "../../../helpers/auth";
+import { Genre } from "../../../models/genre";
+import { Movie } from "../../../models/movie";
+import { User } from "../../../models/user";
+import { app } from "../../../server";
+import { MovieType } from "../../../types/MovieType";
+import { GenreType } from "../../../types/GenreType";
 
 const request = supertest(app);
 
@@ -189,24 +189,16 @@ describe(" Route /api/movies", () => {
       });
 
       it("should save the updated movie", async () => {
-        movie = {
-          title: "Game Of Throne",
-          genreId: genre._id.toHexString(),
-          numberInStock: 2,
-          dailyRentalRate: 2.5,
-        };
+        movie.title = "Game Of Throne";
+        (movie.genreId = genre._id.toHexString()), (movie.genre = undefined);
         const res = await exec();
         const updatedMovie = await Movie.findById(res.body._id);
         expect(updatedMovie).not.toBeNull();
       });
 
       it("should return 200 if movie is updated", async () => {
-        movie = {
-          title: "Game Of Throne",
-          genreId: genre._id.toHexString(),
-          numberInStock: 2,
-          dailyRentalRate: 2.5,
-        };
+        movie.title = "Game Of Throne";
+        (movie.genreId = genre._id.toHexString()), (movie.genre = undefined);
         const res = await exec();
         expect(res.status).toBe(200);
         expect(res.body).toHaveProperty("title", "Game Of Throne");
