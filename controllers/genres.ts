@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-//* Middleware
-import { asyncMiddleware } from "../middleware/async";
-//* Model
-import { Genre, validateGenre } from "../models/genre";
-//* Interfaces
+
 import { Request, Response } from "express";
-//* Types
+import { asyncMiddleware } from "../middleware/async";
+import { Genre, validateGenre } from "../models/genre";
 import { GenreType } from "../types/GenreType";
 import { Params } from "../types/ParamsType";
 

@@ -4,8 +4,8 @@ import {
   generateHash,
   validateHash,
   verifyToken,
-} from "../../../helpers/auth";
-import { User } from "../../../models/user";
+} from "../../helpers/auth";
+import { User } from "../../models/user";
 
 describe("Auth Helper", () => {
   describe("JWT verification", () => {

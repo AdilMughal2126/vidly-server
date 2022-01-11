@@ -1,5 +1,4 @@
 import express from "express";
-//* Controller
 import {
   handleCreateMovie,
   handleDeleteMovie,
@@ -7,15 +6,14 @@ import {
   handleGetMovies,
   handleUpdateMovie,
 } from "../controllers/movies";
-//* Middleware
 import { requireAdmin, requireAuth } from "../middleware/auth";
+import { validateId } from "../middleware/validateObjectId";
 
 const router = express.Router();
-
 router.route("/").get(handleGetMovies);
-router.route("/:id").get(handleGetMovie);
+router.get("/:id", validateId, handleGetMovie);
 router.post("/", requireAuth, handleCreateMovie);
-router.put("/:id", requireAuth, handleUpdateMovie);
-router.delete("/:id", requireAdmin, handleDeleteMovie);
+router.put("/:id", [validateId, requireAuth], handleUpdateMovie);
+router.delete("/:id", [validateId, requireAdmin], handleDeleteMovie);
 
 export { router as movies };

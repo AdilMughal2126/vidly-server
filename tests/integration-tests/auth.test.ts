@@ -1,31 +1,24 @@
 import mongoose from "mongoose";
 import supertest from "supertest";
-import { generateAuthToken } from "../../../helpers/auth";
-import { Genre } from "../../../models/genre";
-import { User } from "../../../models/user";
-import { app } from "../../../server";
-import { GenreType } from "../../../types/GenreType";
+import { generateAuthToken } from "../../helpers/auth";
+import { Genre } from "../../models/genre";
+import { User } from "../../models/user";
+import { app } from "../../server";
+import { GenreType } from "../../types/GenreType";
 
 const request = supertest(app);
 const user = new User();
 let token: string;
 let name: string;
-let connect: mongoose.Connection;
 let genre: mongoose.Document<unknown, unknown, GenreType> &
   GenreType & { _id: mongoose.Types.ObjectId };
 
 describe("Auth Middleware", () => {
   beforeEach(async () => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    connect = mongoose.createConnection(process.env.MONGO_URI_TEST!);
     token = generateAuthToken(user);
     genre = await Genre.create({ name: "Genre4" });
   });
-  afterEach(async () => {
-    await Genre.deleteMany({});
-    // await mongoose.disconnect();
-    await connect.close();
-  });
+  afterEach(async () => await Genre.deleteMany({}));
 
   describe("Require Auth", () => {
     const exec = () =>
