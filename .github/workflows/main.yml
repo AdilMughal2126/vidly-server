@@ -12,6 +12,7 @@ jobs:
     env:
       JWT_PRIVATE_KEY: ${{secrets.JWT_PRIVATE_KEY}}
       MONGO_URI_TEST: ${{secrets.MONGO_URI_TEST}}
+      MONGO_URI: ${{secrets.MONGO_URI}}
 
     steps:
       - uses: actions/checkout@v2
