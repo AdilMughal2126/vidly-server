@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import supertest from "supertest";
 import mongoose from "mongoose";
@@ -22,7 +21,7 @@ describe("Route /api/users", () => {
       await User.create(users);
       const res = await request.get("/api/users");
       expect(res.status).toBe(200);
-      expect(res.body[0]).toHaveProperty("name", "Mugiwara");
+      expect(res.body).toHaveLength(2);
       expect(res.body[1]).toHaveProperty("name", "Takanome");
     });
   });
@@ -76,8 +75,7 @@ describe("Route /api/users", () => {
         hash: "takanome",
         isAdmin: true,
       });
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      id = newUser._id!;
+      id = newUser._id as string;
     });
 
     describe("POST /", () => {

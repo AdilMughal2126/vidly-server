@@ -1,9 +1,9 @@
+import { Genre } from "../models/genre";
 import { Request, Response } from "express";
+import { Params } from "../types/ParamsType";
+import { MovieType } from "../types/MovieType";
 import { asyncMiddleware } from "../middleware/async";
 import { Movie, validateMovie } from "../models/movie";
-import { Genre } from "../models/genre";
-import { MovieType } from "../types/MovieType";
-import { Params } from "../types/ParamsType";
 
 export const handleGetMovies = asyncMiddleware(
   async (req: Request, res: Response) => {
@@ -29,8 +29,7 @@ export const handleCreateMovie = asyncMiddleware(
     if (!genre) return res.status(404).json("Genre Not Found");
     const movie = await Movie.create({
       title,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      genre: { _id: genre._id, name: genre.name },
+      genre: { _id: genre._id as string, name: genre.name },
       numberInStock,
       dailyRentalRate,
     });
@@ -49,8 +48,7 @@ export const handleUpdateMovie = asyncMiddleware(
       req.params.id,
       {
         title,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        genre: { _id: genre._id, name: genre.name },
+        genre: { _id: genre._id as string, name: genre.name },
         numberInStock,
         dailyRentalRate,
       },

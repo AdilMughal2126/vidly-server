@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import { Request, Response } from "express";
 import { asyncMiddleware } from "../middleware/async";
 import { Genre, validateGenre } from "../models/genre";

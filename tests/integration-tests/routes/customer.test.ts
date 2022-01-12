@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import supertest from "supertest";
 import mongoose from "mongoose";
 import { app } from "../../../server";
@@ -23,7 +22,7 @@ describe("Route /api/customers", () => {
       await Customer.create(customers);
       const res = await request.get("/api/customers");
       expect(res.status).toBe(200);
-      expect(res.body[0]).toHaveProperty("name", "Takanome");
+      expect(res.body).toHaveLength(2);
       expect(res.body[1]).toHaveProperty("name", "WesBos");
     });
   });
@@ -124,8 +123,7 @@ describe("Route /api/customers", () => {
       };
 
       const newCustomer = await Customer.create(customer);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      id = newCustomer._id;
+      id = newCustomer._id as string;
     });
 
     describe("PUT /:id", () => {

@@ -1,14 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
-//* Middleware
-import { asyncMiddleware } from "../middleware/async";
-//* Model
-import { Customer, validateCustomer } from "../models/customer";
-//* Interfaces
 import { Request, Response } from "express";
-//* Types
-import { CustomerType } from "../types/CustomerType";
 import { Params } from "../types/ParamsType";
+import { CustomerType } from "../types/CustomerType";
+import { asyncMiddleware } from "../middleware/async";
+import { Customer, validateCustomer } from "../models/customer";
 
 export const handleGetCustomers = asyncMiddleware(
   async (req: Request, res: Response) => {

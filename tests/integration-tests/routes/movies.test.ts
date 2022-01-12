@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
@@ -36,8 +34,8 @@ describe("Route /api/movies", () => {
       await Movie.create(movies);
       const res = await request.get("/api/movies");
       expect(res.status).toBe(200);
+      expect(res.body).toHaveLength(2);
       expect(res.body[0]).toHaveProperty("title", "Avengers");
-      expect(res.body[1]).toHaveProperty("title", "Fast & Furious");
     });
   });
 
@@ -53,7 +51,7 @@ describe("Route /api/movies", () => {
         dailyRentalRate: 2.5,
       };
       const insertedMovie = await Movie.create(movie);
-      id = insertedMovie._id;
+      id = insertedMovie._id as string;
     });
     const exec = () => request.get(`/api/movies/${id}`);
 
@@ -86,7 +84,7 @@ describe("Route /api/movies", () => {
       const genre = await Genre.create({ name: "NewGenre" });
       movie = {
         title: "Merlin",
-        genreId: genre._id,
+        genreId: genre._id as string,
         numberInStock: 2,
         dailyRentalRate: 2.5,
       };
@@ -156,7 +154,7 @@ describe("Route /api/movies", () => {
       const user = new User();
       token = generateAuthToken(user);
       const newMovie = await Movie.create(movie);
-      id = newMovie._id;
+      id = newMovie._id as string;
     });
     afterEach(async () => await Genre.deleteMany({}));
 

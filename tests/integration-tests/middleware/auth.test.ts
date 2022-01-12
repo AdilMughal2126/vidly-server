@@ -1,24 +1,28 @@
-import mongoose from "mongoose";
 import supertest from "supertest";
-import { generateAuthToken } from "../../../helpers/auth";
-import { Genre } from "../../../models/genre";
-import { User } from "../../../models/user";
+import mongoose from "mongoose";
 import { app } from "../../../server";
+import { User } from "../../../models/user";
+import { Genre } from "../../../models/genre";
 import { GenreType } from "../../../types/GenreType";
+import { generateAuthToken } from "../../../helpers/auth";
 
 const request = supertest(app);
 const user = new User();
-let token: string;
-let name: string;
-let genre: mongoose.Document<unknown, unknown, GenreType> &
-  GenreType & { _id: mongoose.Types.ObjectId };
 
 describe("Auth Middleware", () => {
+  let token: string;
+  let name: string;
+  let id: string;
+  let genre: mongoose.Document<unknown, unknown, GenreType> & {
+    _id: mongoose.Types.ObjectId;
+  };
+
+  afterEach(async () => await Genre.deleteMany({}));
   beforeEach(async () => {
     token = generateAuthToken(user);
     genre = await Genre.create({ name: "Genre4" });
+    id = genre._id.toHexString();
   });
-  afterEach(async () => await Genre.deleteMany({}));
 
   describe("Require Auth", () => {
     const exec = () =>
@@ -48,10 +52,7 @@ describe("Auth Middleware", () => {
 
   describe("Require Admin", () => {
     const exec = () =>
-      request
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        .delete(`/api/genres/${genre._id}`)
-        .set("X-Auth-Token", token);
+      request.delete(`/api/genres/${id}`).set("X-Auth-Token", token);
 
     it("should return 403 if user is not admin", async () => {
       const res = await exec();

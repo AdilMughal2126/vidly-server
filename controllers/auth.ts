@@ -1,18 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import Joi from "joi";
-//* Model
 import { User } from "../models/user";
-//* Helper
-import { generateAuthToken, validateHash } from "../helpers/auth";
-//* Middleware
-import { asyncMiddleware } from "../middleware/async";
-//* Interfaces
 import { Request, Response } from "express";
-//* Types
 import { UserType } from "../types/UserType";
+import { asyncMiddleware } from "../middleware/async";
+import { generateAuthToken, validateHash } from "../helpers/auth";
 
 export const handleAuth = asyncMiddleware(
   async (req: Request<unknown, unknown, UserType>, res: Response) => {
@@ -21,8 +12,7 @@ export const handleAuth = asyncMiddleware(
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json("Invalid email or password");
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const isValid = await validateHash(password, user.hash!);
+    const isValid = await validateHash(password, user.hash as string);
     if (!isValid) return res.status(400).json("Invalid email or password");
     const token = generateAuthToken(user);
     return res.json(token);

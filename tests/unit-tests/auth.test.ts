@@ -23,7 +23,7 @@ describe("Auth Helper", () => {
 
   describe("Bcrypt Hash", () => {
     it("should return a valid hash", async () => {
-      const password = "Hello World!";
+      const password = "takanome";
       const hash = await generateHash(password);
       const validate = await validateHash(password, hash);
       expect(validate).toBe(true);

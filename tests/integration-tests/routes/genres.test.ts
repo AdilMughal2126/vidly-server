@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import mongoose from "mongoose";
 import supertest from "supertest";
 import { app } from "../../../server";
@@ -20,8 +19,8 @@ describe("Route /api/genres", () => {
       await Genre.create(genres);
       const res = await request.get("/api/genres");
       expect(res.status).toBe(200);
+      expect(res.body).toHaveLength(2);
       expect(res.body[0]).toHaveProperty("name", "Genre1");
-      expect(res.body[1]).toHaveProperty("name", "Genre2");
     });
   });
 

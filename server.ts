@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
 import helmet from "helmet";
 import dotenv from "dotenv";
@@ -20,7 +19,6 @@ void connectDB();
 
 app.use(helmet());
 app.use(express.json());
-
 app.use("/api/movies", movies);
 app.use("/api/genres", genres);
 app.use("/api/customers", customers);
@@ -32,8 +30,9 @@ app.use(errorHandler);
 if (process.env.NODE_ENV !== "test") {
   app.listen(process.env.PORT, () =>
     logger.info(
-      `Server is listenning in ${process.env.NODE_ENV!} mode on port ${process
-        .env.PORT!}`
+      `Server is listenning in ${process.env.NODE_ENV as string} mode on port ${
+        process.env.PORT as string
+      }`
     )
   );
 }
