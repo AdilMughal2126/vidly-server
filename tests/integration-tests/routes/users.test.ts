@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import supertest from "supertest";
 import mongoose from "mongoose";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
 import { UserType } from "../../../types/UserType";
+import { generateAuthToken } from "../../../helpers/auth";
 
 const request = supertest(app);
 
@@ -59,7 +61,163 @@ describe("Route /api/users", () => {
     it("should return user if ID is valid", async () => {
       const res = await exec();
       expect(res.status).toBe(200);
-      expect(res.body).toMatchObject(user.toJSON());
+      expect(res.body).toHaveProperty("name", "Takanome");
+    });
+  });
+
+  describe("POST - PUT - DELETE", () => {
+    let id: string;
+    let newUser: UserType;
+
+    beforeEach(async () => {
+      newUser = await User.create({
+        name: "Takanome",
+        email: "takanome@gmail.com",
+        hash: "takanome",
+        isAdmin: true,
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      id = newUser._id!;
+    });
+
+    describe("POST /", () => {
+      let user: UserType;
+
+      beforeEach(() => {
+        user = {
+          name: "Developer",
+          email: "dev@dev.com",
+          password: "reactdev",
+        };
+      });
+
+      const exec = () => request.post("/api/users").send(user);
+
+      it("should return 400 if user info is invalid", async () => {
+        user.name = "Dev";
+        const res = await exec();
+        expect(res.status).toBe(400);
+      });
+
+      it("should return 400 if email exist", async () => {
+        user.email = "takanome@gmail.com";
+        const res = await exec();
+        expect(res.status).toBe(400);
+        expect(res.body).toMatch(/already registered/i);
+      });
+
+      it("should save user if valid", async () => {
+        const res = await exec();
+        const registeredUser = await User.findById(res.body._id);
+        expect(registeredUser).not.toBeNull();
+      });
+
+      it("should return user if valid", async () => {
+        const res = await exec();
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty("name", "Developer");
+        expect(res.body).toHaveProperty("email", "dev@dev.com");
+      });
+    });
+
+    describe("PUT - DELETE", () => {
+      let token: string;
+      let user: UserType;
+
+      beforeEach(() => {
+        token = generateAuthToken(newUser);
+      });
+
+      describe("PUT /:id", () => {
+        beforeEach(() => {
+          user = {
+            name: "Developer",
+            email: "dev@dev.com",
+            password: "reactdev",
+          };
+        });
+        const exec = () =>
+          request.put(`/api/users/${id}`).set("X-Auth-Token", token).send(user);
+
+        it("should return 404 if ID is invalid", async () => {
+          id = "1";
+          const res = await exec();
+          expect(res.status).toBe(404);
+          expect(res.body).toMatch(/invalid id/i);
+        });
+
+        it("should return 403 if user is not admin", async () => {
+          token = generateAuthToken(new User());
+          const res = await exec();
+          expect(res.status).toBe(403);
+          expect(res.body).toMatch(/access denied/i);
+        });
+
+        it("should return 400 if user is invalid", async () => {
+          user.name = "Dev";
+          const res = await exec();
+          expect(res.status).toBe(400);
+          expect(res.body).toMatch(/must be at least 5/i);
+        });
+
+        it("should return 404 if user is not found", async () => {
+          id = "61dea11b934e3d2eba68782f";
+          const res = await exec();
+          expect(res.status).toBe(404);
+          expect(res.body).toMatch(/not found/i);
+        });
+
+        it("should update user if valid", async () => {
+          const res = await exec();
+          const updatedUser = await User.findById(res.body._id);
+          expect(updatedUser).not.toBeNull();
+        });
+
+        it("should return the updated user if valid", async () => {
+          const res = await exec();
+          expect(res.status).toBe(200);
+          expect(res.body).toHaveProperty("name", "Developer");
+        });
+      });
+
+      describe("DELETE /:id", () => {
+        const exec = () =>
+          request.delete(`/api/users/${id}`).set("X-Auth-Token", token);
+
+        it("should return 404 if ID is invalid", async () => {
+          id = "1";
+          const res = await exec();
+          expect(res.status).toBe(404);
+          expect(res.body).toMatch(/invalid id/i);
+        });
+
+        it("should return 403 if user is not admin", async () => {
+          token = generateAuthToken(new User());
+          const res = await exec();
+          expect(res.status).toBe(403);
+          expect(res.body).toMatch(/access denied/i);
+        });
+
+        it("should return 404 if user is not found", async () => {
+          id = "61dea11b934e3d2eba68782f";
+          const res = await exec();
+          expect(res.status).toBe(404);
+          expect(res.body).toMatch(/not found/i);
+        });
+
+        it("should delete user if valid", async () => {
+          const res = await exec();
+          const updatedUser = await User.findById(res.body._id);
+          expect(updatedUser).toBeNull();
+        });
+
+        it("should return the deleted user if valid", async () => {
+          const res = await exec();
+          expect(res.status).toBe(200);
+          expect(res.body).toHaveProperty("isAdmin", true);
+          expect(res.body).toHaveProperty("hash", "takanome");
+        });
+      });
     });
   });
 });

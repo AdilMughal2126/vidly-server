@@ -1,15 +1,10 @@
 import _ from "lodash";
-//* Middleware
-import { asyncMiddleware } from "../middleware/async";
-//* Model
-import { User, validateUser } from "../models/user";
-//* Helpers
-import { generateAuthToken, generateHash } from "../helpers/auth";
-//* Interfaces
 import { Request, Response } from "express";
-//* Types
 import { UserType } from "../types/UserType";
 import { Params } from "../types/ParamsType";
+import { asyncMiddleware } from "../middleware/async";
+import { User, validateUser } from "../models/user";
+import { generateAuthToken, generateHash } from "../helpers/auth";
 
 export const handleGetUsers = asyncMiddleware(
   async (req: Request, res: Response) => {
@@ -48,7 +43,7 @@ export const handleUpdateUser = asyncMiddleware(
     const { error } = validateUser(req.body);
     if (error) return res.status(400).json(error.details[0].message);
     const { name, email } = req.body;
-    const hash = generateHash(req.body.password);
+    const hash = await generateHash(req.body.password);
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { name, email, hash },
