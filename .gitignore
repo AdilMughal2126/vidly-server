@@ -8,5 +8,8 @@
 logfile.log
 exceptions.log
 
+# testing
+/coverage
+
 # snyk cache
 .dccache
