@@ -151,7 +151,6 @@ describe("ROUTE /api/rentals", () => {
 
     it("should return 200 if rental is valid", async () => {
       const res = await exec();
-      console.log(res.body);
       expect(res.status).toBe(200);
       expect(res.body.customer).toMatchObject(customer1);
       expect(res.body.movie).toHaveProperty("title", "Avengers");
