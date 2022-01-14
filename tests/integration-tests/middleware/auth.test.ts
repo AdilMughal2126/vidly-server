@@ -9,6 +9,20 @@ import { generateAuthToken } from "../../../helpers/auth";
 const request = supertest(app);
 const user = new User();
 
+/**
+ * @route any route who require auth
+ * @example /api/genres
+ *
+ * @requireAuth
+ * Return 401 if user is not logged in
+ * Return 400 if token is invalid
+ * Return 200 if token is valid
+ *
+ * @requireAdmin
+ * Return 403 if user is not admin
+ * Return null if genre is deleted
+ */
+
 describe("Auth Middleware", () => {
   let token: string;
   let name: string;

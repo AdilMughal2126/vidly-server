@@ -13,6 +13,29 @@ import { generateAuthToken } from "../../../helpers/auth";
 
 const request = supertest(app);
 
+/**
+ * @route /api/rentals
+ *
+ * @method GET
+ * @access Public
+ * Return all the rentals
+ *
+ * @method GET/:id
+ * @access Public
+ * Return 404 if ID is invalid
+ * Return 404 if rental is not found
+ * Return 200 if rental is valid
+ *
+ * @method POST
+ * @access Private
+ * Return 401 if no jwt was provided
+ * Return 400 if rental is invalid
+ * Return 400 if customer is invalid
+ * Return 400 if movie is invalid
+ * Return 404 if numberInStock is null
+ * Return 200 if rental is valid
+ */
+
 describe("ROUTE /api/rentals", () => {
   let customer1: CustomerType;
   let customer2: CustomerType;

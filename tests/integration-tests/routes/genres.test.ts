@@ -10,6 +10,46 @@ import { generateAuthToken } from "../../../helpers/auth";
 const request = supertest(app);
 const user = new User();
 
+/**
+ * @route /api/genre
+ *
+ * @method GET
+ * @access Public
+ * Return all the genres
+ *
+ * @method GET/:id
+ * @access Public
+ * Return 404 if genreId is invalid
+ * Return 404 if genreId is not found
+ * Return genre if id is valid
+ *
+ * @method POST
+ * @access Private
+ * Return 401 user is not logged in
+ * Return 400 if genre.name is less than 5 characters
+ * Return 400 if genre.name is greater than 50 characters
+ * Save genre if it is valid
+ * Return genre if it is valid
+ *
+ * @method PUT
+ * @access Private
+ * Return 404 if ID is invalid
+ * Return 401 if user is not logged in
+ * Return 400 if genre.name is less than 5 characters
+ * Return 400 if genre.name is greater than 50 characters
+ * Update genre if it is valid
+ * Return genre if it is valid
+ *
+ * @method DELETE
+ * @access Private
+ * Return 404 if ID is invalid
+ * Return 401 if user is not logged in
+ * Return 403 if user is not admin
+ * Return 404 if genre is not found
+ * Return null if genre is deleted
+ * Return the genre deleted
+ */
+
 describe("Route /api/genres", () => {
   afterEach(async () => await Genre.deleteMany({}));
 
@@ -69,7 +109,7 @@ describe("Route /api/genres", () => {
       name = "Genre4";
     });
 
-    it("should return 401 user is not log in", async () => {
+    it("should return 401 user is not logged in", async () => {
       token = "";
       const res = await exec();
       expect(res.status).toBe(401);
@@ -178,13 +218,6 @@ describe("Route /api/genres", () => {
         const res = await exec();
         expect(res.status).toBe(404);
         expect(res.body).toMatch(/invalid id/i);
-      });
-
-      it("should return 401 if user is not logged in", async () => {
-        token = "";
-        const res = await exec();
-        expect(res.status).toBe(401);
-        expect(res.body).toMatch(/access denied/i);
       });
 
       it("should return 401 if user is not logged in", async () => {

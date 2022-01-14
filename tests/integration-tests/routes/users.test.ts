@@ -8,6 +8,44 @@ import { generateAuthToken } from "../../../helpers/auth";
 
 const request = supertest(app);
 
+/**
+ * @route /api/users
+ *
+ * @method GET
+ * @access Public
+ * Return all users
+ *
+ * @method GET/:id
+ * @access Public
+ * Return 404 if ID is invalid
+ * Return 404 if customer is not found
+ * Return user if ID is valid
+ *
+ * @method POST
+ * @access Public
+ * Return 400 if user info is invalid
+ * Return 400 if email exist
+ * Save user if valid
+ * Return user if valid
+ *
+ * @method PUT
+ * @access Private
+ * Return 404 if ID is invalid
+ * Return 403 if user is not admin
+ * Return 400 if user is invalid
+ * Return 404 if user is not found
+ * Update user if valid
+ * Return the updated user if valid
+ *
+ * @method DELETE
+ * @access Private
+ * Return 404 if ID is invalid
+ * Return 403 if user is not admin
+ * Return 404 if user is not found
+ * Delete user if valid
+ * Return the deleted user if valid
+ */
+
 describe("Route /api/users", () => {
   afterEach(async () => await User.deleteMany({}));
 

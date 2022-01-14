@@ -6,6 +6,17 @@ import { UserType } from "../../../types/UserType";
 
 const request = supertest(app);
 
+/**
+ * @route /api/auth
+ * @method POST
+ * @access Public
+ *
+ * Return 400 if user is invalid
+ * Return 400 if user not found
+ * Return 400 if password is invalid
+ * Return jwt if user is logged in
+ */
+
 describe("ROUTE /api/auth", () => {
   let user: UserType;
 

@@ -9,6 +9,44 @@ import { generateAuthToken } from "../../../helpers/auth";
 
 const request = supertest(app);
 
+/**
+ * @route /api/customers
+ *
+ * @method GET
+ * @access Public
+ * Return all the customers
+ *
+ * @method GET/:id
+ * @access Public
+ * Return 404 if ID is invalid
+ * Return 404 if customer is not found
+ * Return 200 if customer is found
+ *
+ * @method POST
+ * @access Private
+ * Return 401 if user is not logged in
+ * Return 400 if customer is invalid
+ * Save customer if valid
+ * Return the new customer if valid
+ *
+ * @method PUT
+ * @access Private
+ * Return 404 if ID is invalid
+ * Return 401 if user is not logged in
+ * Return 400 if customer is invalid
+ * Return 404 if customer not found
+ * Save customer if valid
+ * Return customer if valid
+ *
+ * @method DELETE
+ * @access Private
+ * Return 404 if ID is invalid
+ * Return 403 if user is not admin
+ * Return 404 if customer is not found
+ * Delete customer if valid
+ * Return the deleted customer if valid
+ */
+
 describe("Route /api/customers", () => {
   afterEach(async () => await Customer.deleteMany({}));
 
@@ -168,7 +206,7 @@ describe("Route /api/customers", () => {
         expect(updatedCustomer).not.toBeNull();
       });
 
-      it("should save customer if valid", async () => {
+      it("should return customer if valid", async () => {
         customer.name = "React Dev";
         const res = await exec();
         expect(res.status).toBe(200);

@@ -1,15 +1,53 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import mongoose from "mongoose";
 import supertest from "supertest";
-import { generateAuthToken } from "../../../helpers/auth";
+import { app } from "../../../server";
+import { User } from "../../../models/user";
 import { Genre } from "../../../models/genre";
 import { Movie } from "../../../models/movie";
-import { User } from "../../../models/user";
-import { app } from "../../../server";
 import { MovieType } from "../../../types/MovieType";
 import { GenreType } from "../../../types/GenreType";
+import { generateAuthToken } from "../../../helpers/auth";
 
 const request = supertest(app);
+
+/**
+ * @route /api/movies
+ *
+ * @method GET
+ * @access Public
+ * Return all the movies
+ *
+ * @method GET/:id
+ * @access Public
+ * Return 404 if ID is invalid
+ * Return 404 if movie is not found
+ * Return 200 if movie is found
+ *
+ * @method POST
+ * @access Private
+ * Return 401 if no jwt was provided
+ * Return 400 if movie is invalid
+ * Return 404 if genre is not found
+ * Save movie if is valid
+ * Return 200 if movie is valid
+ *
+ * @method PUT
+ * @access Private
+ * Return 404 if ID is invalid
+ * Return 401 if no jwt was provided
+ * Return 400 if movie is invalid
+ * Save the updated movie
+ * Return 200 if movie is updated
+ *
+ * @method DELETE
+ * @access Private
+ * Return 404 if ID is invalid
+ * Return 403 if user is not admin
+ * Return 404 if movie is not found
+ * Return null if movie is deleted
+ * Return 200 if movie is successfully deleted
+ */
 
 describe("Route /api/movies", () => {
   afterEach(async () => await Movie.deleteMany({}));
