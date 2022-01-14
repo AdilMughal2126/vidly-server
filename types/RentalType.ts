@@ -1,12 +1,10 @@
 import { CustomerType } from "./CustomerType";
 import { MovieType } from "./MovieType";
 
-type DateType = { type: DateConstructor; default: () => number };
-
 export type RentalType = {
   customer: CustomerType;
   movie: Pick<MovieType, "title" | "dailyRentalRate">;
-  dateOut: DateType;
+  dateOut: Date | { type: DateConstructor; default: () => number };
   dateReturned: Date;
   rentalFee: number;
 };

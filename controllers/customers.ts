@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Params } from "../types/ParamsType";
+import { Customer } from "../models/customer";
 import { CustomerType } from "../types/CustomerType";
 import { asyncMiddleware } from "../middleware/async";
-import { Customer, validateCustomer } from "../models/customer";
 
 export const handleGetCustomers = asyncMiddleware(
   async (req: Request, res: Response) => {
@@ -21,8 +21,6 @@ export const handleGetCustomer = asyncMiddleware(
 
 export const handleCreateCustomer = asyncMiddleware(
   async (req: Request<unknown, unknown, CustomerType>, res: Response) => {
-    const { error } = validateCustomer(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
     const { name, phone, isGold } = req.body;
     const customer = await Customer.create({ name, phone, isGold });
     return res.json(customer);
@@ -31,8 +29,6 @@ export const handleCreateCustomer = asyncMiddleware(
 
 export const handleUpdateCustomer = asyncMiddleware(
   async (req: Request<Params, unknown, CustomerType>, res: Response) => {
-    const { error } = validateCustomer(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
     const { name, phone, isGold } = req.body;
     const customer = await Customer.findByIdAndUpdate(
       req.params.id,

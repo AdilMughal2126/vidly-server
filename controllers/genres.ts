@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { asyncMiddleware } from "../middleware/async";
-import { Genre, validateGenre } from "../models/genre";
+import { Genre } from "../models/genre";
 import { GenreType } from "../types/GenreType";
 import { Params } from "../types/ParamsType";
 
@@ -21,8 +21,6 @@ export const handleGetGenre = asyncMiddleware(
 
 export const handleCreateGenre = asyncMiddleware(
   async (req: Request<unknown, unknown, GenreType>, res: Response) => {
-    const { error } = validateGenre(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
     const genre = await Genre.create({ name: req.body.name });
     return res.json(genre);
   }
@@ -30,8 +28,6 @@ export const handleCreateGenre = asyncMiddleware(
 
 export const handleUpdateGenre = asyncMiddleware(
   async (req: Request<Params, unknown, GenreType>, res: Response) => {
-    const { error } = validateGenre(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
     const genre = await Genre.findByIdAndUpdate(
       req.params.id,
       { name: req.body.name },

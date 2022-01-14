@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import { Movie } from "../models/movie";
+import { Rental } from "../models/rental";
 import { Customer } from "../models/customer";
 import { asyncMiddleware } from "../middleware/async";
 import { NextFunction, Request, Response } from "express";
-import { Rental, validateRental } from "../models/rental";
 import { CustomerRental } from "../types/CustomerRentalType";
 
 export const handleGetRentals = asyncMiddleware(
@@ -26,8 +26,6 @@ export const handleCreateRental = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { error } = validateRental(req.body);
-  if (error) return res.status(400).json(error.details[0].message);
   const { customerId, movieId } = req.body;
   const customer = await Customer.findById(customerId);
   if (!customer) return res.status(400).json("Invalid Customer");

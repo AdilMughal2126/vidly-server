@@ -1,8 +1,13 @@
 import express from "express";
-import { handleReturnedMovie } from "../controllers/returns";
+import { handleReturnedMovie, validateReturn } from "../controllers/returns";
 import { requireAuth } from "../middleware/auth";
+import { validateRequest } from "../middleware/validateRequest";
 
 const router = express.Router();
-router.post("/", requireAuth, handleReturnedMovie);
+router.post(
+  "/",
+  [requireAuth, validateRequest(validateReturn)],
+  handleReturnedMovie
+);
 
 export { router as returns };

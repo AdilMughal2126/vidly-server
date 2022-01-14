@@ -1,9 +1,9 @@
 import _ from "lodash";
+import { User } from "../models/user";
 import { Request, Response } from "express";
 import { UserType } from "../types/UserType";
 import { Params } from "../types/ParamsType";
 import { asyncMiddleware } from "../middleware/async";
-import { User, validateUser } from "../models/user";
 import { generateAuthToken, generateHash } from "../helpers/auth";
 
 export const handleGetUsers = asyncMiddleware(
@@ -23,8 +23,6 @@ export const handleGetUser = asyncMiddleware(
 
 export const handleCreateUser = asyncMiddleware(
   async (req: Request<unknown, unknown, UserType>, res: Response) => {
-    const { error } = validateUser(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
     const { name, email } = req.body;
     const isEmail = await User.findOne({ email });
     if (isEmail) return res.status(400).json("Email already registered");
@@ -40,8 +38,6 @@ export const handleCreateUser = asyncMiddleware(
 // TODO: Handle Password Update
 export const handleUpdateUser = asyncMiddleware(
   async (req: Request<Params, unknown, UserType>, res: Response) => {
-    const { error } = validateUser(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
     const { name, email } = req.body;
     const hash = await generateHash(req.body.password);
     const user = await User.findByIdAndUpdate(

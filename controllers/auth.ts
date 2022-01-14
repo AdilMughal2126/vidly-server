@@ -7,8 +7,6 @@ import { generateAuthToken, validateHash } from "../helpers/auth";
 
 export const handleAuth = asyncMiddleware(
   async (req: Request<unknown, unknown, UserType>, res: Response) => {
-    const { error } = validate(req.body);
-    if (error) return res.status(400).json(error.details[0].message);
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json("Invalid email or password");
@@ -19,7 +17,7 @@ export const handleAuth = asyncMiddleware(
   }
 );
 
-const validate = (user: UserType) => {
+export const validateAuth = (user: UserType) => {
   const schema = Joi.object({
     email: Joi.string().email().min(8).max(50).required(),
     password: Joi.string().min(8).max(50).required(),
