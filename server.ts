@@ -1,6 +1,7 @@
 import express from "express";
-import helmet from "helmet";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import compression from "compression";
 
 import { connectDB } from "./db/db";
 import { auth } from "./routes/auth";
@@ -19,6 +20,7 @@ dotenv.config();
 void connectDB();
 
 app.use(helmet());
+app.use(compression());
 app.use(express.json());
 app.use("/api/movies", movies);
 app.use("/api/genres", genres);
