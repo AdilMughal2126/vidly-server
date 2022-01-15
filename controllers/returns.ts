@@ -1,51 +1,31 @@
-import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import { Movie } from "../models/movie";
 import { Rental } from "../models/rental";
+import { Request, Response } from "express";
+import { asyncMiddleware } from "../middleware/async";
 import { CustomerRental } from "../types/CustomerRentalType";
+import { numberOfDays } from "../helpers/numberOfDays";
 
-export const handleReturnedMovie = async (
-  req: Request<unknown, unknown, CustomerRental>,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    // const { error } = validateReturn(req.body);
-    // if (error) return res.status(400).json(error.details[0].message);
-
+export const handleReturnedMovie = asyncMiddleware(
+  async (req: Request<unknown, unknown, CustomerRental>, res: Response) => {
+    const { customerId, movieId } = req.body;
     const rental = await Rental.findOne({
-      "customer._id": req.body.customerId,
-      "movie._id": req.body.movieId,
+      "customer._id": customerId,
+      "movie._id": movieId,
     });
-
     if (!rental) return res.status(404).json("No rental was found");
-
-    if (rental.dateReturned) return res.status(400).json("Already prossesses");
-
+    if (rental.dateReturned)
+      return res.status(400).json("Rental already process");
     rental.dateReturned = new Date();
+    const days = numberOfDays(+rental.dateReturned, +rental.dateOut);
+    rental.rentalFee = days * rental.movie.dailyRentalRate;
     await rental.save();
-
-    const day = 24 * 60 * 60 * 1000;
-    const daysDiff = +rental.dateReturned - +rental.dateOut;
-
-    /**
-     * @ref https://stackoverflow.com/questions/2627473/how-to-calculate-the-number-of-days-between-two-dates
-     */
-
-    const numberOfDays = Math.round(daysDiff / day);
-
-    rental.rentalFee = numberOfDays * rental.movie.dailyRentalRate;
-    await rental.save();
-
     await Movie.findByIdAndUpdate(req.body.movieId, {
       $inc: { numberInStock: 1 },
     });
-
     return res.status(200).json(rental);
-  } catch (err) {
-    return next(err);
   }
-};
+);
 
 export const validateReturn = (rental: CustomerRental) => {
   const schema = Joi.object({

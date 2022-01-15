@@ -7,12 +7,12 @@ import { Rental } from "../../../models/rental";
 import { MovieType } from "../../../types/MovieType";
 import { RentalType } from "../../../types/RentalType";
 import { generateAuthToken } from "../../../helpers/auth";
+import { numberOfDays } from "../../../helpers/numberOfDays";
 
 const request = supertest(app);
 
 /**
  * @route /api/returns
- *
  * @method POST {customerId, movieId}
  * @access Private
  *
@@ -126,13 +126,17 @@ describe("Route /api/returns", () => {
     await rental.save();
     await exec();
     const rentalInDb = await Rental.findById(rental._id);
-    expect(rentalInDb?.rentalFee).toBe(6);
+    const dateReturned = rentalInDb?.dateReturned;
+    const dateOut = rentalInDb?.dateOut;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const days = numberOfDays(+dateReturned!, +dateOut!);
+    expect(rentalInDb?.rentalFee).toBe(days * movie.dailyRentalRate);
   });
 
   it("should increase the movie stock if input is valid", async () => {
     await exec();
     const movieInDb = await Movie.findById(movie._id);
-    expect(movieInDb?.numberInStock).toBe(6);
+    expect(movieInDb?.numberInStock).toBe(movie.numberInStock + 1);
   });
 
   it("should return the rental if input is valid", async () => {

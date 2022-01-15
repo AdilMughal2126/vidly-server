@@ -3,14 +3,14 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 
 import { connectDB } from "./db/db";
-import { logger } from "./helpers/logger";
+import { auth } from "./routes/auth";
+import { users } from "./routes/users";
 import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
-import { customers } from "./routes/customers";
+import { logger } from "./helpers/logger";
 import { rentals } from "./routes/rentals";
 import { returns } from "./routes/returns";
-import { users } from "./routes/users";
-import { auth } from "./routes/auth";
+import { customers } from "./routes/customers";
 import { errorHandler } from "./middleware/error";
 
 export const app = express();

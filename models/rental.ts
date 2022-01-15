@@ -3,61 +3,60 @@ import { model, Schema } from "mongoose";
 import { RentalType } from "../types/RentalType";
 import { CustomerRental } from "../types/CustomerRentalType";
 
-export const Rental = model(
-  "Rental",
-  new Schema<RentalType>({
-    customer: {
-      type: new Schema({
-        name: {
-          type: String,
-          required: true,
-          minlength: 5,
-          maxlength: 255,
-        },
-        phone: {
-          type: String,
-          required: true,
-          minlength: 8,
-          maxlength: 255,
-        },
-        isGold: {
-          type: Boolean,
-          default: false,
-        },
-      }),
-      required: true,
-    },
-    movie: {
-      type: new Schema({
-        title: {
-          type: String,
-          required: true,
-          trim: true,
-          minlength: 5,
-          maxlength: 255,
-        },
-        dailyRentalRate: {
-          type: Number,
-          required: true,
-          min: 0,
-          max: 255,
-        },
-      }),
-      required: true,
-    },
-    dateOut: {
-      type: Date,
-      default: Date.now,
-    },
-    dateReturned: {
-      type: Date,
-    },
-    rentalFee: {
-      type: Number,
-      min: 0,
-    },
-  })
-);
+const rentalSchema = new Schema<RentalType>({
+  customer: {
+    type: new Schema({
+      name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 255,
+      },
+      phone: {
+        type: String,
+        required: true,
+        minlength: 8,
+        maxlength: 255,
+      },
+      isGold: {
+        type: Boolean,
+        default: false,
+      },
+    }),
+    required: true,
+  },
+  movie: {
+    type: new Schema({
+      title: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 5,
+        maxlength: 255,
+      },
+      dailyRentalRate: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 255,
+      },
+    }),
+    required: true,
+  },
+  dateOut: {
+    type: Date,
+    default: Date.now,
+  },
+  dateReturned: {
+    type: Date,
+  },
+  rentalFee: {
+    type: Number,
+    min: 0,
+  },
+});
+
+export const Rental = model("Rental", rentalSchema);
 
 export const validateRental = (rental: CustomerRental) => {
   const schema = Joi.object({
