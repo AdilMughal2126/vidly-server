@@ -1,7 +1,3 @@
-import mongoose from "mongoose";
-import { Genre } from "./models/genre";
-import { Movie } from "./models/movie";
-
 const data = [
   {
     name: "Comedy",
@@ -37,24 +33,23 @@ const data = [
   },
 ];
 
-async function seed() {
-  await mongoose.connect("mongodb://localhost:27017/vidly");
+module.exports = {
+  async up(db, client) {
+    for (const genre of data) {
+      const { _id: genreId } = await db
+        .collection("genres")
+        .insertOne({ name: genre.name });
+      const movies = genre.movies.map((movie) => ({
+        ...movie,
+        genre: { _id: genreId.toHexString(), name: genre.name },
+      }));
+      await Movie.insertMany(movies);
+    }
+  },
 
-  await Movie.deleteMany({});
-  await Genre.deleteMany({});
-
-  for (const genre of data) {
-    const { _id: genreId } = await new Genre({ name: genre.name }).save();
-    const movies = genre.movies.map((movie) => ({
-      ...movie,
-      genre: { _id: genreId.toHexString(), name: genre.name },
-    }));
-    await Movie.insertMany(movies);
-  }
-
-  await mongoose.disconnect();
-
-  console.info("Done!");
-}
-
-void seed();
+  async down(db, client) {
+    // TODO write the statements to rollback your migration (if possible)
+    // Example:
+    // await db.collection('albums').updateOne({artist: 'The Beatles'}, {$set: {blacklisted: false}});
+  },
+};

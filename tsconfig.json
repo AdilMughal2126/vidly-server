@@ -5,6 +5,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    // "checkJs": true,
     "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
