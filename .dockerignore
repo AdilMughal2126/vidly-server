@@ -1,0 +1,15 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# misc
+.env
+
+# log files
+logfile.log
+exceptions.log
+
+# snyk cache
+.dccache

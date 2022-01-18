@@ -1,5 +1,5 @@
 import { createLogger, format, transports } from "winston";
-// import "winston-mongodb";
+import "winston-mongodb";
 
 export const logger = createLogger({
   format: format.combine(
@@ -22,12 +22,12 @@ export const logger = createLogger({
       level: "error",
       filename: "logfile.log",
     }),
-    // new transports.MongoDB({
-    //   level: "error",
-    //   db: "mongodb://localhost/vidly-backend",
-    //   storeHost: true,
-    //   tryReconnect: true,
-    // }),
+    new transports.MongoDB({
+      level: "error",
+      db: "mongodb://localhost/vidly-backend",
+      storeHost: true,
+      tryReconnect: true,
+    }),
   ],
   exceptionHandlers: [
     new transports.File({
