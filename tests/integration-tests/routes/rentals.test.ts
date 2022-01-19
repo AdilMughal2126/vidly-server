@@ -126,8 +126,8 @@ describe("ROUTE /api/rentals", () => {
     beforeEach(async () => {
       const customer = await Customer.create(customer1);
       const movie = await Movie.create(movie1);
-      movieId = movie._id as string;
-      customerId = customer._id as string;
+      movieId = movie._id.toHexString();
+      customerId = customer._id.toHexString();
       token = generateAuthToken(new User());
     });
 

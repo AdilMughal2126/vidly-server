@@ -1,7 +1,7 @@
 import express from "express";
-import { handleReturnedMovie, validateReturn } from "../controllers/returns";
 import { requireAuth } from "../middleware/auth";
 import { validateRequest } from "../middleware/validateRequest";
+import { handleReturnedMovie, validateReturn } from "../controllers/returns";
 
 const router = express.Router();
 router.post(

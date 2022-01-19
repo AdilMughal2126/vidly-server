@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import supertest from "supertest";
 import mongoose from "mongoose";
@@ -67,7 +68,7 @@ describe("Route /api/users", () => {
   describe("GET /:id", () => {
     let id: string;
     let user: mongoose.Document<unknown, unknown, UserType> & {
-      _id: mongoose.Types.ObjectId;
+      _id: mongoose.Types.ObjectId | undefined;
     };
 
     beforeEach(async () => {
@@ -76,7 +77,7 @@ describe("Route /api/users", () => {
         email: "takanome@gmail.com",
         hash: "takanome",
       });
-      id = user._id.toHexString();
+      id = user._id!.toHexString();
     });
 
     const exec = () => request.get(`/api/users/${id}`);
@@ -104,7 +105,9 @@ describe("Route /api/users", () => {
 
   describe("POST - PUT - DELETE", () => {
     let id: string;
-    let newUser: UserType;
+    let newUser: mongoose.Document<unknown, unknown, UserType> & {
+      _id: mongoose.Types.ObjectId | undefined;
+    };
 
     beforeEach(async () => {
       newUser = await User.create({
@@ -113,7 +116,7 @@ describe("Route /api/users", () => {
         hash: "takanome",
         isAdmin: true,
       });
-      id = newUser._id as string;
+      id = newUser._id!.toHexString();
     });
 
     describe("POST /", () => {
@@ -161,7 +164,7 @@ describe("Route /api/users", () => {
       let user: UserType;
 
       beforeEach(() => {
-        token = generateAuthToken(newUser);
+        token = generateAuthToken(new User(newUser));
       });
 
       describe("PUT /:id", () => {
@@ -250,6 +253,7 @@ describe("Route /api/users", () => {
         it("should return the deleted user if valid", async () => {
           const res = await exec();
           expect(res.status).toBe(200);
+          console.log(res.body);
           expect(res.body).toHaveProperty("isAdmin", true);
           expect(res.body).toHaveProperty("hash", "takanome");
         });

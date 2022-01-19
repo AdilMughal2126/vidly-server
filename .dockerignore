@@ -5,11 +5,11 @@
 /coverage
 
 # misc
-.env
+# .env
 
 # log files
-logfile.log
-exceptions.log
+# logfile.log
+# exceptions.log
 
 # snyk cache
 .dccache

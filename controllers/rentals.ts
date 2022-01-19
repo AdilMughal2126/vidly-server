@@ -38,12 +38,12 @@ export const handleCreateRental = async (
     await session.withTransaction(async () => {
       const rental = await Rental.create({
         customer: {
-          _id: customer._id as string,
+          _id: customer._id.toHexString(),
           name: customer.name,
           phone: customer.phone,
         },
         movie: {
-          _id: movie._id as string,
+          _id: movie._id.toHexString(),
           title: movie.title,
           dailyRentalRate: movie.dailyRentalRate,
         },

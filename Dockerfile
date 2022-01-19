@@ -6,12 +6,12 @@ USER app
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 
-RUN pnpm install
+RUN npm install
 
 COPY . .
 
 EXPOSE 3001
 
-CMD [ "pnpm", "start" ]
+CMD [ "npm", "start" ]

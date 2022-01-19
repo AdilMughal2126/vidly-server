@@ -27,7 +27,7 @@ export const handleCreateMovie = asyncMiddleware(
     if (!genre) return res.status(404).json("Genre Not Found");
     const movie = await Movie.create({
       title,
-      genre: { _id: genre._id as string, name: genre.name },
+      genre: { _id: genre._id.toHexString(), name: genre.name },
       numberInStock,
       dailyRentalRate,
     });
@@ -44,7 +44,7 @@ export const handleUpdateMovie = asyncMiddleware(
       req.params.id,
       {
         title,
-        genre: { _id: genre._id as string, name: genre.name },
+        genre: { _id: genre._id.toHexString(), name: genre.name },
         numberInStock,
         dailyRentalRate,
       },

@@ -161,7 +161,7 @@ describe("Route /api/customers", () => {
       };
 
       const newCustomer = await Customer.create(customer);
-      id = newCustomer._id as string;
+      id = newCustomer._id.toHexString();
     });
 
     describe("PUT /:id", () => {

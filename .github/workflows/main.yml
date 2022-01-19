@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.26.1
+          version: 6.27.1
           run_install: true
       # - run: pnpm test
 

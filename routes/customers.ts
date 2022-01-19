@@ -7,8 +7,8 @@ import {
   handleUpdateCustomer,
 } from "../controllers/customers";
 import { validateCustomer } from "../models/customer";
-import { requireAdmin, requireAuth } from "../middleware/auth";
 import { validateId } from "../middleware/validateObjectId";
+import { requireAdmin, requireAuth } from "../middleware/auth";
 import { validateRequest } from "../middleware/validateRequest";
 
 const router = express.Router();

@@ -21,6 +21,7 @@ export const handleGetUser = asyncMiddleware(
   }
 );
 
+// TODO: Get rid of lodash method
 export const handleCreateUser = asyncMiddleware(
   async (req: Request<unknown, unknown, UserType>, res: Response) => {
     const { name, email } = req.body;

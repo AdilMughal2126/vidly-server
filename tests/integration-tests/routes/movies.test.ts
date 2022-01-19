@@ -89,7 +89,7 @@ describe("Route /api/movies", () => {
         dailyRentalRate: 2.5,
       };
       const insertedMovie = await Movie.create(movie);
-      id = insertedMovie._id as string;
+      id = insertedMovie._id.toHexString();
     });
     const exec = () => request.get(`/api/movies/${id}`);
 
@@ -122,7 +122,7 @@ describe("Route /api/movies", () => {
       const genre = await Genre.create({ name: "NewGenre" });
       movie = {
         title: "Merlin",
-        genreId: genre._id as string,
+        genreId: genre._id.toHexString(),
         numberInStock: 2,
         dailyRentalRate: 2.5,
       };
@@ -192,7 +192,7 @@ describe("Route /api/movies", () => {
       const user = new User();
       token = generateAuthToken(user);
       const newMovie = await Movie.create(movie);
-      id = newMovie._id as string;
+      id = newMovie._id.toHexString();
     });
     afterEach(async () => await Genre.deleteMany({}));
 
