@@ -1,6 +1,9 @@
-import express from "express";
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
+import cors, { CorsOptions } from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
+import express from "express";
 import compression from "compression";
 
 import { connectDB } from "./db/db";
@@ -19,7 +22,22 @@ export const app = express();
 dotenv.config();
 void connectDB();
 
+const allowList = [process.env.LOCAL_CORS];
+
+const corsOptions: CorsOptions = {
+  origin: (origin, callback) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    const isAllowList = allowList.indexOf(origin) !== -1;
+    if (isAllowList) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
 app.use(helmet());
+app.use(cors(corsOptions));
 app.use(compression());
 app.use(express.json());
 app.use("/api/movies", movies);

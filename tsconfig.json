@@ -12,8 +12,8 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noImplicitThis": true,
+    "noImplicitThis": true
     // "noUnusedParameters": true,
-    "skipLibCheck": true
+    // "skipLibCheck": true
   }
 }
