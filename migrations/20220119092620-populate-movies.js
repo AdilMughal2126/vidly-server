@@ -36,20 +36,19 @@ const data = [
 module.exports = {
   async up(db, client) {
     for (const genre of data) {
-      const { _id: genreId } = await db
-        .collection("genres")
-        .insertOne({ name: genre.name });
+      const { insertedId: genreId } = await db.collection("genres").insertOne({
+        name: genre.name,
+      });
       const movies = genre.movies.map((movie) => ({
         ...movie,
-        genre: { _id: genreId.toHexString(), name: genre.name },
+        genre: { _id: genreId, name: genre.name },
       }));
-      await Movie.insertMany(movies);
+      await db.collection("movies").insertMany(movies);
     }
   },
 
   async down(db, client) {
-    // TODO write the statements to rollback your migration (if possible)
-    // Example:
-    // await db.collection('albums').updateOne({artist: 'The Beatles'}, {$set: {blacklisted: false}});
+    await db.collection("genres").deleteMany({});
+    await db.collection("movies").deleteMany({});
   },
 };
