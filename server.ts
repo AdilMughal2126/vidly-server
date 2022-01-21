@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-
-import cors, { CorsOptions } from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import express from "express";
 import compression from "compression";
+import cors, { CorsOptions } from "cors";
 
 import { connectDB } from "./db/db";
 import { auth } from "./routes/auth";

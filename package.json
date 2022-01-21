@@ -8,8 +8,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "node server --trace-warnings",
-    "dev": "nodemon server --trace-warnings",
+    "start": "node server.ts",
+    "dev": "nodemon server.ts",
     "db:up": "migrate-mongo up",
     "test": "jest --verbose --detectOpenHandles --coverage",
     "seed": "node seed.ts",
