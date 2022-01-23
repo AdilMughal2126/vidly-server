@@ -33,6 +33,7 @@ const corsOptions: CorsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  allowedHeaders: ["Content-Type", "Content-Length", "sentry-trace"],
 };
 
 app.use(helmet());

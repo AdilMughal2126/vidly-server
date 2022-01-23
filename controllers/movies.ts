@@ -57,8 +57,6 @@ export const handleUpdateMovie = asyncMiddleware(
 
 export const handleDeleteMovie = asyncMiddleware(
   async (req: Request, res: Response) => {
-    // throw new Error("Oops! failure");
-    // return res.status(404).json("Handle Delete Movie");
     const movie = await Movie.findByIdAndRemove(req.params.id);
     if (!movie) return res.status(404).json("Movie Not Found");
     return res.json(movie);
