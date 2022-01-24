@@ -12,6 +12,8 @@ describe("Auth Helper", () => {
     it("should return a valid token", () => {
       const payload = {
         _id: new mongoose.Types.ObjectId(),
+        name: "User1",
+        email: "user1@gmail.com",
         isAdmin: true,
       };
       const user = new User(payload);

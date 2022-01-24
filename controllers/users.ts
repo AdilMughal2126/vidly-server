@@ -32,6 +32,7 @@ export const handleCreateUser = asyncMiddleware(
     const token = generateAuthToken(user);
     return res
       .header("X-Auth-Token", token)
+      .header("Access-Control-Expose-Headers", "X-Auth-Token")
       .json(_.pick(user, ["_id", "name", "email"]));
   }
 );

@@ -7,11 +7,16 @@ import { UserType } from "../types/UserType";
  * ! load dotenv for test case
  */
 // import dotenv from "dotenv";
-//   dotenv.config();
+// dotenv.config();
 
 export const generateAuthToken = (user: UserType) => {
   const token = jwt.sign(
-    { _id: user._id, isAdmin: user.isAdmin },
+    {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    },
     process.env.JWT_PRIVATE_KEY as string
   );
   return token;

@@ -7,7 +7,7 @@ import { GenreType } from "../../../types/GenreType";
 import { generateAuthToken } from "../../../helpers/auth";
 
 const request = supertest(app);
-const user = new User();
+const user = new User({ name: "User1", email: "user1@gmail.com" });
 
 /**
  * @route any route who require auth
