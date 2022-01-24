@@ -21,7 +21,7 @@ export const app = express();
 dotenv.config();
 void connectDB();
 
-const allowList = [process.env.LOCAL_CORS];
+const allowList = [process.env.DEV_ENDPOINT];
 
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
@@ -52,7 +52,7 @@ app.use(errorHandler);
 if (process.env.NODE_ENV !== "test") {
   app.listen(process.env.PORT, () =>
     logger.info(
-      `Server is listenning in ${process.env.NODE_ENV as string} mode on port ${
+      `Server is listening in ${process.env.NODE_ENV as string} mode on port ${
         process.env.PORT as string
       }`
     )

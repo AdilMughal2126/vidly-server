@@ -8,7 +8,7 @@ import {
 } from "../controllers/movies";
 import { validateMovie } from "../models/movie";
 import { validateId } from "../middleware/validateObjectId";
-import { requireAuth } from "../middleware/auth";
+// import { requireAuth } from "../middleware/auth";
 // import { requireAdmin, requireAuth } from "../middleware/auth";
 import { validateRequest } from "../middleware/validateRequest";
 
@@ -21,9 +21,14 @@ router.post("/", [validateRequest(validateMovie)], handleCreateMovie);
 //   [requireAuth, validateRequest(validateMovie)],
 //   handleCreateMovie
 // );
+// router.put(
+//   "/:id",
+//   [validateId, requireAuth, validateRequest(validateMovie)],
+//   handleUpdateMovie
+// );
 router.put(
   "/:id",
-  [validateId, requireAuth, validateRequest(validateMovie)],
+  [validateId, validateRequest(validateMovie)],
   handleUpdateMovie
 );
 router.delete("/:id", [validateId], handleDeleteMovie);

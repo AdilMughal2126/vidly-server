@@ -6,8 +6,8 @@ import { UserType } from "../types/UserType";
 /**
  * ! load dotenv for test case
  */
-// dotenv.config();
 // import dotenv from "dotenv";
+//   dotenv.config();
 
 export const generateAuthToken = (user: UserType) => {
   const token = jwt.sign(
