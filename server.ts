@@ -23,7 +23,7 @@ void connectDB();
 
 const allowList = [process.env.DEV_ENDPOINT];
 
-const corsOptions: CorsOptions = {
+export const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const isAllowList = allowList.indexOf(origin) !== -1;
