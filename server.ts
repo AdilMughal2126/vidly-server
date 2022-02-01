@@ -12,7 +12,7 @@ import { movies } from "./routes/movies";
 import { genres } from "./routes/genres";
 import { logger } from "./helpers/logger";
 import { rentals } from "./routes/rentals";
-import { returns } from "./routes/returns";
+// import { returns } from "./routes/returns";
 import { customers } from "./routes/customers";
 import { errorHandler } from "./middleware/error";
 
@@ -24,21 +24,21 @@ void connectDB();
 const allowList = [process.env.DEV_ENDPOINT];
 
 export const corsOptions: CorsOptions = {
-  origin: (origin, callback) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const isAllowList = allowList.indexOf(origin) !== -1;
-    if (isAllowList) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  allowedHeaders: [
-    "Content-Type",
-    "Content-Length",
-    "sentry-trace",
-    "X-Auth-Token",
-  ],
+	origin: (origin, callback) => {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+		const isAllowList = allowList.indexOf(origin) !== -1;
+		if (isAllowList) {
+			callback(null, true);
+		} else {
+			callback(new Error("Not allowed by CORS"));
+		}
+	},
+	allowedHeaders: [
+		"Content-Type",
+		"Content-Length",
+		"sentry-trace",
+		"X-Auth-Token",
+	],
 };
 
 app.use(helmet());
@@ -49,17 +49,17 @@ app.use("/api/movies", movies);
 app.use("/api/genres", genres);
 app.use("/api/customers", customers);
 app.use("/api/rentals", rentals);
-app.use("/api/returns", returns);
+// app.use("/api/returns", returns);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use(errorHandler);
 
 if (process.env.NODE_ENV !== "test") {
-  app.listen(process.env.PORT, () =>
-    logger.info(
-      `Server is listening in ${process.env.NODE_ENV as string} mode on port ${
-        process.env.PORT as string
-      }`
-    )
-  );
+	app.listen(process.env.PORT, () =>
+		logger.info(
+			`Server is listening in ${process.env.NODE_ENV as string} mode on port ${
+				process.env.PORT as string
+			}`
+		)
+	);
 }
