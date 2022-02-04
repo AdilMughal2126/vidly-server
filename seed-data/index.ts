@@ -1,20 +1,21 @@
 import { connectDB } from "../db/db";
 import { Genre } from "../models/genre";
-import { movies } from "./data";
+import { Movie } from "../models/movie";
+import { movies, genres } from "./data";
 
 void connectDB();
 
 const insertSeedData = async () => {
-	console.log(`🌱 Inserting Seed Data: ${movies.length} Movies`);
+	console.log(`🌱 Inserting Seed Data: ${genres.length} Genres`);
+	await Genre.insertMany(genres);
 
+	console.log(`🌱 Inserting Seed Data: ${movies.length} Movies`);
 	for (const movie of movies) {
-		// console.log(`  🛍️ Adding Movie: ${movie.genres}`);
-		const genres = movie.genres.filter(
-			async (g) => g !== (await Genre.findOne(g))
-		);
-		const insertedGenres = await Genre.insertMany(genres);
-		console.log({ insertedGenres });
+		console.log(` 🎥 Adding Movie: ${movie.title}`);
+		await Movie.insertMany(movie);
 	}
+
+	console.log(`✅ Seed Data Inserted: ${genres.length} Movies`);
 	console.log(`✅ Seed Data Inserted: ${movies.length} Movies`);
 	process.exit();
 };
