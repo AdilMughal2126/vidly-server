@@ -1,3 +1,6 @@
+import mongoose from "mongoose";
+
 export type GenreType = {
-  name: string;
+	_id?: mongoose.Types.ObjectId;
+	name: string;
 };

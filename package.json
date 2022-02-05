@@ -11,7 +11,7 @@
 		"start": "node server.ts",
 		"dev": "nodemon server.ts",
 		"db:up": "migrate-mongo up",
-		"test": "jest --verbose --detectOpenHandles --coverage",
+		"test": "jest --verbose --coverage",
 		"seed": "nodemon ./seed-data/index.ts",
 		"lint": "eslint . --ext .ts"
 	},

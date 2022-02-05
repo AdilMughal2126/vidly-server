@@ -1,4 +1,5 @@
 export type CustomerRental = {
-  customerId: string;
-  movieId: string;
+	dateOut: Date;
+	dateReturned: Date;
+	movieId: string;
 };

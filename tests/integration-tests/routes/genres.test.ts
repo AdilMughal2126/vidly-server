@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import mongoose from "mongoose";
 import supertest from "supertest";
-import { app } from "../../../server";
-import { User } from "../../../models/user";
-import { Genre } from "../../../models/genre";
-import { GenreType } from "../../../types/GenreType";
 import { generateAuthToken } from "../../../helpers/auth";
+import { Genre } from "../../../models/genre";
+import { User } from "../../../models/user";
+import { app } from "../../../server";
+import { GenreType } from "../../../types/GenreType";
 
 const request = supertest(app);
 const user = new User();
@@ -67,11 +67,11 @@ describe("Route /api/genres", () => {
 	describe("GET /:id", () => {
 		let id: string;
 		let genre: mongoose.Document<unknown, unknown, GenreType> &
-			GenreType & { _id: mongoose.Types.ObjectId };
+			GenreType & { _id: mongoose.Types.ObjectId | undefined };
 
 		beforeEach(async () => {
 			genre = await Genre.create({ name: "Genre3" });
-			id = genre._id.toHexString();
+			id = genre._id!.toHexString();
 		});
 
 		const exec = () => request.get(`/api/genres/${id}`);
@@ -116,11 +116,11 @@ describe("Route /api/genres", () => {
 			expect(res.body).toMatch(/access denied/i);
 		});
 
-		it("should return 400 if genre.name is less than 5 characters", async () => {
-			name = "Genr";
+		it("should return 400 if genre.name is less than 3 characters", async () => {
+			name = "Ge";
 			const res = await exec();
 			expect(res.status).toBe(400);
-			expect(res.body).toMatch(/must be at least 5/i);
+			expect(res.body).toMatch(/must be at least 3/i);
 		});
 
 		it("should return 400 if genre.name is greater than 50 characters", async () => {
@@ -148,12 +148,12 @@ describe("Route /api/genres", () => {
 		let id: string;
 		let name: string;
 		let genre: mongoose.Document<unknown, unknown, GenreType> &
-			GenreType & { _id: mongoose.Types.ObjectId };
+			GenreType & { _id: mongoose.Types.ObjectId | undefined };
 
 		beforeEach(async () => {
 			token = generateAuthToken(user);
 			genre = await Genre.create({ name: "Genre5" });
-			id = genre._id.toHexString();
+			id = genre._id!.toHexString();
 		});
 
 		describe("PUT /:id", () => {
@@ -177,11 +177,11 @@ describe("Route /api/genres", () => {
 				expect(res.body).toMatch(/access denied/i);
 			});
 
-			it("should return 400 if genre.name is less than 5 characters", async () => {
-				name = "Genr";
+			it("should return 400 if genre.name is less than 3 characters", async () => {
+				name = "Ge";
 				const res = await exec();
 				expect(res.status).toBe(400);
-				expect(res.body).toMatch(/must be at least 5/i);
+				expect(res.body).toMatch(/must be at least 3/i);
 			});
 
 			it("should return 400 if genre.name is greater than 50 characters", async () => {
