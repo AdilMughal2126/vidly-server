@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import dotenv from "dotenv";
-import helmet from "helmet";
-import express from "express";
 import compression from "compression";
+import dotenv from "dotenv";
+import express from "express";
+import helmet from "helmet";
 // import cors, { CorsOptions } from "cors";
-
 import { connectDB } from "./db/db";
-import { auth } from "./routes/auth";
-import { users } from "./routes/users";
-import { movies } from "./routes/movies";
-import { genres } from "./routes/genres";
 import { logger } from "./helpers/logger";
-import { rentals } from "./routes/rentals";
-// import { returns } from "./routes/returns";
-import { customers } from "./routes/customers";
 import { errorHandler } from "./middleware/error";
+import { auth } from "./routes/auth";
+import { customers } from "./routes/customers";
+import { genres } from "./routes/genres";
+import { movies } from "./routes/movies";
+import { rentals } from "./routes/rentals";
+import { users } from "./routes/users";
 
 export const app = express();
 
@@ -50,7 +48,6 @@ app.use("/api/movies", movies);
 app.use("/api/genres", genres);
 app.use("/api/customers", customers);
 app.use("/api/rentals", rentals);
-// app.use("/api/returns", returns);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use(errorHandler);
