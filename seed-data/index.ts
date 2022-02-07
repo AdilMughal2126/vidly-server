@@ -1,9 +1,13 @@
 import { connectDB } from "../db/db";
 import { Genre } from "../models/genre";
 import { Movie } from "../models/movie";
-import { movies, genres } from "./data";
+import { genres, movies } from "./data";
 
 void connectDB();
+
+/**
+ * @todo: insert genres before and update genreId in movies data
+ */
 
 const insertSeedData = async () => {
 	console.log(`🌱 Inserting Seed Data: ${genres.length} Genres`);
