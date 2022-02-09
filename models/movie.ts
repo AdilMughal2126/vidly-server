@@ -1,11 +1,15 @@
 import Joi from "joi";
 import { model, Schema } from "mongoose";
-import { genreSchema } from "./genre";
 import { MovieType } from "../types/MovieType";
+import { genreSchema } from "./genre";
 
 export const Movie = model(
 	"Movie",
 	new Schema<MovieType>({
+		genres: {
+			type: [genreSchema],
+			required: true,
+		},
 		title: {
 			type: String,
 			required: true,
@@ -16,11 +20,13 @@ export const Movie = model(
 		overview: {
 			type: String,
 		},
-		genres: {
-			type: [genreSchema],
-			required: true,
-		},
 		category: {
+			type: String,
+		},
+		url: {
+			type: String,
+		},
+		dateRelease: {
 			type: String,
 		},
 		numberInStock: {

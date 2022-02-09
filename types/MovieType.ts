@@ -1,9 +1,11 @@
 import { GenreType } from "./GenreType";
 
 export type MovieType = {
+	genres: GenreType[];
 	title: string;
 	overview: string;
-	genres: GenreType[];
+	dateRelease: string;
+	url: string;
 	genreId?: string;
 	numberInStock: number;
 	dailyRentalRate: number;

@@ -8,7 +8,8 @@ export const movies = [
 		title: "Spider-Man: No Way Home",
 		overview:
 			"Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
-		date: "2021-12-15",
+		dateRelease: "2021-12-15",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1643970505/vidly/spider-man_no-way-home_s60wqy.jpg",
 		voteAverage: 8.4,
 		dailyRentalRate: 3.4,
 		numberInStock: 5,
@@ -24,7 +25,8 @@ export const movies = [
 		title: "Eternals",
 		overview:
 			"The Eternals are a team of ancient aliens who have been living on Earth in secret for thousands of years. When an unexpected tragedy forces them out of the shadows, they are forced to reunite against mankind’s most ancient enemy, the Deviants.",
-		date: "2021-11-03",
+		dateRelease: "2021-11-03",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1643970520/vidly/eternals_td1jjf.jpg",
 		voteAverage: 7.2,
 		dailyRentalRate: 2.4,
 		numberInStock: 5,
@@ -39,7 +41,8 @@ export const movies = [
 		title: "Ghostbusters: Afterlife",
 		overview:
 			"When a single mom and her two kids arrive in a small town, they begin to discover their connection to the original Ghostbusters and the secret legacy their grandfather left behind.",
-		date: "2021-11-11",
+		dateRelease: "2021-11-11",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400039/vidly/ghostbusters-afterlife_sn2wfn.jpg",
 		voteAverage: 7.7,
 		dailyRentalRate: 2.6,
 		numberInStock: 5,
@@ -53,7 +56,8 @@ export const movies = [
 		title: "Last Man Down",
 		overview:
 			"After civilization succumbs to a deadly pandemic and his wife is murdered, a special forces soldier abandons his duty and becomes a hermit in the Nordic wilderness. Years later, a wounded woman appears on his doorstep. She's escaped from a lab and her pursuers believe her blood is the key to a worldwide cure. He's hesitant to get involved, but all doubts are cast aside when he discovers her pursuer is none other than Commander Stone, the man that murdered his wife some years ago.",
-		date: "2021-10-19",
+		dateRelease: "2021-10-19",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400096/vidly/last-man-down_hlz3uk.jpg",
 		voteAverage: 6.6,
 		dailyRentalRate: 1.5,
 		numberInStock: 5,
@@ -68,7 +72,8 @@ export const movies = [
 		title: "The Matrix Resurrections",
 		overview:
 			"Plagued by strange memories, Neo's life takes an unexpected turn when he finds himself back inside the Matrix.",
-		date: "2021-12-16",
+		dateRelease: "2021-12-16",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400146/vidly/matrix-resurrections_ckezjt.jpg",
 		voteAverage: 6.8,
 		dailyRentalRate: 1.8,
 		numberInStock: 5,
@@ -79,7 +84,8 @@ export const movies = [
 		title: "One Shot",
 		overview:
 			"An elite squad of Navy SEALs, on a covert mission to transport a prisoner off a CIA black site island prison, are trapped when insurgents attack while trying to rescue the same prisoner.",
-		date: "2021-11-05",
+		dateRelease: "2021-11-05",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400197/vidly/one-shot_jy8rru.jpg",
 		voteAverage: 6.8,
 		dailyRentalRate: 1.8,
 		numberInStock: 5,
@@ -94,7 +100,8 @@ export const movies = [
 		title: "Resident Evil: Welcome to Raccoon City",
 		overview:
 			"Once the booming home of pharmaceutical giant Umbrella Corporation, Raccoon City is now a dying Midwestern town. The company’s exodus left the city a wasteland…with great evil brewing below the surface. When that evil is unleashed, the townspeople are forever…changed…and a small group of survivors must work together to uncover the truth behind Umbrella and make it through the night.",
-		date: "2021-11-24",
+		dateRelease: "2021-11-24",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400260/vidly/resident-evil_qzwst3.jpg",
 		voteAverage: 6.1,
 		dailyRentalRate: 1.6,
 		numberInStock: 5,
@@ -105,10 +112,10 @@ export const movies = [
 		title: "The Jack in the Box: Awakening",
 		overview:
 			"When a vintage Jack-in-the-box is opened by a dying woman, she enters into a deal with the demon within that would see her illness cured in return for helping it claim six innocent victims.",
-		date: "2022-01-03",
+		dateRelease: "2022-01-03",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400356/vidly/the-jack-in-the-box_yfeho5.jpg",
 		voteAverage: 5.8,
 		dailyRentalRate: 1,
-
 		numberInStock: 5,
 		category: "popular",
 	},
@@ -121,7 +128,8 @@ export const movies = [
 		title: "Venom: Let There Be Carnage",
 		overview:
 			"After finding a host body in investigative reporter Eddie Brock, the alien symbiote must face a new enemy, Carnage, the alter ego of serial killer Cletus Kasady.",
-		date: "2021-09-30",
+		dateRelease: "2021-09-30",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400434/vidly/venom-let-there-be-carnage_o5mbk6.jpg",
 		voteAverage: 7.1,
 		dailyRentalRate: 2.3,
 		numberInStock: 5,
@@ -137,7 +145,8 @@ export const movies = [
 		title: "Red Notice",
 		overview:
 			"An Interpol-issued Red Notice is a global alert to hunt and capture the world's most wanted. But when a daring heist brings together the FBI's top profiler and two rival criminals, there's no telling what will happen.",
-		date: "2021-11-04",
+		dateRelease: "2021-11-04",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400516/vidly/red-notice_llelnp.jpg",
 		voteAverage: 6.8,
 		dailyRentalRate: 1.8,
 		numberInStock: 5,
@@ -152,7 +161,8 @@ export const movies = [
 		title: "Brazen",
 		overview:
 			"Mystery writer Grace Miller has killer instincts when it comes to motive - and she'll need every bit of expertise to help solve her sister's murder.",
-		date: "2022-01-13",
+		dateRelease: "2022-01-13",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400554/vidly/brazen_yeqzu0.jpg",
 		voteAverage: 4.8,
 		dailyRentalRate: 0.8,
 		numberInStock: 5,
@@ -167,7 +177,8 @@ export const movies = [
 		title: "Shang-Chi and the Legend of the Ten Rings",
 		overview:
 			"Shang-Chi must confront the past he thought he left behind when he is drawn into the web of the mysterious Ten Rings organization.",
-		date: "2021-09-01",
+		dateRelease: "2021-09-01",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400613/vidly/shang-chi-and-the-legend-of-the-ten-rings_rebsqq.jpg",
 		voteAverage: 7.8,
 		dailyRentalRate: 2.6,
 		numberInStock: 5,
@@ -181,7 +192,8 @@ export const movies = [
 		title: "Mother/Android",
 		overview:
 			"Georgia and her boyfriend Sam go on a treacherous journey to escape their country, which is caught in an unexpected war with artificial intelligence. Days away from the arrival of their first child, the couple must face No Man’s Land—a stronghold of the android uprising—in hopes of reaching safety before giving birth.",
-		date: "2021-12-17",
+		dateRelease: "2021-12-17",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400663/vidly/mother-android_wd9pm0.jpg",
 		voteAverage: 5.8,
 		dailyRentalRate: 1,
 
@@ -196,7 +208,8 @@ export const movies = [
 		title: "Dangerous",
 		overview:
 			"A reformed sociopath heads to a remote island after the death of his brother. Soon after his arrival, the island falls under siege from a deadly gang of mercenaries, and when he discovers their role in his brother’s demise, he sets out on a relentless quest for vengeance.",
-		date: "2021-11-05",
+		dateRelease: "2021-11-05",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400698/vidly/dangerous_by81nx.jpg",
 		voteAverage: 6.5,
 		dailyRentalRate: 1.2,
 		numberInStock: 5,
@@ -212,10 +225,10 @@ export const movies = [
 		title: "American Siege",
 		overview:
 			"An ex-NYPD officer-turned-sheriff of a small rural Georgia town has to contend with a gang of thieves who have taken a wealthy doctor hostage.",
-		date: "2022-01-07",
+		dateRelease: "2022-01-07",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400729/vidly/american-siege_tde3a2.jpg",
 		voteAverage: 5.6,
 		dailyRentalRate: 1,
-
 		numberInStock: 5,
 		category: "popular",
 	},
@@ -224,7 +237,8 @@ export const movies = [
 		title: "The Fallout",
 		overview:
 			"In the wake of a school tragedy, Vada, Mia and Quinton form a unique and dynamic bond as they navigate the never linear, often confusing journey to heal in a world that feels forever changed.",
-		date: "2022-01-28",
+		dateRelease: "2022-01-28",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400790/vidly/the-fallout_elpwgm.jpg",
 		voteAverage: 7.7,
 		dailyRentalRate: 2.5,
 		numberInStock: 5,
@@ -240,7 +254,8 @@ export const movies = [
 		title: "The House",
 		overview:
 			"Across different eras, a poor family, an anxious developer and a fed-up landlady become tied to the same mysterious house in this animated dark comedy.",
-		date: "2022-01-14",
+		dateRelease: "2022-01-14",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400903/vidly/the-house_hyipfb.jpg",
 		voteAverage: 7.1,
 		dailyRentalRate: 2.2,
 		numberInStock: 5,
@@ -255,7 +270,8 @@ export const movies = [
 		title: "Chernobyl: Abyss",
 		overview:
 			"The aftermath of a shocking explosion at the Chernobyl nuclear power station made hundreds of people sacrifice their lives to clean up the site of the catastrophe and to successfully prevent an even bigger disaster that could have turned a large part of the European continent into an uninhabitable exclusion zone. This is their story.",
-		date: "2021-04-15",
+		dateRelease: "2021-04-15",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400937/vidly/chernobyl_fzfhum.jpg",
 		voteAverage: 6.3,
 		dailyRentalRate: 1.3,
 		numberInStock: 5,
@@ -269,7 +285,8 @@ export const movies = [
 		title: "The Royal Treatment",
 		overview:
 			"Isabella runs her own salon and isn’t afraid to speak her mind, while Prince Thomas runs his own country and is about to marry for duty rather than love. When Izzy and her fellow stylists get the opportunity of a lifetime to do the hair for the royal wedding, she and Prince Thomas learn that taking control of their own destiny requires following their hearts.",
-		date: "2022-01-20",
+		dateRelease: "2022-01-20",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644400997/vidly/the-royal-treatment_fdayc0.jpg",
 		voteAverage: 6.8,
 		dailyRentalRate: 1.7,
 		numberInStock: 5,
@@ -284,7 +301,8 @@ export const movies = [
 		title: "Antlers",
 		overview:
 			"A small-town Oregon teacher and her brother, the local sheriff, discover a young student is harbouring a dangerous secret that could have frightening consequences.",
-		date: "2021-10-28",
+		dateRelease: "2021-10-28",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401027/vidly/antlers_meujbp.jpg",
 		voteAverage: 6.4,
 		dailyRentalRate: 1.3,
 		numberInStock: 5,
@@ -299,7 +317,8 @@ export const movies = [
 		title: "Survive the Game",
 		overview:
 			"When cop David is injured in a drug bust gone wrong, his partner Cal chases the two criminals who shot him. They all land at a remote farm owned by troubled vet Eric, and as Cal and Eric plot their defense, more of the gang arrives - along with a wounded David. Outnumbered, the three heroes must use stealth, smarts, and good shooting to take down the drug-dealing mob.",
-		date: "2021-10-08",
+		dateRelease: "2021-10-08",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401064/vidly/survive-the-game_ny7xus.jpg",
 		voteAverage: 5.8,
 		dailyRentalRate: 1.1,
 		numberInStock: 5,
@@ -314,7 +333,8 @@ export const movies = [
 		title: "Mortal Kombat",
 		overview:
 			"Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.",
-		date: "2021-04-07",
+		dateRelease: "2021-04-07",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401100/vidly/mortal-combat_qlssbk.jpg",
 		voteAverage: 7.3,
 		dailyRentalRate: 2.1,
 		numberInStock: 5,
@@ -329,7 +349,8 @@ export const movies = [
 		title: "Fortress",
 		overview:
 			"The story revolves around a top-secret resort for retired U.S. intelligence officers. A group of criminals led by Balzary breach the compound, hellbent on revenge on Robert, forcing the retired officer and his son to save the day.",
-		date: "2021-12-17",
+		dateRelease: "2021-12-17",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401160/vidly/the-fortress_yrm3ra.jpg",
 		voteAverage: 6.3,
 		dailyRentalRate: 1.3,
 		numberInStock: 5,
@@ -345,7 +366,8 @@ export const movies = [
 		title: "Free Guy",
 		overview:
 			"A bank teller called Guy realizes he is a background character in an open world video game called Free City that will soon go offline.",
-		date: "2021-08-11",
+		dateRelease: "2021-08-11",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401203/vidly/free-guy_a3m0sr.jpg",
 		voteAverage: 7.7,
 		dailyRentalRate: 2.5,
 		numberInStock: 5,
@@ -359,7 +381,8 @@ export const movies = [
 		title: "The 355",
 		overview:
 			"A group of top female agents from American, British, Chinese, Columbian and German  government agencies are drawn together to try and stop an organization from acquiring a deadly weapon to send the world into chaos.",
-		date: "2022-01-05",
+		dateRelease: "2022-01-05",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401235/vidly/the-355_yzkb84.jpg",
 		voteAverage: 6.2,
 		dailyRentalRate: 1.2,
 		numberInStock: 5,
@@ -373,7 +396,8 @@ export const movies = [
 		title: "Son",
 		overview:
 			"When a young boy contracts a mysterious illness, his mother must decide how far she will go to protect him from terrifying forces in her past.",
-		date: "2021-08-06",
+		dateRelease: "2021-08-06",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401273/vidly/son_flwvc3.jpg",
 		voteAverage: 6.0,
 		dailyRentalRate: 1.1,
 		numberInStock: 5,
@@ -387,7 +411,8 @@ export const movies = [
 		title: "Dune",
 		overview:
 			"Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence-a commodity capable of unlocking humanity's greatest potential-only those who can conquer their fear will survive.",
-		date: "2021-09-15",
+		dateRelease: "2021-09-15",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401302/vidly/dune_mb4anx.jpg",
 		voteAverage: 7.9,
 		dailyRentalRate: 2.8,
 		numberInStock: 5,
@@ -402,7 +427,8 @@ export const movies = [
 		title: "Scream",
 		overview:
 			"Twenty-five years after a streak of brutal murders shocked the quiet town of Woodsboro, a new killer has donned the Ghostface mask and begins targeting a group of teenagers to resurrect secrets from the town’s deadly past.",
-		date: "2022-01-12",
+		dateRelease: "2022-01-12",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401374/vidly/scream_cifnyb.jpg",
 		voteAverage: 7.2,
 		dailyRentalRate: 2.3,
 		numberInStock: 5,
@@ -417,7 +443,8 @@ export const movies = [
 		title: "Finch",
 		overview:
 			"On a post-apocalyptic Earth, a robot, built to protect the life of his dying creator's beloved dog, learns about life, love, friendship, and what it means to be human.",
-		date: "2021-11-04",
+		dateRelease: "2021-11-04",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401407/vidly/finch_elaegf.jpg",
 		voteAverage: 8.1,
 		dailyRentalRate: 3.1,
 		numberInStock: 5,
@@ -432,7 +459,8 @@ export const movies = [
 		title: "Nightmare Alley",
 		overview:
 			"An ambitious carnival man with a talent for manipulating people with a few well-chosen words hooks up with a female psychiatrist who is even more dangerous than he is.",
-		date: "2021-12-02",
+		dateRelease: "2021-12-02",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401471/vidly/nightmare-alley_rqoxoz.jpg",
 		voteAverage: 7.2,
 		dailyRentalRate: 2.2,
 		numberInStock: 5,
@@ -447,7 +475,8 @@ export const movies = [
 		title: "The King's Daughter",
 		overview:
 			"King Louis XIV's quest for immortality leads him to capture and steal a mermaid's life force, a move that is further complicated by his illegitimate daughter's discovery of the creature.",
-		date: "2022-01-21",
+		dateRelease: "2022-01-21",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401511/vidly/the-king-s-daughter_jqsclb.jpg",
 		voteAverage: 7.7,
 		dailyRentalRate: 2.3,
 		numberInStock: 5,
@@ -461,7 +490,8 @@ export const movies = [
 		title: "Dracula: The Original Living Vampire",
 		overview:
 			"Detective Amelia Van Helsing is on the desperate hunt for the killer responsible for a string of grisly murders targeting young women. Matters only worsen when all evidence leads to the seemingly untouchable Count Dracula. And when Van Helsing’s girlfriend vanishes, she is forced to question the very existence of monsters in a final showdown with the enigmatic count.",
-		date: "2022-01-28",
+		dateRelease: "2022-01-28",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401545/vidly/dracula_ke9oba.jpg",
 		voteAverage: 7.2,
 		dailyRentalRate: 2.1,
 		numberInStock: 5,
@@ -472,7 +502,8 @@ export const movies = [
 		title: "Chaos Walking",
 		overview:
 			"Two unlikely companions embark on a perilous adventure through the badlands of an unexplored planet as they try to escape a dangerous and disorienting reality, where all inner thoughts are seen and heard by everyone.",
-		date: "2021-02-24",
+		dateRelease: "2021-02-24",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401577/vidly/chaos-walking_xlyprh.jpg",
 		voteAverage: 6.8,
 		dailyRentalRate: 1.4,
 		numberInStock: 5,
@@ -486,7 +517,8 @@ export const movies = [
 		title: "Mystère",
 		overview:
 			'Stéphane decides to move to the beautiful mountains of Cantal in order to reconnect with his 8-year-old daughter, Victoria, who has been silent since her mother\'s disappearance. During a walk in the forest, a shepherd gives Victoria a puppy named "Mystery" who will gradually give her a taste for life. But very quickly, Stéphane discovers that the animal is in reality a wolf… Despite the warnings and the danger of this situation, he cannot bring himself to separate his daughter from this seemingly harmless ball of hair.',
-		date: "2021-12-15",
+		dateRelease: "2021-12-15",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401616/vidly/mystere_hmkh9n.jpg",
 		voteAverage: 7.4,
 		dailyRentalRate: 2.2,
 		numberInStock: 5,
@@ -500,10 +532,10 @@ export const movies = [
 		title: "Annette",
 		overview:
 			"The story of Henry, a stand-up comedian with a fierce sense of humour and Ann, a singer of international renown. In the spotlight, they are the perfect couple, healthy, happy, and glamourous. The birth of their first child, Annette, a mysterious girl with an exceptional destiny, will change their lives.",
-		date: "2021-07-06",
+		dateRelease: "2021-07-06",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401646/vidly/annette_zn2v6j.jpg",
 		voteAverage: 7.0,
 		dailyRentalRate: 2,
-
 		numberInStock: 5,
 		category: "trending",
 	},
@@ -517,7 +549,8 @@ export const movies = [
 		title: "Fast and Furious 9",
 		overview:
 			"Dominic Toretto and his crew battle the most skilled assassin and high-performance driver they've ever encountered: his forsaken brother.",
-		date: "2021-05-19",
+		dateRelease: "2021-05-19",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401680/vidly/fast-and-furious-9_axcwzp.jpg",
 		voteAverage: 7.3,
 		dailyRentalRate: 2.2,
 		numberInStock: 5,
@@ -532,7 +565,8 @@ export const movies = [
 		title: "Black Widow",
 		overview:
 			"Natasha Romanoff, also known as Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy and the broken relationships left in her wake long before she became an Avenger.",
-		date: "2021-07-07",
+		dateRelease: "2021-07-07",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401713/vidly/black-widow_sod0tm.jpg",
 		voteAverage: 7.5,
 		dailyRentalRate: 2.3,
 		numberInStock: 5,
@@ -546,7 +580,8 @@ export const movies = [
 		title: "Munich: The Edge of War",
 		overview:
 			"At the tense 1938 Munich Conference, former friends who now work for opposing governments become reluctant spies racing to expose a Nazi secret.",
-		date: "2022-01-06",
+		dateRelease: "2022-01-06",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401803/vidly/munich_myvmmi.jpg",
 		voteAverage: 6.9,
 		dailyRentalRate: 1.9,
 		numberInStock: 5,
@@ -561,7 +596,8 @@ export const movies = [
 		title: "The Amazing Spider-Man 2",
 		overview:
 			"For Peter Parker, life is busy. Between taking out the bad guys as Spider-Man and spending time with the person he loves, Gwen Stacy, high school graduation cannot come quickly enough. Peter has not forgotten about the promise he made to Gwen’s father to protect her by staying away, but that is a promise he cannot keep. Things will change for Peter when a new villain, Electro, emerges, an old friend, Harry Osborn, returns, and Peter uncovers new clues about his past.",
-		date: "2014-04-16",
+		dateRelease: "2014-04-16",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401843/vidly/the-amazing-spider-man-2_z3skvs.jpg",
 		voteAverage: 6.5,
 		dailyRentalRate: 1.3,
 		numberInStock: 5,
@@ -577,7 +613,8 @@ export const movies = [
 		title: "Deathstroke: Knights & Dragons - The Movie",
 		overview:
 			"The assassin Deathstroke tries to save his family from the wrath of H.I.V.E. and the murderous Jackal.",
-		date: "2020-08-04",
+		dateRelease: "2020-08-04",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401881/vidly/deathstroke-knights-and-dragons_tjtcyf.jpg",
 		voteAverage: 6.9,
 		dailyRentalRate: 1.9,
 		numberInStock: 5,
@@ -592,10 +629,10 @@ export const movies = [
 		title: "Avengers: Infinity War",
 		overview:
 			"As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.",
-		date: "2018-04-25",
+		dateRelease: "2018-04-25",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401917/vidly/avengers-infinity-war_b90xnh.jpg",
 		voteAverage: 8.3,
 		dailyRentalRate: 3,
-
 		numberInStock: 5,
 		category: "trending",
 	},
@@ -608,10 +645,10 @@ export const movies = [
 		title: "The Last Warrior: Root of Evil",
 		overview:
 			"Peace and tranquility have set in Belogorie. The evil was defeated and Ivan is now enjoying his well-deserved fame. He is surrounded by his family, friends and small wonders from the modern world that help him lead a comfortable life. Luckily, he has his Magic Sword to cut a gap between the worlds to get some supplies quite regularly. But when an ancient evil rises and the existence of the magic world is put to danger, Ivan has to team up with his old friends and his new rivals. They will set out on a long journey beyond the known world to find a way to defeat the enemies and to return peace to Belogorie.",
-		date: "2020-12-31",
+		dateRelease: "2020-12-31",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644401974/vidly/the-last-warrior-root-of-evil_f3dcnd.jpg",
 		voteAverage: 7.1,
 		dailyRentalRate: 2,
-
 		numberInStock: 5,
 		category: "trending",
 	},
@@ -624,7 +661,8 @@ export const movies = [
 		title: "Paranormal Activity: Next of Kin",
 		overview:
 			"Margot, a documentary filmmaker, heads to a secluded Amish community in the hopes of learning about her long-lost mother and extended family. Following a string of strange occurrences and discoveries, she comes to realize this community may not be what it seems.",
-		date: "2021-10-29",
+		dateRelease: "2021-10-29",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402031/vidly/paraanormal-activity-next-of-kin_bviesf.jpg",
 		voteAverage: 6.6,
 		dailyRentalRate: 1.5,
 		numberInStock: 5,
@@ -639,8 +677,9 @@ export const movies = [
 		],
 		title: "Jungle Cruise",
 		overview:
-			"Dr. Lily Houghton enlists the aid of wisecracking skipper Frank Wolff to take her down the Amazon in his dilapidated boat. Together, they search for an ancient tree that holds the power to heal – a discovery that will change the future of medicine.",
-		date: "2021-07-28",
+			"Dr. Lily Houghton enlists the aid of wisecracking skipper Frank Wolff to take her down the Amazon in his dilapidateReleased boat. Together, they search for an ancient tree that holds the power to heal – a discovery that will change the future of medicine.",
+		dateRelease: "2021-07-28",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402087/vidly/jungle-cruise_xbs4ja.jpg",
 		voteAverage: 7.6,
 		dailyRentalRate: 2.3,
 		numberInStock: 5,
@@ -656,7 +695,8 @@ export const movies = [
 		title: "Mobile Suit Gundam Hathaway",
 		overview:
 			"After Char's rebellion, Hathaway Noa leads an insurgency against Earth Federation, but meeting an enemy officer and a mysterious woman alters his fate.",
-		date: "2021-06-11",
+		dateRelease: "2021-06-11",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402290/vidly/kido-senshi-gundam-senko-no-hathaway_kdinfr.jpg",
 		voteAverage: 7.9,
 		dailyRentalRate: 2.4,
 		numberInStock: 5,
@@ -672,10 +712,10 @@ export const movies = [
 		title: "Zack Snyder's Justice League",
 		overview:
 			"Determined to ensure Superman's ultimate sacrifice was not in vain, Bruce Wayne aligns forces with Diana Prince with plans to recruit a team of metahumans to protect the world from an approaching threat of catastrophic proportions.",
-		date: "2021-03-18",
+		dateRelease: "2021-03-18",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402338/vidly/zack-snyder-s-justice-league_y6vae1.jpg",
 		voteAverage: 8.3,
 		dailyRentalRate: 3,
-
 		numberInStock: 5,
 		category: "trending",
 	},
@@ -684,10 +724,10 @@ export const movies = [
 		title: "Harry Potter 20th Anniversary: Return to Hogwarts",
 		overview:
 			"An enchanting making-of story told through all-new in-depth interviews and cast conversations, inviting fans on a magical first-person journey through one of the most beloved film franchises of all time.",
-		date: "2022-01-01",
+		dateRelease: "2022-01-01",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402396/vidly/harry-potter-20th_yd3mnm.jpg",
 		voteAverage: 8.3,
 		dailyRentalRate: 3,
-
 		numberInStock: 5,
 		category: "trending",
 	},
@@ -701,7 +741,8 @@ export const movies = [
 		title: "Avatar",
 		overview:
 			"In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.",
-		date: "2009-12-10",
+		dateRelease: "2009-12-10",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402432/vidly/avatar_iyymus.jpg",
 		voteAverage: 7.5,
 		dailyRentalRate: 2.3,
 		numberInStock: 5,
@@ -716,7 +757,8 @@ export const movies = [
 		title: "Godzilla vs. Kong",
 		overview:
 			"In a time when monsters walk the Earth, humanity’s fight for its future sets Godzilla and Kong on a collision course that will see the two most powerful forces of nature on the planet collide in a spectacular battle for the ages.",
-		date: "2021-03-24",
+		dateRelease: "2021-03-24",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402466/vidly/godzilla-vs-kong_sp7j4c.jpg",
 		voteAverage: 7.8,
 		dailyRentalRate: 2.7,
 		numberInStock: 5,
@@ -730,7 +772,8 @@ export const movies = [
 		title: "Snake Eyes: G.I. Joe Origins",
 		overview:
 			"After saving the life of their heir apparent, tenacious loner Snake Eyes is welcomed into an ancient Japanese clan called the Arashikage where he is taught the ways of the ninja warrior. But, when secrets from his past are revealed, Snake Eyes' honor and allegiance will be tested – even if that means losing the trust of those closest to him.",
-		date: "2021-07-22",
+		dateRelease: "2021-07-22",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402501/vidly/snake-eyes-g-i-joe-origins_tteru5.jpg",
 		voteAverage: 6.8,
 		dailyRentalRate: 1.7,
 		numberInStock: 5,
@@ -744,10 +787,10 @@ export const movies = [
 		title: "Gone Mom: The Disappearance of Jennifer Dulos",
 		overview:
 			"Jennifer Dulos, the wealthy, Connecticut mother-of-five who mysteriously vanished.",
-		date: "2021-06-05",
+		dateRelease: "2021-06-05",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402603/vidly/gone-mom_g6eatg.jpg",
 		voteAverage: 8.0,
 		dailyRentalRate: 3,
-
 		numberInStock: 5,
 		category: "trending",
 	},
@@ -756,7 +799,8 @@ export const movies = [
 		title: "The Deep House",
 		overview:
 			"While diving in a remote French lake, a couple of YouTubers who specialize in underwater exploration videos discover a house submerged in the deep waters. What was initially a unique finding soon turns into a nightmare when they discover that the house was the scene of atrocious crimes. Trapped, with their oxygen reserves falling dangerously, they realize the worst is yet to come: they are not alone in the house.",
-		date: "2021-06-30",
+		dateRelease: "2021-06-30",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402649/vidly/the-deep-house_vnwvnp.jpg",
 		voteAverage: 6.5,
 		dailyRentalRate: 1.2,
 		numberInStock: 5,
@@ -771,7 +815,8 @@ export const movies = [
 		title: "Wrath of Man",
 		overview:
 			"A cold and mysterious new security guard for a Los Angeles cash truck company surprises his co-workers when he unleashes precision skills during a heist. The crew is left wondering who he is and where he came from. Soon, the marksman's ultimate motive becomes clear as he takes dramatic and irrevocable steps to settle a score.",
-		date: "2021-04-22",
+		dateRelease: "2021-04-22",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402694/vidly/wrath-of-man_tmr16l.jpg",
 		voteAverage: 7.8,
 		dailyRentalRate: 2.6,
 		numberInStock: 5,
@@ -785,10 +830,10 @@ export const movies = [
 		title: "Zeros and Ones",
 		overview:
 			"Called to Rome to stop an imminent terrorist bombing, a soldier desperately seeks news of his imprisoned brother — a rebel with knowledge that could thwart the attack. Navigating the capital's darkened streets, he races to a series of ominous encounters to keep the Vatican from being blown to bits.",
-		date: "2021-11-18",
+		dateRelease: "2021-11-18",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402728/vidly/zeros-and-ones_l4or4o.jpg",
 		voteAverage: 5.4,
 		dailyRentalRate: 1,
-
 		numberInStock: 5,
 		category: "trending",
 	},
@@ -801,7 +846,8 @@ export const movies = [
 		title: "The Avengers",
 		overview:
 			"When an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!",
-		date: "2012-04-25",
+		dateRelease: "2012-04-25",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402769/vidly/the-avengers_qede8t.jpg",
 		voteAverage: 7.7,
 		dailyRentalRate: 2.5,
 		numberInStock: 5,
@@ -816,7 +862,8 @@ export const movies = [
 		title: "Infinite",
 		overview:
 			"Evan McCauley has skills he never learned and memories of places he has never visited. Self-medicated and on the brink of a mental breakdown, a secret group that call themselves “Infinites” come to his rescue, revealing that his memories are real.",
-		date: "2021-09-09",
+		dateRelease: "2021-09-09",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402807/vidly/infinite_pdmnco.jpg",
 		voteAverage: 6.8,
 		dailyRentalRate: 1.6,
 		numberInStock: 5,
@@ -831,7 +878,8 @@ export const movies = [
 		title: "Dynasty Warriors",
 		overview:
 			"In the turbulent late Eastern Han Dynasty. Ambitious Dong Zhuo controls the court and the commonalty, and heroes from all over the country begin to rise.",
-		date: "2021-04-27",
+		dateRelease: "2021-04-27",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402840/vidly/dynasty-warriors_kydokw.jpg",
 		voteAverage: 6.6,
 		dailyRentalRate: 1.3,
 		numberInStock: 5,
@@ -842,7 +890,8 @@ export const movies = [
 		title: "Ripper Untold",
 		overview:
 			"A detective and a medical examiner join forces to solve a series of horrific murders in Victorian London - but one of them harbors a deadly secret.",
-		date: "2021-06-28",
+		dateRelease: "2021-06-28",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402881/vidly/ripper-untold_mob1qr.jpg",
 		voteAverage: 6.7,
 		dailyRentalRate: 1.4,
 		numberInStock: 5,
@@ -853,7 +902,8 @@ export const movies = [
 		title: "Crazy Fist",
 		overview:
 			"After an opponent dies mid-match, a prominent MMA champion swore never to fight again and retired to run his family's company. But when his best friend dies under suspicious circumstances, he has no choice but to step back in the ring.",
-		date: "2021-05-06",
+		dateRelease: "2021-05-06",
+		url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1644402948/vidly/crazy-fisrt_o4u6ic.jpg",
 		voteAverage: 7.4,
 		dailyRentalRate: 2.3,
 		numberInStock: 5,
