@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import compression from "compression";
 import cors, { CorsOptions } from "cors";
 import dotenv from "dotenv";
@@ -24,7 +22,6 @@ const allowList = [process.env.DEV_ENDPOINT];
 
 export const corsOptions: CorsOptions = {
 	origin: (origin, callback) => {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		const isAllowList = allowList.indexOf(origin) !== -1;
 		if (isAllowList) {
 			callback(null, true);

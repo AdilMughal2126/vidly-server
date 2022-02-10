@@ -1,9 +1,11 @@
+// import { MovieType } from "../types/MovieType";
+
 export const movies = [
 	{
 		genres: [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Spider-Man: No Way Home",
 		overview:
@@ -20,7 +22,7 @@ export const movies = [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 			{ _id: "61fd813dda7095106f3d5b41", name: "Fantasy" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Eternals",
 		overview:
@@ -67,7 +69,7 @@ export const movies = [
 		genres: [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "The Matrix Resurrections",
 		overview:
@@ -95,7 +97,7 @@ export const movies = [
 		genres: [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b40", name: "Horror" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Resident Evil: Welcome to Raccoon City",
 		overview:
@@ -121,7 +123,7 @@ export const movies = [
 	},
 	{
 		genres: [
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 		],
@@ -186,7 +188,7 @@ export const movies = [
 	},
 	{
 		genres: [
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 			{ _id: "61fd813dda7095106f3d5b3c", name: "Thriller" },
 		],
 		title: "Mother/Android",
@@ -361,7 +363,7 @@ export const movies = [
 			{ _id: "61fd813dda7095106f3d5b3e", name: "Comedy" },
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Free Guy",
 		overview:
@@ -406,7 +408,7 @@ export const movies = [
 	{
 		genres: [
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Dune",
 		overview:
@@ -436,7 +438,7 @@ export const movies = [
 	},
 	{
 		genres: [
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 			{ _id: "61fd813dda7095106f3d5b45", name: "Drama" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 		],
@@ -498,7 +500,7 @@ export const movies = [
 		category: "trending",
 	},
 	{
-		genres: [{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" }],
+		genres: [{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" }],
 		title: "Chaos Walking",
 		overview:
 			"Two unlikely companions embark on a perilous adventure through the badlands of an unexplored planet as they try to escape a dangerous and disorienting reality, where all inner thoughts are seen and heard by everyone.",
@@ -559,7 +561,7 @@ export const movies = [
 	{
 		genres: [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 		],
 		title: "Black Widow",
@@ -608,7 +610,7 @@ export const movies = [
 			{ _id: "61fd813dda7095106f3d5b46", name: "Animation" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Deathstroke: Knights & Dragons - The Movie",
 		overview:
@@ -624,7 +626,7 @@ export const movies = [
 		genres: [
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Avengers: Infinity War",
 		overview:
@@ -690,7 +692,7 @@ export const movies = [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b46", name: "Animation" },
 			{ _id: "61fd813dda7095106f3d5b45", name: "Drama" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Mobile Suit Gundam Hathaway",
 		overview:
@@ -707,7 +709,7 @@ export const movies = [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 			{ _id: "61fd813dda7095106f3d5b41", name: "Fantasy" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Zack Snyder's Justice League",
 		overview:
@@ -736,7 +738,7 @@ export const movies = [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 			{ _id: "61fd813dda7095106f3d5b41", name: "Fantasy" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Avatar",
 		overview:
@@ -752,7 +754,7 @@ export const movies = [
 		genres: [
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b41", name: "Fantasy" },
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 		],
 		title: "Godzilla vs. Kong",
 		overview:
@@ -839,7 +841,7 @@ export const movies = [
 	},
 	{
 		genres: [
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3b", name: "Adventure" },
 		],
@@ -855,7 +857,7 @@ export const movies = [
 	},
 	{
 		genres: [
-			{ _id: "61fd813dda7095106f3d5b3f", name: "Science Fiction" },
+			{ _id: "61fd813dda7095106f3d5b3f", name: "Sci-Fi" },
 			{ _id: "61fd813dda7095106f3d5b3a", name: "Action" },
 			{ _id: "61fd813dda7095106f3d5b3c", name: "Thriller" },
 		],
@@ -917,7 +919,7 @@ export const genres = [
 	{ name: "Thriller" },
 	{ name: "Romance" },
 	{ name: "Comedy" },
-	{ name: "Science Fiction" },
+	{ name: "Sci-Fi" },
 	{ name: "Horror" },
 	{ name: "Fantasy" },
 	{ name: "Crime" },
