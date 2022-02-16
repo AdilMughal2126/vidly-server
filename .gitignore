@@ -1,8 +1,14 @@
 # dependencies
 /node_modules
 
+# folder
+# /src
+
 # misc
 .env
+
+# config
+# tsconfig.json
 
 # log files
 logfile.log

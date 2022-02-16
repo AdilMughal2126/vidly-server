@@ -8,8 +8,8 @@
 	"description": "",
 	"main": "server.ts",
 	"scripts": {
-		"start": "node server.ts",
-		"dev": "nodemon server.ts",
+		"start": "node server",
+		"dev": "nodemon ./src/server",
 		"test": "jest --verbose --coverage",
 		"seed": "nodemon ./seed-data/index.ts",
 		"lint": "eslint . --ext .ts"

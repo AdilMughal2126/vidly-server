@@ -1,7 +1,7 @@
 import supertest from "supertest";
-import { app } from "../../../server";
-import { User } from "../../../models/user";
 import { verifyToken } from "../../../helpers/auth";
+import { User } from "../../../models/user";
+import { app } from "../../../server";
 import { UserType } from "../../../types/UserType";
 
 const request = supertest(app);

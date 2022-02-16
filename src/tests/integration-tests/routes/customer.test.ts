@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import supertest from "supertest";
 import mongoose from "mongoose";
-import { app } from "../../../server";
-import { User } from "../../../models/user";
-import { Customer } from "../../../models/customer";
-import { CustomerType } from "../../../types/CustomerType";
+import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
+import { Customer } from "../../../models/customer";
+import { User } from "../../../models/user";
+import { app } from "../../../server";
+import { CustomerType } from "../../../types/CustomerType";
 
 const request = supertest(app);
 
