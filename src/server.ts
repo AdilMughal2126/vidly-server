@@ -18,7 +18,7 @@ export const app = express();
 dotenv.config();
 void connectDB();
 
-const allowList = [process.env.DEV_ENDPOINT];
+const allowList = [process.env.CLIENT_ENDPOINT];
 
 export const corsOptions: CorsOptions = {
 	origin: (origin, callback) => {

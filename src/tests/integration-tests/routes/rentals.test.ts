@@ -55,6 +55,8 @@ describe("ROUTE /api/rentals", () => {
 			voteAverage: 1,
 			overview: "",
 			category: "popular",
+			dateRelease: "",
+			url: "",
 		};
 		movie2 = {
 			title: "GAME OF THRONE",
@@ -64,6 +66,8 @@ describe("ROUTE /api/rentals", () => {
 			voteAverage: 1,
 			overview: "",
 			category: "popular",
+			dateRelease: "",
+			url: "",
 		};
 	});
 

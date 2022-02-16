@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import mongoose from "mongoose";
 import supertest from "supertest";
-import { app } from "../../../server";
-import { User } from "../../../models/user";
+import { generateAuthToken } from "../../../helpers/auth";
 import { Genre } from "../../../models/genre";
 import { Movie } from "../../../models/movie";
-import { MovieType } from "../../../types/MovieType";
+import { User } from "../../../models/user";
+import { app } from "../../../server";
 import { GenreType } from "../../../types/GenreType";
-import { generateAuthToken } from "../../../helpers/auth";
+import { MovieType } from "../../../types/MovieType";
 
 const request = supertest(app);
 
@@ -63,6 +63,8 @@ describe("Route /api/movies", () => {
 					voteAverage: 1,
 					category: "popular",
 					overview: "",
+					dateRelease: "",
+					url: "",
 				},
 				{
 					title: "Fast & Furious",
@@ -72,6 +74,8 @@ describe("Route /api/movies", () => {
 					voteAverage: 1,
 					category: "popular",
 					overview: "",
+					dateRelease: "",
+					url: "",
 				},
 			];
 
@@ -96,6 +100,8 @@ describe("Route /api/movies", () => {
 				voteAverage: 1,
 				category: "popular",
 				overview: "",
+				dateRelease: "",
+				url: "",
 			};
 			const insertedMovie = await Movie.create(movie);
 			id = insertedMovie._id.toHexString();
@@ -201,6 +207,8 @@ describe("Route /api/movies", () => {
 				voteAverage: 1,
 				category: "popular",
 				overview: "",
+				dateRelease: "",
+				url: "",
 			};
 			const user = new User();
 			token = generateAuthToken(user);
