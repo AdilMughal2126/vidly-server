@@ -1,25 +1,27 @@
 import { connectDB } from "../db/db";
 import { Genre } from "../models/genre";
 import { Movie } from "../models/movie";
-import { genres, movies } from "./data";
+import { movies } from "./data";
 
 void connectDB();
 
-/**
- * @todo: insert genres before and update genreId in movies data
- */
-
 const insertSeedData = async () => {
-	console.log(`🌱 Inserting Seed Data: ${genres.length} Genres`);
-	await Genre.insertMany(genres);
-
 	console.log(`🌱 Inserting Seed Data: ${movies.length} Movies`);
+
 	for (const movie of movies) {
-		console.log(` 🎥 Adding Movie: ${movie.title}`);
-		await Movie.insertMany(movie);
+		console.log(`🎥 Adding Movie: ${movie.title}`);
+		const { _id, genre } = await Movie.create(movie);
+		console.log(` 📽️  Adding Genre: ${genre.name}`);
+		const genreInDb = await Genre.findOne({ name: genre.name });
+		if (genreInDb) {
+			await Movie.findByIdAndUpdate(_id, {
+				$set: { genre: { _id: genreInDb._id, name: genreInDb.name } },
+			});
+		} else {
+			await Genre.insertMany(genre);
+		}
 	}
 
-	console.log(`✅ Seed Data Inserted: ${genres.length} Movies`);
 	console.log(`✅ Seed Data Inserted: ${movies.length} Movies`);
 	process.exit();
 };

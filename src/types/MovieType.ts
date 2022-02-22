@@ -1,7 +1,10 @@
+import mongoose from "mongoose";
 import { GenreType } from "./GenreType";
 
 export type MovieType = {
-	genres: GenreType[];
+	// _id?: string;
+	_id?: mongoose.Types.ObjectId | undefined;
+	genre: GenreType;
 	title: string;
 	overview: string;
 	dateRelease: string;

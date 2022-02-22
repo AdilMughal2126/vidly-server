@@ -6,8 +6,8 @@ import { genreSchema } from "./genre";
 export const Movie = model(
 	"Movie",
 	new Schema<MovieType>({
-		genres: {
-			type: [genreSchema],
+		genre: {
+			type: genreSchema,
 			required: true,
 		},
 		title: {

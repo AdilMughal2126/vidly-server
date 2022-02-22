@@ -11,7 +11,7 @@
 		"start": "node server",
 		"dev": "nodemon ./src/server",
 		"test": "jest --verbose --coverage",
-		"seed": "nodemon ./seed-data/index.ts",
+		"seed": "nodemon ./src/seed-data/index.ts",
 		"lint": "eslint . --ext .ts"
 	},
 	"keywords": [],
