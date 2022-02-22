@@ -2,8 +2,7 @@
 	"name": "vidly-server",
 	"version": "1.0.0",
 	"engines": {
-		"node": "^16.13.2",
-		"pnpm": "^6.27.1"
+		"node": "^16.13.2"
 	},
 	"description": "",
 	"main": "server.ts",
