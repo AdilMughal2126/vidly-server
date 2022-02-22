@@ -52,7 +52,7 @@ export const handleCreateRental = async (
 			const rental = await Rental.create({
 				user,
 				movie: {
-					_id: movie._id.toHexString(),
+					_id: movie?._id?.toHexString(),
 					title: movie.title,
 					dailyRentalRate: movie.dailyRentalRate,
 				},

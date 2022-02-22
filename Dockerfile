@@ -1,5 +1,7 @@
 FROM node:16.13.2-alpine3.14
 
+RUN npm install -g pnpm
+
 RUN addgroup app && adduser -S -G app app
 
 USER app
@@ -11,10 +13,10 @@ WORKDIR /app
 COPY package.json ./
 # COPY tsconfig.json ./
 
-RUN npm install
+RUN pnpm install
 
 COPY . .
 
 EXPOSE 3001
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "pnpm", "run", "dev" ]
