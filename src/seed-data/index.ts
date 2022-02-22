@@ -3,6 +3,8 @@ import { Genre } from "../models/genre";
 import { Movie } from "../models/movie";
 import { movies } from "./data";
 
+process.env.NODE_ENV = "seed";
+
 void connectDB();
 
 const insertSeedData = async () => {
