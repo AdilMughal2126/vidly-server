@@ -10,7 +10,8 @@
 		"start": "node server",
 		"dev": "nodemon ./src/server",
 		"test": "jest --verbose --coverage",
-		"seed": "nodemon ./src/seed-data/index.ts",
+		"seed": "node ./src/seed-data/index.js",
+		"build": "tsc",
 		"lint": "eslint . --ext .ts"
 	},
 	"keywords": [],
