@@ -12,8 +12,8 @@ export const Movie = model(
 		},
 		title: {
 			type: String,
-			required: true,
 			trim: true,
+			required: true,
 			minlength: 3,
 			maxlength: 255,
 		},

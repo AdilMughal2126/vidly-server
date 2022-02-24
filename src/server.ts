@@ -8,6 +8,7 @@ import { logger } from "./helpers/logger";
 import { errorHandler } from "./middleware/error";
 import { auth } from "./routes/auth";
 import { customers } from "./routes/customers";
+import { feedbacks } from "./routes/feedbacks";
 import { genres } from "./routes/genres";
 import { movies } from "./routes/movies";
 import { rentals } from "./routes/rentals";
@@ -47,6 +48,7 @@ app.use("/api/customers", customers);
 app.use("/api/rentals", rentals);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use("/api/feedback", feedbacks);
 app.use(errorHandler);
 
 if (process.env.NODE_ENV !== "test") {
