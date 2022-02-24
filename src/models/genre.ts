@@ -5,8 +5,8 @@ import { GenreType } from "../types/GenreType";
 export const genreSchema = new Schema<GenreType>({
 	name: {
 		type: String,
-		required: true,
 		trim: true,
+		required: true,
 		minlength: 3,
 		maxlength: 255,
 	},

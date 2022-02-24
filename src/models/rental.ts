@@ -9,8 +9,8 @@ const rentalSchema = new Schema<RentalType>({
 			_id: mongoose.Types.ObjectId,
 			name: {
 				type: String,
-				required: true,
 				trim: true,
+				required: true,
 				minlength: 5,
 				maxlength: 255,
 			},
@@ -32,8 +32,8 @@ const rentalSchema = new Schema<RentalType>({
 		type: new Schema({
 			title: {
 				type: String,
-				required: true,
 				trim: true,
+				required: true,
 				minlength: 5,
 				maxlength: 255,
 			},
