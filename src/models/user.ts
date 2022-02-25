@@ -27,6 +27,16 @@ const userSchema = new Schema<UserType>({
 		type: Boolean,
 		default: false,
 	},
+	imageUrl: {
+		type: String,
+	},
+	imageId: {
+		type: String,
+	},
+	createAt: {
+		type: Date,
+		default: Date.now,
+	},
 });
 
 export const User = model<UserType>("User", userSchema);

@@ -13,6 +13,8 @@ export const generateAuthToken = (user: UserType) => {
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,
+			imageUrl: user.imageUrl,
+			imageId: user.imageId,
 		},
 		process.env.JWT_PRIVATE_KEY as string
 	);
