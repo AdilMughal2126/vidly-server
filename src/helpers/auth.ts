@@ -16,7 +16,7 @@ export const generateAuthToken = (user: UserType) => {
 			email: user.email,
 			isAdmin: user.isAdmin,
 			imageUrl: user.imageUrl,
-			imageId: user.imageId,
+			// imageId: user.imageId,
 		},
 		process.env.JWT_PRIVATE_KEY as string
 	);

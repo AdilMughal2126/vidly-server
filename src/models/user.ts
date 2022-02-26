@@ -29,6 +29,8 @@ const userSchema = new Schema<UserType>({
 	},
 	imageUrl: {
 		type: String,
+		default:
+			"https://res.cloudinary.com/dafwzsod0/image/upload/v1645876548/vidly/profile/avatar_or2l9m.jpg",
 	},
 	imageId: {
 		type: String,
@@ -45,6 +47,15 @@ export const validateUser = (user: UserType) => {
 	const schema = Joi.object({
 		name: Joi.string().trim().min(5).max(50).required(),
 		password: Joi.string().min(8).max(50).required(),
+		email: Joi.string().email().min(8).max(50).required(),
+	});
+
+	return schema.validate(user);
+};
+
+export const validateUpdatedUser = (user: Pick<UserType, "name" | "email">) => {
+	const schema = Joi.object({
+		name: Joi.string().trim().min(5).max(50).required(),
 		email: Joi.string().email().min(8).max(50).required(),
 	});
 

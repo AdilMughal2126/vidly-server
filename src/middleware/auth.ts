@@ -38,15 +38,32 @@ export const requireAdmin = (
 };
 
 const storage = multer.memoryStorage();
-export const handleFormatImage = multer({
+
+const upload = multer({
 	storage,
 	fileFilter: (req, file, cb) => {
 		if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
-			return cb(null, false);
+			cb(new Error("Only image files are allowed"), false);
 		}
-		cb(null, true);
+		return cb(null, true);
 	},
-});
+}).single("image");
+
+export const handleValidateImage = (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	upload(req, res, (err) => {
+		if (err instanceof multer.MulterError) {
+			return res.status(400).json(err);
+		} else if (err) {
+			return res.status(400).json(err);
+		}
+
+		return next();
+	});
+};
 
 export const cloudinaryConfig = (
 	req: Request,
@@ -59,6 +76,7 @@ export const cloudinaryConfig = (
 		api_secret: process.env.CLOUDINARY_API_SECRET,
 		secure: true,
 	});
-	if (!req.file) return res.status(400).json("Only image files are allowed!");
+	// console.log(req.file);
+	if (!req.file) return res.status(400).json("Bad request");
 	return next();
 };

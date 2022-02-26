@@ -4,7 +4,7 @@ import { dataUri } from "../helpers/auth";
 import { asyncMiddleware } from "../middleware/async";
 import {
 	cloudinaryConfig,
-	handleFormatImage,
+	handleValidateImage,
 	requireAuth,
 } from "../middleware/auth";
 import { User } from "../models/user";
@@ -13,14 +13,16 @@ const router = express.Router();
 
 router.post(
 	"/",
-	[requireAuth, handleFormatImage.single("image"), cloudinaryConfig],
+	[requireAuth, handleValidateImage, cloudinaryConfig],
 	asyncMiddleware(async (req: Request, res: Response) => {
+		const id = req.header("X-User-Id");
 		const file = dataUri(req).content;
+		const userInDb = await User.findById(id);
+		await cloudinary.v2.uploader.destroy(userInDb!.imageId!);
 		const image = await cloudinary.v2.uploader.upload(file!, {
 			folder: "vidly/profile",
 		});
-		const id = req.header("X-User-Id");
-		const user = await User.findByIdAndUpdate(
+		const updatedUser = await User.findByIdAndUpdate(
 			id,
 			{
 				$set: { imageUrl: image.secure_url, imageId: image.public_id },
@@ -28,7 +30,7 @@ router.post(
 			{ new: true }
 		);
 
-		return res.json(user?.imageUrl);
+		return res.json(updatedUser?.imageUrl);
 	})
 );
 
