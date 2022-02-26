@@ -1,8 +1,6 @@
 import cloudinary from "cloudinary";
-import DataURIParser from "datauri/parser";
 import { NextFunction, Request, Response } from "express";
 import multer from "multer";
-import path from "path";
 import { getToken, verifyToken } from "../helpers/auth";
 
 export const requireAuth = (
@@ -40,7 +38,6 @@ export const requireAdmin = (
 };
 
 const storage = multer.memoryStorage();
-
 export const handleFormatImage = multer({
 	storage,
 	fileFilter: (req, file, cb) => {
@@ -50,21 +47,6 @@ export const handleFormatImage = multer({
 		cb(null, true);
 	},
 });
-
-const dUri = new DataURIParser();
-
-/**
- * @description This function converts the buffer to data url
- * @param {Object} req containing the field object
- * @returns {String} The data url from the string buffer
- * @see {@link https://medium.com/@joeokpus/uploading-images-to-cloudinary-using-multer-and-expressjs-f0b9a4e14c54}
- */
-
-export const dataUri = (req: Request) =>
-	dUri.format(
-		path.extname(req.file?.originalname!).toString(),
-		req.file?.buffer!
-	);
 
 export const cloudinaryConfig = (
 	req: Request,
@@ -77,5 +59,6 @@ export const cloudinaryConfig = (
 		api_secret: process.env.CLOUDINARY_API_SECRET,
 		secure: true,
 	});
-	next();
+	if (!req.file) return res.status(400).json("Only image files are allowed!");
+	return next();
 };

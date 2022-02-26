@@ -1,7 +1,9 @@
 import bcrypt from "bcryptjs";
+import DataURIParser from "datauri/parser";
 // import dotenv from "dotenv";
 import { Request } from "express";
 import jwt from "jsonwebtoken";
+import path from "path";
 import { UserType } from "../types/UserType";
 
 // dotenv.config();
@@ -33,3 +35,18 @@ export const generateHash = async (password: string) => {
 
 export const validateHash = async (password: string, hash: string) =>
 	await bcrypt.compare(password, hash);
+
+const dUri = new DataURIParser();
+
+/**
+ * @description This function converts the buffer to data url
+ * @param {Object} req containing the field object
+ * @returns {String} The data url from the string buffer
+ * @see {@link https://medium.com/@joeokpus/uploading-images-to-cloudinary-using-multer-and-expressjs-f0b9a4e14c54}
+ */
+
+export const dataUri = (req: Request) =>
+	dUri.format(
+		path.extname(req.file!.originalname).toString(),
+		req.file!.buffer
+	);

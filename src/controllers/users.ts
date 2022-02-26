@@ -1,4 +1,3 @@
-import cloudinary from "cloudinary";
 import { Request, Response } from "express";
 import _ from "lodash";
 import { generateAuthToken, generateHash } from "../helpers/auth";
@@ -25,8 +24,6 @@ export const handleGetUser = asyncMiddleware(
 // TODO: Get rid of lodash method
 export const handleCreateUser = asyncMiddleware(
 	async (req: Request<unknown, unknown, UserType>, res: Response) => {
-		const avatar = await cloudinary.v2.uploader.upload(req.file?.path!);
-		console.log({ avatar });
 		const { name, email } = req.body;
 		const isEmail = await User.findOne({ email });
 		if (isEmail) return res.status(400).json("Email already registered");
