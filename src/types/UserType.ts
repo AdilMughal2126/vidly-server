@@ -11,3 +11,8 @@ export type UserType = {
 	imageId?: string;
 	createAt?: Date;
 };
+
+export type UpdatePasswordType = {
+	currentPassword: string;
+	newPassword: string;
+};

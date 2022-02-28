@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import _ from "lodash";
-import { generateAuthToken, generateHash } from "../helpers/auth";
+import { generateAuthToken, generateHash, validateHash } from "../helpers/auth";
 import { asyncMiddleware } from "../middleware/async";
 import { User } from "../models/user";
 import { Params } from "../types/ParamsType";
-import { UserType } from "../types/UserType";
+import { UpdatePasswordType, UserType } from "../types/UserType";
 
 export const handleGetUsers = asyncMiddleware(
 	async (req: Request, res: Response) => {
@@ -37,7 +37,6 @@ export const handleCreateUser = asyncMiddleware(
 	}
 );
 
-// TODO: Handle Password Update
 export const handleUpdateUser = asyncMiddleware(
 	async (req: Request<Params, unknown, UserType>, res: Response) => {
 		const { name, email } = req.body;
@@ -49,6 +48,20 @@ export const handleUpdateUser = asyncMiddleware(
 		if (!user) return res.status(404).json("User not found");
 		const token = generateAuthToken(user);
 		return res.json(token);
+	}
+);
+
+// TODO: Handle Password Update
+export const handleUpdatePassword = asyncMiddleware(
+	async (req: Request<Params, unknown, UpdatePasswordType>, res: Response) => {
+		const { currentPassword, newPassword } = req.body;
+		const user = await User.findById(req.params.id);
+		if (!user) return res.status(400).json("User not found");
+		const isValid = await validateHash(currentPassword, user?.hash as string);
+		if (!isValid) return res.status(400).json("Invalid password");
+		const hash = await generateHash(newPassword);
+		await User.findByIdAndUpdate(req.params.id, { $set: { hash } });
+		return res.json("Password successfully updated");
 	}
 );
 
