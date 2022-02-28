@@ -51,7 +51,6 @@ export const handleUpdateUser = asyncMiddleware(
 	}
 );
 
-// TODO: Handle Password Update
 export const handleUpdatePassword = asyncMiddleware(
 	async (req: Request<Params, unknown, UpdatePasswordType>, res: Response) => {
 		const { currentPassword, newPassword } = req.body;
