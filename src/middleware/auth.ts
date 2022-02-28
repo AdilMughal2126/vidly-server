@@ -58,7 +58,8 @@ export const handleValidateImage = (
 		if (err instanceof multer.MulterError) {
 			return res.status(400).json(err);
 		} else if (err) {
-			return res.status(400).json(err);
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+			return res.status(400).json(err.message);
 		}
 
 		return next();
@@ -76,7 +77,5 @@ export const cloudinaryConfig = (
 		api_secret: process.env.CLOUDINARY_API_SECRET,
 		secure: true,
 	});
-	// console.log(req.file);
-	if (!req.file) return res.status(400).json("Bad request");
 	return next();
 };
