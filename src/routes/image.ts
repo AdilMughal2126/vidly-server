@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import cloudinary from "cloudinary";
 import express, { Request, Response } from "express";
 import { dataUri } from "../helpers/auth";

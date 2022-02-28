@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import bcrypt from "bcryptjs";
 import DataURIParser from "datauri/parser";
 // import dotenv from "dotenv";
@@ -16,7 +17,6 @@ export const generateAuthToken = (user: UserType) => {
 			email: user.email,
 			isAdmin: user.isAdmin,
 			imageUrl: user.imageUrl,
-			// imageId: user.imageId,
 		},
 		process.env.JWT_PRIVATE_KEY as string
 	);

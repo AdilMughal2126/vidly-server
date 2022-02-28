@@ -4,6 +4,7 @@ import {
 	handleDeleteUser,
 	handleGetUser,
 	handleGetUsers,
+	handleUpdatePassword,
 	handleUpdateUser,
 } from "../controllers/users";
 import { requireAdmin, requireAuth } from "../middleware/auth";
@@ -16,6 +17,7 @@ router.route("/").get(handleGetUsers);
 router.get("/:id", validateId, handleGetUser);
 router.post("/", validateRequest(validateUser), handleCreateUser);
 router.put("/:id", [validateId, requireAuth], handleUpdateUser);
+router.put("/reset/:id", [validateId, requireAuth], handleUpdatePassword);
 router.delete("/:id", [validateId, requireAdmin], handleDeleteUser);
 
 export { router as users };
