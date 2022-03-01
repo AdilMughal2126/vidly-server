@@ -19,6 +19,17 @@ export const Favorite = model<FavoriteType>(
 					type: String,
 					required: true,
 				},
+				url: {
+					type: String,
+					required: true,
+				},
+				voteAverage: {
+					type: String,
+					required: true,
+				},
+				likes: {
+					type: [{ userId: String }],
+				},
 			}),
 			required: true,
 		},

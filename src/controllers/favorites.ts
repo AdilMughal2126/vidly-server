@@ -8,7 +8,9 @@ import { Params } from "../types/ParamsType";
 
 export const handleGetFavorites = asyncMiddleware(
 	async (req: Request, res: Response) => {
-		const favorites = await Favorite.find({ user: { _id: req.params.id } });
+		const favorites = await Favorite.find({
+			"user._id": req.header("X-User-Id"),
+		});
 		return res.json(favorites);
 	}
 );
@@ -33,6 +35,9 @@ export const handlePostFavorite = asyncMiddleware(
 			movie: {
 				_id: movie?._id,
 				title: movie?.title,
+				url: movie?.url,
+				voteAverage: movie?.voteAverage,
+				likes: movie?.likes,
 			},
 		});
 
