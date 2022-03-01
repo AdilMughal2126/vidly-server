@@ -14,4 +14,5 @@ export type MovieType = {
 	dailyRentalRate: number;
 	voteAverage: number;
 	category: "trending" | "popular";
+	likes: { userId: string }[];
 };
