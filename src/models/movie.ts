@@ -50,6 +50,9 @@ export const Movie = model(
 		likes: {
 			type: [{ userId: String }],
 		},
+		bookmarks: {
+			type: [{ userId: String }],
+		},
 	})
 );
 
