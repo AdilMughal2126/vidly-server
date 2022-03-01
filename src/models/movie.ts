@@ -47,6 +47,9 @@ export const Movie = model(
 			min: 0,
 			max: 10,
 		},
+		likes: {
+			type: [{ userId: String }],
+		},
 	})
 );
 
