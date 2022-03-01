@@ -7,6 +7,7 @@ import { connectDB } from "./db/db";
 import { logger } from "./helpers/logger";
 import { errorHandler } from "./middleware/error";
 import { auth } from "./routes/auth";
+import { bookmarks } from "./routes/bookmarks";
 import { customers } from "./routes/customers";
 import { favorites } from "./routes/favorites";
 import { feedbacks } from "./routes/feedbacks";
@@ -51,9 +52,10 @@ app.use("/api/image", image);
 app.use("/api/movies", movies);
 app.use("/api/genres", genres);
 app.use("/api/rentals", rentals);
-app.use("/api/customers", customers);
 app.use("/api/feedback", feedbacks);
+app.use("/api/customers", customers);
 app.use("/api/favorites", favorites);
+app.use("/api/bookmarks", bookmarks);
 app.use(errorHandler);
 
 if (process.env.NODE_ENV !== "test") {

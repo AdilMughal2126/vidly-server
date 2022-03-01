@@ -1,33 +1,35 @@
 import { Request, Response } from "express";
 import { asyncMiddleware } from "../middleware/async";
-import { Favorite } from "../models/favorite";
+import { Bookmark } from "../models/bookmark";
 import { Movie } from "../models/movie";
 import { User } from "../models/user";
-import { FavoriteRequestType } from "../types/FavoriteType";
+import { BookmarkRequestType } from "../types/BookmarkType";
 import { Params } from "../types/ParamsType";
 
-export const handleGetFavorites = asyncMiddleware(
+export const handleGetBookmarks = asyncMiddleware(
 	async (req: Request, res: Response) => {
-		const favorites = await Favorite.find({
+		const bookmarks = await Bookmark.find({
 			"user._id": req.header("X-User-Id"),
 		});
-		return res.json(favorites);
+		return res.json(bookmarks);
 	}
 );
 
-export const handlePostFavorite = asyncMiddleware(
+export const handlePostBookmark = asyncMiddleware(
 	async (
-		req: Request<unknown, unknown, FavoriteRequestType>,
+		req: Request<unknown, unknown, BookmarkRequestType>,
 		res: Response
 	) => {
 		const { userId, movieId } = req.body;
+
 		const user = await User.findById(userId);
 		const movie = await Movie.findByIdAndUpdate(
 			movieId,
-			{ $set: { likes: { userId } } },
+			{ $set: { bookmarks: { userId } } },
 			{ new: true }
 		);
-		await Favorite.create({
+
+		await Bookmark.create({
 			user: {
 				_id: user?._id,
 				name: user?.name,
@@ -37,23 +39,25 @@ export const handlePostFavorite = asyncMiddleware(
 				title: movie?.title,
 				url: movie?.url,
 				voteAverage: movie?.voteAverage,
-				likes: movie?.likes,
+				bookmarks: movie?.bookmarks,
 			},
 		});
 
-		return res.json("Movie added to favorites");
+		return res.json("Movie added to bookmarks");
 	}
 );
 
-export const handleDeleteFavorite = asyncMiddleware(
+export const handleDeleteBookmark = asyncMiddleware(
 	async (req: Request<Params>, res: Response) => {
 		const { userId, movieId } = req.params;
-		await Movie.findByIdAndUpdate(movieId, { $unset: { likes: { userId } } });
-		const fav = await Favorite.findOneAndDelete({
+		await Movie.findByIdAndUpdate(movieId, {
+			$unset: { bookmarks: { userId } },
+		});
+		const bookmark = await Bookmark.findOneAndDelete({
 			"user._id": userId,
 			"movie._id": movieId,
 		});
-		if (!fav) return res.status(400).json("Movie not found");
-		return res.json("Movie removed from favorites");
+		if (!bookmark) return res.status(400).json("Movie not found");
+		return res.json("Movie removed from bookmarks");
 	}
 );
