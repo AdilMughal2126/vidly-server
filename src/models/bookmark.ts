@@ -28,7 +28,7 @@ export const Bookmark = model<BookmarkType>(
 					required: true,
 				},
 				bookmarks: {
-					type: [{ userId: String }],
+					type: [{ _id: String }],
 				},
 			}),
 			required: true,

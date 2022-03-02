@@ -48,10 +48,10 @@ export const Movie = model(
 			max: 10,
 		},
 		likes: {
-			type: [{ userId: String }],
+			type: [{ _id: String }],
 		},
 		bookmarks: {
-			type: [{ userId: String }],
+			type: [{ _id: String }],
 		},
 	})
 );
