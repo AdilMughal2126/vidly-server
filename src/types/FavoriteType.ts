@@ -5,7 +5,7 @@ export type FavoriteType = {
 		title: string;
 		url: string;
 		voteAverage: number;
-		likes: { userId: string }[];
+		likes: { _id: string }[];
 	};
 	date: Date;
 };

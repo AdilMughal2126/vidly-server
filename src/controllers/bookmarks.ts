@@ -25,7 +25,7 @@ export const handlePostBookmark = asyncMiddleware(
 		const user = await User.findById(userId);
 		const movie = await Movie.findByIdAndUpdate(
 			movieId,
-			{ $set: { bookmarks: { userId } } },
+			{ $set: { bookmarks: { _id: userId } } },
 			{ new: true }
 		);
 
@@ -51,7 +51,7 @@ export const handleDeleteBookmark = asyncMiddleware(
 	async (req: Request<Params>, res: Response) => {
 		const { userId, movieId } = req.params;
 		await Movie.findByIdAndUpdate(movieId, {
-			$unset: { bookmarks: { userId } },
+			$unset: { bookmarks: { _id: userId } },
 		});
 		const bookmark = await Bookmark.findOneAndDelete({
 			"user._id": userId,
@@ -59,5 +59,20 @@ export const handleDeleteBookmark = asyncMiddleware(
 		});
 		if (!bookmark) return res.status(400).json("Movie not found");
 		return res.json("Movie removed from bookmarks");
+	}
+);
+
+export const handleDeleteBookmarks = asyncMiddleware(
+	async (req: Request<Params>, res: Response) => {
+		const { userId } = req.params;
+		await Movie.findOneAndUpdate(
+			{ bookmarks: { _id: userId } },
+			{
+				$unset: { bookmarks: { _id: userId } },
+			}
+		);
+		const bookmarks = await Bookmark.deleteMany({ "user._id": userId });
+		if (!bookmarks) return res.status(400).json("No movies was found");
+		return res.json("Movies removed from bookmarks");
 	}
 );

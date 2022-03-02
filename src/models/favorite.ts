@@ -28,7 +28,7 @@ export const Favorite = model<FavoriteType>(
 					required: true,
 				},
 				likes: {
-					type: [{ userId: String }],
+					type: [{ _id: String }],
 				},
 			}),
 			required: true,
