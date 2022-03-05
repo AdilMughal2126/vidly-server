@@ -1,10 +1,17 @@
 import { MovieType } from "./MovieType";
-import { UserType } from "./UserType";
 
 export type RentalType = {
-	user: Pick<UserType, "_id" | "name" | "email" | "isAdmin">;
-	movie: Pick<MovieType, "title" | "dailyRentalRate">;
-	dateOut: Date | { type: DateConstructor; default: () => number };
-	dateReturned: Date;
+	userId: string;
+	movie: Pick<MovieType, "_id" | "title" | "url" | "voteAverage" | "rentals">;
+	rentDate: Date | { type: DateConstructor; default: () => number };
+	returnedDate: Date;
 	rentalFee: number;
+	status: string;
+};
+
+export type RentalRequestType = {
+	returnedDate: Date;
+	movieId: string;
+	userId: string;
+	paymentIntentId: string | undefined;
 };

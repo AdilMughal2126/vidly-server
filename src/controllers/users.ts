@@ -26,7 +26,8 @@ export const handleCreateUser = asyncMiddleware(
 	async (req: Request<unknown, unknown, UserType>, res: Response) => {
 		const { name, email } = req.body;
 		const isEmail = await User.findOne({ email });
-		if (isEmail) return res.status(400).json("Email already registered");
+		if (isEmail)
+			return res.status(400).json("This email is already registered");
 		const hash = await generateHash(req.body.password);
 		const user = await User.create({ name, email, hash });
 		const token = generateAuthToken(user);

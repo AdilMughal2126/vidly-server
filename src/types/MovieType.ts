@@ -16,4 +16,5 @@ export type MovieType = {
 	category: "trending" | "popular";
 	likes: { _id: string }[];
 	bookmarks: { _id: string }[];
+	rentals: { _id: string }[];
 };
