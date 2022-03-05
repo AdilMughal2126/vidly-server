@@ -1,5 +1,5 @@
 import compression from "compression";
-import cors, { CorsOptions } from "cors";
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
@@ -14,37 +14,41 @@ import { feedbacks } from "./routes/feedbacks";
 import { genres } from "./routes/genres";
 import { image } from "./routes/image";
 import { movies } from "./routes/movies";
+import { payment } from "./routes/payment";
 import { rentals } from "./routes/rentals";
 import { users } from "./routes/users";
+import { webhook } from "./routes/webhook";
 
 export const app = express();
 
 dotenv.config();
 void connectDB();
 
-const allowList = [process.env.CLIENT_ENDPOINT];
+// const allowList = [process.env.CLIENT_ENDPOINT];
 
-export const corsOptions: CorsOptions = {
-	origin: (origin, callback) => {
-		const isAllowList = allowList.indexOf(origin) !== -1;
-		if (isAllowList) {
-			callback(null, true);
-		} else {
-			callback(new Error("Not allowed by CORS"));
-		}
-	},
-	allowedHeaders: [
-		"Content-Type",
-		"Content-Length",
-		"sentry-trace",
-		"X-Auth-Token",
-		"X-User-Id",
-	],
-};
+// export const corsOptions: CorsOptions = {
+// 	origin: (origin, callback) => {
+// 		const isAllowList = allowList.indexOf(origin) !== -1;
+// 		if (isAllowList) {
+// 			callback(null, true);
+// 		} else {
+// 			callback(new Error("Not allowed by CORS"));
+// 		}
+// 	},
+// 	allowedHeaders: [
+// 		"Content-Type",
+// 		"Content-Length",
+// 		"sentry-trace",
+// 		"X-Auth-Token",
+// 		"X-User-Id",
+// 	],
+// };
 
 app.use(helmet());
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 app.use(compression());
+app.use("/api/webhook", webhook);
 app.use(express.json());
 app.use("/api/auth", auth);
 app.use("/api/users", users);
@@ -56,6 +60,7 @@ app.use("/api/feedback", feedbacks);
 app.use("/api/customers", customers);
 app.use("/api/favorites", favorites);
 app.use("/api/bookmarks", bookmarks);
+app.use("/api/payment", payment);
 app.use(errorHandler);
 
 if (process.env.NODE_ENV !== "test") {

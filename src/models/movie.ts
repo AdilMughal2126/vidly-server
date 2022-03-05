@@ -53,6 +53,9 @@ export const Movie = model(
 		bookmarks: {
 			type: [{ _id: String }],
 		},
+		rentals: {
+			type: [{ _id: String }],
+		},
 	})
 );
 

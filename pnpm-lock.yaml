@@ -35,6 +35,7 @@ specifiers:
   mongoose: ^6.1.6
   multer: ^1.4.4
   nodemon: ^2.0.15
+  stripe: ^8.207.0
   supertest: ^6.1.6
   ts-node: ^10.4.0
   tslib: ^2.3.1
@@ -57,6 +58,7 @@ dependencies:
   lodash: 4.17.21
   mongoose: 6.1.7
   multer: 1.4.4
+  stripe: 8.207.0
   winston: 3.4.0
   winston-mongodb: 5.0.7_winston@3.4.0
 
@@ -2393,7 +2395,6 @@ packages:
     dependencies:
       function-bind: 1.1.1
       get-intrinsic: 1.1.1
-    dev: true
 
   /callsites/3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
@@ -3354,7 +3355,6 @@ packages:
 
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
-    dev: true
 
   /functional-red-black-tree/1.0.1:
     resolution: {integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=}
@@ -3376,7 +3376,6 @@ packages:
       function-bind: 1.1.1
       has: 1.0.3
       has-symbols: 1.0.2
-    dev: true
 
   /get-package-type/0.1.0:
     resolution: {integrity: sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==}
@@ -3506,7 +3505,6 @@ packages:
   /has-symbols/1.0.2:
     resolution: {integrity: sha512-chXa79rL/UC2KlX17jo3vRGz0azaWEx5tGqZg5pO3NUyEJVB17dMruQlzCCOfUvElghKcm5194+BCRvi2Rv/Gw==}
     engines: {node: '>= 0.4'}
-    dev: true
 
   /has-yarn/2.1.0:
     resolution: {integrity: sha512-UqBRqi4ju7T+TqGNdqAO0PaSVGsDGJUBQvk9eUWNGRY1CFGDzYhLWoM7JQEemnlvVcv/YEmc2wNW8BC24EnUsw==}
@@ -3518,7 +3516,6 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
-    dev: true
 
   /helmet/5.0.1:
     resolution: {integrity: sha512-iyYpGYH2nbQVaQtauYDnemWg45S2RyGvJ+iKj+V9jp7Dc1NTtAJHmD+hFOSYS7Xdwe1GeyVEYSydggXLOg6TKQ==}
@@ -4839,7 +4836,6 @@ packages:
 
   /object-inspect/1.12.0:
     resolution: {integrity: sha512-Ho2z80bVIvJloH+YzRmpZVQe87+qASmBUKZDWgx9cu+KDrX2ZDH/3tMy+gXbZETVGs2M8YdxObOh7XAtim9Y0g==}
-    dev: true
 
   /object-keys/1.1.1:
     resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
@@ -5146,7 +5142,6 @@ packages:
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.4
-    dev: true
 
   /qs/6.9.3:
     resolution: {integrity: sha512-EbZYNarm6138UKKq46tdx08Yo/q9ZhFoAXAI1meAFd2GtbRDhbZY2WQSICskT0c5q99aFzLG1D4nvTk9tqfXIw==}
@@ -5474,7 +5469,6 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.1.1
       object-inspect: 1.12.0
-    dev: true
 
   /sift/13.5.2:
     resolution: {integrity: sha512-+gxdEOMA2J+AI+fVsCqeNn7Tgx3M9ZN9jdi95939l1IJ8cZsqS8sqpJyOkic2SJk+1+98Uwryt/gL6XDaV+UZA==}
@@ -5641,6 +5635,14 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
     dev: true
+
+  /stripe/8.207.0:
+    resolution: {integrity: sha512-ZCjdqN2adGfrC5uAAo0v7IquzaiQ3+pDzB324/iV3Q3Deiot9VO7KMVSNVx/0i6E6ywhgV33ko3FMT7iUgxKYA==}
+    engines: {node: ^8.1 || >=10.*}
+    dependencies:
+      '@types/node': 17.0.10
+      qs: 6.10.3
+    dev: false
 
   /superagent/7.0.2:
     resolution: {integrity: sha512-2Kx35bZxLLJMBKtuXezxvD0aZQ7l923VwoCn7EtUx+aFxdG7co7PeRIddfrNtvvMuGaLZXA0mKzX+yWRhjrJ7A==}
