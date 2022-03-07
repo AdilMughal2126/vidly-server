@@ -27,6 +27,7 @@ export const logger = createLogger({
 			db: "mongodb://localhost/vidly",
 			storeHost: true,
 			tryReconnect: true,
+			collection: "logs",
 		}),
 	],
 	exceptionHandlers: [

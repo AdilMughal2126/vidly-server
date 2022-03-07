@@ -28,7 +28,7 @@ const handleCreatePayment = asyncMiddleware(
 		if (!movie) return res.status(400).json("Movie not found");
 
 		const days = numberOfDays(new Date(returnedDate), new Date());
-		const rentalFee = days * movie.dailyRentalRate;
+		const rentalFee = Math.round(days * movie.dailyRentalRate);
 
 		const paymentIntents = await stripe.paymentIntents.create({
 			amount: rentalFee * 100,
