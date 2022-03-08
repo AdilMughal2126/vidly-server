@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import _ from "lodash";
 import { generateAuthToken, generateHash, validateHash } from "../helpers/auth";
 import { asyncMiddleware } from "../middleware/async";
 import { User } from "../models/user";
@@ -21,7 +20,6 @@ export const handleGetUser = asyncMiddleware(
 	}
 );
 
-// TODO: Get rid of lodash method
 export const handleCreateUser = asyncMiddleware(
 	async (req: Request<unknown, unknown, UserType>, res: Response) => {
 		const { name, email } = req.body;
@@ -31,10 +29,11 @@ export const handleCreateUser = asyncMiddleware(
 		const hash = await generateHash(req.body.password);
 		const user = await User.create({ name, email, hash });
 		const token = generateAuthToken(user);
-		return res
-			.header("X-Auth-Token", token)
-			.header("Access-Control-Expose-Headers", "X-Auth-Token")
-			.json(_.pick(user, ["_id", "name", "email"]));
+		return res.json(token);
+		// return res
+		// 	.header("X-Auth-Token", token)
+		// 	.header("Access-Control-Expose-Headers", "X-Auth-Token")
+		// 	.json(_.pick(user, ["_id", "name", "email"]));
 	}
 );
 

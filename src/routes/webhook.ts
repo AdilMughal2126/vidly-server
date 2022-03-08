@@ -1,16 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-case-declarations */
-
 import express, { Request, Response } from "express";
 import { Stripe } from "stripe";
-// import { asyncMiddleware } from "../middleware/async";
 import { Payment } from "../models/payment";
 
 const router = express.Router();
 
-const stripe = new Stripe(
-	"sk_test_51JEwp0G8f5i7HLkxjuGskMgfjB7X3LYIbxaQpyUVe7nM6UZQ8M3YYsr8QNZTWnHw3WafK0FHlGsO10bd34pBt1O600xeWNTG36",
-	{ apiVersion: "2020-08-27", typescript: true }
-);
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY!, {
+	apiVersion: "2020-08-27",
+	typescript: true,
+});
+
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 router.post(
 	"/",
@@ -19,16 +21,20 @@ router.post(
 		req: Request<unknown, unknown, "String" | "Buffer">,
 		res: Response
 	) => {
-		const endpointSecret =
-			"whsec_feda210cbf81d060ab7d6506b79bc66b3d7ba978dd6d533ff085bfb9e1994d27";
-
 		const signature = req.headers["stripe-signature"]!;
+		let event: Stripe.Event;
 
-		const event = stripe.webhooks.constructEvent(
-			req.body,
-			signature,
-			endpointSecret
-		);
+		try {
+			event = stripe.webhooks.constructEvent(
+				req.body,
+				signature,
+				webhookSecret
+			);
+		} catch (err: any) {
+			console.log("❌ Error message:", err.message);
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+			return res.status(400).json({ Webhook: err.message });
+		}
 
 		switch (event.type) {
 			case "payment_intent.succeeded":
@@ -47,7 +53,7 @@ router.post(
 				break;
 		}
 
-		res.json("Webhook received");
+		return res.json("Webhook received");
 	}
 );
 

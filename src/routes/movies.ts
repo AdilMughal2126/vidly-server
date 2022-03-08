@@ -1,14 +1,13 @@
 import express from "express";
 import {
 	// handleCreateMovie,
-	handleDeleteMovie,
+	// handleDeleteMovie,
 	handleGetMovie,
 	handleGetMovies,
-	// handleUpdateMovie,
 } from "../controllers/movies";
 // import { validateMovie } from "../models/movie";
 import { validateId } from "../middleware/validateObjectId";
-import { requireAdmin } from "../middleware/auth";
+// import { requireAdmin } from "../middleware/auth";
 // import { requireAdmin, requireAuth } from "../middleware/auth";
 // import { validateRequest } from "../middleware/validateRequest";
 
@@ -25,6 +24,6 @@ router.get("/:id", validateId, handleGetMovie);
 //   [validateId, requireAuth, validateRequest(validateMovie)],
 //   handleUpdateMovie
 // );
-router.delete("/:id", [validateId, requireAdmin], handleDeleteMovie);
+// router.delete("/:id", [validateId, requireAdmin], handleDeleteMovie);
 
 export { router as movies };

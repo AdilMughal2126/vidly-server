@@ -52,7 +52,7 @@ export const handleCreateRental = async (
 	if (!user) return res.status(400).json("User not found");
 	const payment = await Payment.findOne({ paymentId: paymentIntentId });
 	// if (payment?.status !== "succeeded")
-	// return res.status(400).json("The payment is not succeed yet");
+	// return res.status(400).json("The payment is not succeeded yet");
 
 	const days = numberOfDays(new Date(returnedDate), new Date());
 	const rentalFee = days * movie.dailyRentalRate;

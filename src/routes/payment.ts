@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import { Stripe } from "stripe";
 import { numberOfDays } from "../helpers/numberOfDays";
@@ -9,16 +10,12 @@ import { Payment } from "../models/payment";
 import { PaymentRequestType } from "../types/PaymentType";
 
 const router = express.Router();
+dotenv.config();
 
-// const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY!, {
-// 	apiVersion: "2020-08-27",
-// 	typescript: true,
-// });
-
-const stripe = new Stripe(
-	"sk_test_51JEwp0G8f5i7HLkxjuGskMgfjB7X3LYIbxaQpyUVe7nM6UZQ8M3YYsr8QNZTWnHw3WafK0FHlGsO10bd34pBt1O600xeWNTG36",
-	{ apiVersion: "2020-08-27", typescript: true }
-);
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY!, {
+	apiVersion: "2020-08-27",
+	typescript: true,
+});
 
 const handleCreatePayment = asyncMiddleware(
 	async (req: Request<unknown, unknown, PaymentRequestType>, res: Response) => {

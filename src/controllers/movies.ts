@@ -1,9 +1,9 @@
-import { Movie } from "../models/movie";
 // import { Genre } from "../models/genre";
 import { Request, Response } from "express";
 // import { Params } from "../types/ParamsType";
 // import { MovieType } from "../types/MovieType";
 import { asyncMiddleware } from "../middleware/async";
+import { Movie } from "../models/movie";
 
 export const handleGetMovies = asyncMiddleware(
 	async (req: Request, res: Response) => {
@@ -55,10 +55,10 @@ export const handleGetMovie = asyncMiddleware(
 // 	}
 // );
 
-export const handleDeleteMovie = asyncMiddleware(
-	async (req: Request, res: Response) => {
-		const movie = await Movie.findByIdAndRemove(req.params.id);
-		if (!movie) return res.status(404).json("Movie Not Found");
-		return res.json(movie);
-	}
-);
+// export const handleDeleteMovie = asyncMiddleware(
+// 	async (req: Request, res: Response) => {
+// 		const movie = await Movie.findByIdAndRemove(req.params.id);
+// 		if (!movie) return res.status(404).json("Movie Not Found");
+// 		return res.json(movie);
+// 	}
+// );
