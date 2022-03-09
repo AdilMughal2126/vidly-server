@@ -13,16 +13,18 @@ export const handleGetRentals = asyncMiddleware(
 	async (req: Request, res: Response) => {
 		const rentals = await Rental.find({ userId: req.header("X-User-Id") });
 
-		// const filterRentals = rentals.filter(async (rental) => {
-		// 	const isExpire = rental.returnedDate <= new Date();
-		// 	if (!isExpire) return rental;
-		// 	await Movie.findOneAndUpdate({ rental }, { $inc: { numberInStock: 1 } });
-		// 	return await Rental.findOneAndRemove({ rental });
-		// });
+		const filterRentals = rentals.filter(async (rental) => {
+			const isExpire = rental.returnedDate <= new Date();
+			console.log({ isExpire });
+			if (!isExpire) return rental;
+			await Movie.findByIdAndUpdate(
+				{ _id: rental.movie._id },
+				{ $inc: { numberInStock: 1 } }
+			);
+			return await Rental.findOneAndRemove({ rental });
+		});
 
-		// return res.json(filterRentals);
-
-		return res.json(rentals);
+		return res.json(filterRentals);
 	}
 );
 
