@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
 import { Genre } from "../../../models/genre";
@@ -8,50 +8,16 @@ import { app } from "../../../server";
 import { GenreType } from "../../../types/GenreType";
 
 const request = supertest(app);
-const user = new User();
-
-/**
- * @route /api/genre
- *
- * @method GET
- * @access Public
- * Return all the genres
- *
- * @method GET/:id
- * @access Public
- * Return 404 if genreId is invalid
- * Return 404 if genreId is not found
- * Return genre if id is valid
- *
- * @method POST
- * @access Private
- * Return 401 user is not logged in
- * Return 400 if genre.name is less than 5 characters
- * Return 400 if genre.name is greater than 50 characters
- * Save genre if it is valid
- * Return genre if it is valid
- *
- * @method PUT
- * @access Private
- * Return 404 if ID is invalid
- * Return 401 if user is not logged in
- * Return 400 if genre.name is less than 5 characters
- * Return 400 if genre.name is greater than 50 characters
- * Update genre if it is valid
- * Return genre if it is valid
- *
- * @method DELETE
- * @access Private
- * Return 404 if ID is invalid
- * Return 401 if user is not logged in
- * Return 403 if user is not admin
- * Return 404 if genre is not found
- * Return null if genre is deleted
- * Return the genre deleted
- */
 
 describe("Route /api/genres", () => {
 	afterEach(async () => await Genre.deleteMany({}));
+
+	/**
+	 * @route /api/genre
+	 * @method GET
+	 * @access Public
+	 * @return all the genres
+	 */
 
 	describe("GET /", () => {
 		it("should return all the genres", async () => {
@@ -60,18 +26,24 @@ describe("Route /api/genres", () => {
 			const res = await request.get("/api/genres");
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveLength(2);
-			expect(res.body[0]).toHaveProperty("name", "Genre1");
 		});
 	});
 
+	/**
+	 * @route /api/genre
+	 * @method GET/:id
+	 * @access Public
+	 * @return 404 if genreId is invalid
+	 * @return 404 if genreId is not found
+	 * @return genre if id is valid
+	 */
+
 	describe("GET /:id", () => {
 		let id: string;
-		let genre: mongoose.Document<unknown, unknown, GenreType> &
-			GenreType & { _id: mongoose.Types.ObjectId | undefined };
 
 		beforeEach(async () => {
-			genre = await Genre.create({ name: "Genre3" });
-			id = genre._id!.toHexString();
+			const { _id } = await Genre.create({ name: "Genre3" });
+			id = _id!.toHexString();
 		});
 
 		const exec = () => request.get(`/api/genres/${id}`);
@@ -97,6 +69,17 @@ describe("Route /api/genres", () => {
 		});
 	});
 
+	/**
+	 * @route /api/genre
+	 * @method POST
+	 * @access Private
+	 * @return 401 user is not logged in
+	 * @return 400 if genre.name is less than 3 characters
+	 * @return 400 if genre.name is greater than 50 characters
+	 * @should save genre if it is valid
+	 * @return genre if it is valid
+	 */
+
 	describe("POST /", () => {
 		let token: string;
 		let name: string;
@@ -105,8 +88,8 @@ describe("Route /api/genres", () => {
 			request.post("/api/genres").set("X-Auth-Token", token).send({ name });
 
 		beforeEach(() => {
-			token = generateAuthToken(user);
-			name = "Genre4";
+			token = generateAuthToken(new User());
+			name = "Test Genre";
 		});
 
 		it("should return 401 user is not logged in", async () => {
@@ -117,7 +100,7 @@ describe("Route /api/genres", () => {
 		});
 
 		it("should return 400 if genre.name is less than 3 characters", async () => {
-			name = "Ge";
+			name = "Te";
 			const res = await exec();
 			expect(res.status).toBe(400);
 			expect(res.body).toMatch(/must be at least 3/i);
@@ -139,7 +122,7 @@ describe("Route /api/genres", () => {
 		it("should return genre if it is valid", async () => {
 			const res = await exec();
 			expect(res.status).toBe(200);
-			expect(res.body).toMatchObject({ name: "Genre4" });
+			expect(res.body).toMatchObject({ name });
 		});
 	});
 
@@ -147,14 +130,25 @@ describe("Route /api/genres", () => {
 		let token: string;
 		let id: string;
 		let name: string;
-		let genre: mongoose.Document<unknown, unknown, GenreType> &
-			GenreType & { _id: mongoose.Types.ObjectId | undefined };
 
 		beforeEach(async () => {
-			token = generateAuthToken(user);
-			genre = await Genre.create({ name: "Genre5" });
-			id = genre._id!.toHexString();
+			token = generateAuthToken(new User());
+			name = "Test genre";
+			const { _id } = await Genre.create({ name });
+			id = _id!.toHexString();
 		});
+
+		/**
+		 * @route /api/genre
+		 * @method PUT
+		 * @access Private
+		 * @return 404 if ID is invalid
+		 * @return 401 if user is not logged in
+		 * @return 400 if genre.name is less than 3 characters
+		 * @return 400 if genre.name is greater than 50 characters
+		 * @should update genre if it is valid
+		 * @return genre if it is valid
+		 */
 
 		describe("PUT /:id", () => {
 			const exec = () =>
@@ -178,7 +172,7 @@ describe("Route /api/genres", () => {
 			});
 
 			it("should return 400 if genre.name is less than 3 characters", async () => {
-				name = "Ge";
+				name = "Te";
 				const res = await exec();
 				expect(res.status).toBe(400);
 				expect(res.body).toMatch(/must be at least 3/i);
@@ -192,19 +186,29 @@ describe("Route /api/genres", () => {
 			});
 
 			it("should update genre if it is valid", async () => {
-				name = "Genre6";
 				const res = await exec();
 				const updatedGenre = await Genre.findById(res.body._id);
 				expect(updatedGenre).not.toBeNull();
 			});
 
 			it("should return genre if it is valid", async () => {
-				name = "Genre6";
 				const res = await exec();
 				expect(res.status).toBe(200);
 				expect(res.body).toMatchObject({ name });
 			});
 		});
+
+		/**
+		 * @route /api/genre
+		 * @method DELETE
+		 * @access Private
+		 * @return 404 if ID is invalid
+		 * @return 401 if user is not logged in
+		 * @return 403 if user is not admin
+		 * @return 404 if genre is not found
+		 * @return null if genre is deleted
+		 * @return the genre deleted
+		 */
 
 		describe("DELETE /:id", () => {
 			const exec = () =>
@@ -252,7 +256,7 @@ describe("Route /api/genres", () => {
 				token = generateAuthToken(new User({ isAdmin: true }));
 				const res = await exec();
 				expect(res.status).toBe(200);
-				expect(res.body).toMatchObject({ name: "Genre5" });
+				expect(res.body).toMatchObject({ name });
 			});
 		});
 	});

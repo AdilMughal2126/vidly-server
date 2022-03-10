@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/", requireAuth, handleGetFavorites);
 router.post("/", requireAuth, handlePostFavorite);
-router.delete("/:movieId/:userId", requireAuth, handleDeleteFavorite);
-router.delete("/:userId", requireAuth, handleDeleteFavorites);
+router.delete("/:movieId", requireAuth, handleDeleteFavorite);
+router.delete("/clear", requireAuth, handleDeleteFavorites);
 
 export { router as favorites };

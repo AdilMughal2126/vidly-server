@@ -1,21 +1,24 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
+import { getToken, verifyToken } from "../helpers/auth";
 import { numberOfDays } from "../helpers/numberOfDays";
 import { asyncMiddleware } from "../middleware/async";
 import { Movie } from "../models/movie";
 import { Payment } from "../models/payment";
 import { Rental } from "../models/rental";
 import { User } from "../models/user";
+import { JwtPayload } from "../types/JwtPayload";
 import { Params } from "../types/ParamsType";
 import { RentalRequestType } from "../types/RentalType";
 
 export const handleGetRentals = asyncMiddleware(
 	async (req: Request, res: Response) => {
-		const rentals = await Rental.find({ userId: req.header("X-User-Id") });
+		const token = getToken(req);
+		const payload = verifyToken(token as string) as JwtPayload;
+		const rentals = await Rental.find({ userId: payload._id });
 
 		const filterRentals = rentals.filter(async (rental) => {
 			const isExpire = rental.returnedDate <= new Date();
-			console.log({ isExpire });
 			if (!isExpire) return rental;
 			await Movie.findByIdAndUpdate(
 				{ _id: rental.movie._id },
@@ -53,6 +56,7 @@ export const handleCreateRental = async (
 	const user = await User.findById(userId);
 	if (!user) return res.status(400).json("User not found");
 	const payment = await Payment.findOne({ paymentId: paymentIntentId });
+	if (!payment) return res.status(400).json("No payment was found");
 	// if (payment?.status !== "succeeded")
 	// return res.status(400).json("The payment is not succeeded yet");
 

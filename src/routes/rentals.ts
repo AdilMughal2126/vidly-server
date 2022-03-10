@@ -9,7 +9,7 @@ import { validateRequest } from "../middleware/validateRequest";
 import { validateRental } from "../models/rental";
 
 const router = express.Router();
-router.route("/").get(handleGetRentals);
+router.get("/", requireAuth, handleGetRentals);
 // router.get("/:id", validateId, handleGetRental);
 router.post(
 	"/",

@@ -1,41 +1,23 @@
-import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
 import { Genre } from "../../../models/genre";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
-import { GenreType } from "../../../types/GenreType";
 
 const request = supertest(app);
-const user = new User({ name: "User1", email: "user1@gmail.com" });
-
-/**
- * @route any route who require auth
- * @example /api/genres
- *
- * @requireAuth
- * Return 401 if user is not logged in
- * Return 400 if token is invalid
- * Return 200 if token is valid
- *
- * @requireAdmin
- * Return 403 if user is not admin
- * Return null if genre is deleted
- */
 
 describe("Auth Middleware", () => {
 	let token: string;
 	let name: string;
 	let id: string;
-	let genre: mongoose.Document<unknown, unknown, GenreType> & {
-		_id: mongoose.Types.ObjectId | undefined;
-	};
 
 	afterEach(async () => await Genre.deleteMany({}));
 	beforeEach(async () => {
-		token = generateAuthToken(user);
-		genre = await Genre.create({ name: "Genre4" });
-		id = genre._id!.toHexString();
+		token = generateAuthToken(new User());
+		name = "Test New Genre";
+		const { _id } = await Genre.create({ name });
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		id = _id!.toHexString();
 	});
 
 	describe("Require Auth", () => {
@@ -57,10 +39,9 @@ describe("Auth Middleware", () => {
 		});
 
 		it("should return 200 if token is valid", async () => {
-			name = "Genre3";
 			const res = await exec();
 			expect(res.status).toBe(200);
-			expect(res.body).toMatchObject({ name: "Genre3" });
+			expect(res.body).toMatchObject({ name });
 		});
 	});
 

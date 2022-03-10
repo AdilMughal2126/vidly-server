@@ -15,7 +15,7 @@ export const handleGetMovies = asyncMiddleware(
 export const handleGetMovie = asyncMiddleware(
 	async (req: Request, res: Response) => {
 		const movie = await Movie.findById(req.params.id);
-		if (!movie) return res.status(404).json("Movie Not Found");
+		if (!movie) return res.status(404).json("Movie not found");
 		return res.json(movie);
 	}
 );

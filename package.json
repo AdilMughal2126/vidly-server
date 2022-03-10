@@ -9,7 +9,7 @@
 	"scripts": {
 		"start": "node server",
 		"dev": "nodemon ./src/server",
-		"test": "jest --verbose --coverage",
+		"test": "jest --verbose --coverage --detectOpenHandles --forceExit",
 		"seed": "node ./src/seed-data/index.js",
 		"build": "tsc",
 		"lint": "eslint . --ext .ts"

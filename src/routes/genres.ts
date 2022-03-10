@@ -4,12 +4,12 @@ import {
   handleDeleteGenre,
   handleGetGenre,
   handleGetGenres,
-  handleUpdateGenre,
+  handleUpdateGenre
 } from "../controllers/genres";
-import { validateGenre } from "../models/genre";
-import { validateId } from "../middleware/validateObjectId";
 import { requireAdmin, requireAuth } from "../middleware/auth";
+import { validateId } from "../middleware/validateId";
 import { validateRequest } from "../middleware/validateRequest";
+import { validateGenre } from "../models/genre";
 
 const router = express.Router();
 router.route("/").get(handleGetGenres);

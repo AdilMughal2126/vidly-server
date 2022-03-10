@@ -25,15 +25,11 @@ export const handleCreateUser = asyncMiddleware(
 		const { name, email } = req.body;
 		const isEmail = await User.findOne({ email });
 		if (isEmail)
-			return res.status(400).json("This email is already registered");
+			return res.status(400).json("Address email is already registered");
 		const hash = await generateHash(req.body.password);
 		const user = await User.create({ name, email, hash });
 		const token = generateAuthToken(user);
 		return res.json(token);
-		// return res
-		// 	.header("X-Auth-Token", token)
-		// 	.header("Access-Control-Expose-Headers", "X-Auth-Token")
-		// 	.json(_.pick(user, ["_id", "name", "email"]));
 	}
 );
 

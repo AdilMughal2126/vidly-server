@@ -6,7 +6,7 @@ import {
 	handleGetMovies,
 } from "../controllers/movies";
 // import { validateMovie } from "../models/movie";
-import { validateId } from "../middleware/validateObjectId";
+import { validateId } from "../middleware/validateId";
 // import { requireAdmin } from "../middleware/auth";
 // import { requireAdmin, requireAuth } from "../middleware/auth";
 // import { validateRequest } from "../middleware/validateRequest";

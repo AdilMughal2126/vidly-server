@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/", requireAuth, handleGetBookmarks);
 router.post("/", requireAuth, handlePostBookmark);
-router.delete("/:movieId/:userId", requireAuth, handleDeleteBookmark);
-router.delete("/:userId", requireAuth, handleDeleteBookmarks);
+router.delete("/:movieId", requireAuth, handleDeleteBookmark);
+router.delete("/clear", requireAuth, handleDeleteBookmarks);
 
 export { router as bookmarks };

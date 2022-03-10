@@ -1,90 +1,158 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import mongoose from "mongoose";
 import supertest from "supertest";
-// import { RentalType } from "../../../types/RentalType";
-// import { CustomerType } from "../../../types/CustomerType";
 import { generateAuthToken } from "../../../helpers/auth";
 import { Movie } from "../../../models/movie";
+import { Payment } from "../../../models/payment";
 import { Rental } from "../../../models/rental";
 import { User } from "../../../models/user";
-// import mongoose from "mongoose";
 import { app } from "../../../server";
-// import { Customer } from "../../../models/customer";
 import { MovieType } from "../../../types/MovieType";
+import { RentalType } from "../../../types/RentalType";
 import { UserType } from "../../../types/UserType";
 
 const request = supertest(app);
 
-/**
- * @route /api/rentals
- *
- * @method GET
- * @access Public
- * Return all the rentals
- *
- * @method GET/:id
- * @access Public
- * Return 404 if ID is invalid
- * Return 404 if rental is not found
- * Return 200 if rental is valid
- *
- * @method POST
- * @access Private
- * Return 401 if no jwt was provided
- * Return 400 if rental is invalid
- * Return 400 if customer is invalid
- * Return 400 if movie is invalid
- * Return 404 if numberInStock is null
- * Return 200 if rental is valid
- */
-
 describe("ROUTE /api/rentals", () => {
-	let user1: Omit<UserType, "password">;
-	let user2: Omit<UserType, "password">;
+	let user5: Omit<UserType, "password">;
+	// let user6: Omit<UserType, "password">;
 	let movie1: MovieType;
 	let movie2: MovieType;
 
 	afterEach(async () => await Rental.deleteMany({}));
 	beforeEach(() => {
-		user1 = { name: "User1", email: "user1@gmail.com" };
-		user2 = { name: "User2", email: "user2@gmail.com" };
+		user5 = {
+			_id: new mongoose.Types.ObjectId(),
+			name: "User5",
+			email: "user5@gmail.com",
+		};
+		// user6 = {
+		// 	_id: new mongoose.Types.ObjectId(),
+		// 	name: "User6",
+		// 	email: "user6@gmail.com",
+		// };
 		movie1 = {
 			title: "Avengers",
-			genres: [{ name: "Action" }],
+			genre: { name: "Action" },
 			numberInStock: 2,
 			dailyRentalRate: 2.5,
 			voteAverage: 1,
 			overview: "",
 			category: "popular",
 			dateRelease: "",
-			url: "",
+			url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1643970505/vidly/spider-man_no-way-home_s60wqy.jpg",
+			likes: [],
+			bookmarks: [],
+			rentals: [],
 		};
 		movie2 = {
 			title: "GAME OF THRONE",
-			genres: [{ name: "Adventure" }],
+			genre: { name: "Adventure" },
 			numberInStock: 3,
 			dailyRentalRate: 3.5,
 			voteAverage: 1,
 			overview: "",
 			category: "popular",
 			dateRelease: "",
-			url: "",
+			url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1643970505/vidly/spider-man_no-way-home_s60wqy.jpg",
+			likes: [],
+			bookmarks: [],
+			rentals: [],
 		};
 	});
 
+	/**
+	 *  @route /api/rentals
+	 * @method GET
+	 * @access Private
+	 * @return 401 if no jwt was provided"
+	 * @return all the rentals
+	 */
+
 	describe("GET /", () => {
-		it("should return all the rentals", async () => {
-			const rentals = [
-				{ user: user1, movie: movie1, rentalFee: 0 },
-				{ user: user2, movie: movie2, rentalFee: 0 },
+		let token: string;
+		let rentals: RentalType[];
+		let rental3: RentalType;
+
+		afterEach(async () => await Rental.deleteMany({}));
+		beforeEach(async () => {
+			rental3 = {
+				userId: user5._id!.toHexString(),
+				movie: {
+					title: movie1.title,
+					url: movie1.url,
+					voteAverage: movie1.voteAverage,
+					rentals: movie1.rentals,
+				},
+				rentalFee: 0,
+				rentDate: new Date(),
+				returnedDate: new Date(),
+				status: "succeeded",
+			};
+			rentals = [
+				{
+					userId: user5._id!.toHexString(),
+					movie: {
+						title: movie1.title,
+						url: movie1.url,
+						voteAverage: movie1.voteAverage,
+						rentals: movie1.rentals,
+					},
+					rentalFee: 0,
+					rentDate: new Date(),
+					returnedDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+					status: "succeeded",
+				},
+				{
+					userId: user5._id!.toHexString(),
+					movie: {
+						title: movie2.title,
+						url: movie2.url,
+						voteAverage: movie2.voteAverage,
+						rentals: movie2.rentals,
+					},
+					rentalFee: 0,
+					rentDate: new Date(),
+					returnedDate: new Date(new Date().setDate(new Date().getDate() + 2)),
+					status: "succeeded",
+				},
 			];
-			await Rental.create(rentals);
-			const res = await request.get("/api/rentals");
-			console.log("GET /api/rentals :", res.body);
+			await Rental.insertMany(rentals);
+			token = generateAuthToken(new User(user5));
+		});
+
+		const exec = () => request.get("/api/rentals").set("X-Auth-Token", token);
+
+		it("should return 401 if no jwt was provided", async () => {
+			token = "";
+			const res = await exec();
+			expect(res.status).toBe(401);
+			expect(res.body).toMatch(/access denied/i);
+		});
+
+		it("should return all the rentals", async () => {
+			const res = await exec();
 			expect(res.status).toBe(200);
-			expect(res.body[0].user).toMatchObject(user1);
-			expect(res.body[1].user).toMatchObject(user2);
+			expect(res.body).toHaveLength(2);
+		});
+
+		it("should return all the rentals if their returned date > today", async () => {
+			rentals.push(rental3);
+			const res = await exec();
+			expect(res.status).toBe(200);
+			expect(res.body).toHaveLength(2);
+			// expect(res.body[0]).toMatchObject(rental1);
 		});
 	});
+
+	/**
+	 *  @method GET/:id
+	 * @access Private
+	 * @return 404 if ID is invalid
+	 * @return 404 if rental is not found
+	 * @return 200 if rental is valid
+	 */
 
 	// describe("GET /:id", () => {
 	// 	let id: string;
@@ -125,37 +193,60 @@ describe("ROUTE /api/rentals", () => {
 	// 	});
 	// });
 
+	/**
+	 * @method POST
+	 * @access Private
+	 * @return 401 if no jwt was provided
+	 * @return 400 if movie is invalid
+	 * @return 404 if numberInStock is null
+	 * @return 400 if user is not found
+	 * @return 400 if no payment was found
+	 * @return 200 if rental is valid
+	 */
+
 	describe("POST /", () => {
 		let user: UserType;
 		let movieId: string;
+		let userId: string;
 		let token: string;
-		let dateOut: Date;
-		let dateReturned: Date;
+		let paymentIntentId: string;
+		let returnedDate: number;
 
 		afterEach(async () => {
 			await User.deleteMany({});
 			await Movie.deleteMany({});
+			await Payment.deleteMany({});
+			await Rental.deleteMany({});
 		});
 
 		beforeEach(async () => {
 			user = await User.create({
-				name: user1.name,
-				email: user1.email,
-				hash: "user1ssdldqslfqfffezf",
+				name: user5.name,
+				email: user5.email,
+				hash: "user5hash",
 			});
-			const movie = await Movie.create(movie1);
-			movieId = movie._id.toHexString();
-			// userId = (newUser._id!).toHexString();
+			const { _id } = await Movie.create(movie1);
+			movieId = _id!.toHexString();
+			userId = user._id!.toHexString();
+			paymentIntentId = "payment_id";
 			token = generateAuthToken(user);
-			dateOut = new Date("01/02/2022");
-			dateReturned = new Date();
+			returnedDate = new Date().setDate(new Date().getDate() + 1);
+			await Payment.create({
+				paymentId: "payment_id",
+				userId,
+				movieId,
+				amount: 2,
+				client_secret: "client_secret",
+				createAt: +new Date(),
+				status: "succeeded",
+			});
 		});
 
 		const exec = () =>
 			request
 				.post("/api/rentals")
 				.set("X-Auth-Token", token)
-				.send({ movieId, dateOut, dateReturned });
+				.send({ movieId, userId, returnedDate, paymentIntentId });
 
 		it("should return 401 if no jwt was provided", async () => {
 			token = "";
@@ -164,40 +255,38 @@ describe("ROUTE /api/rentals", () => {
 			expect(res.body).toMatch(/access denied/i);
 		});
 
-		// it("should return 400 if rental is invalid", async () => {
-		// 	customerId = "1";
-		// 	// movieId = "1";
-		// 	const res = await exec();
-		// 	expect(res.status).toBe(400);
-		// 	expect(res.body).toMatch(/fails to match the ObjectId pattern/i);
-		// });
-
-		// it("should return 400 if customer is invalid", async () => {
-		// 	customerId = "61df00dd7facff58c1a80e94";
-		// 	const res = await exec();
-		// 	expect(res.status).toBe(400);
-		// 	expect(res.body).toMatch(/invalid customer/i);
-		// });
-
 		it("should return 400 if movie is invalid", async () => {
 			movieId = "61df00dd7facff58c1a80e94";
 			const res = await exec();
 			expect(res.status).toBe(400);
-			expect(res.body).toMatch(/invalid movie/i);
+			expect(res.body).toMatch(/no movie was found/i);
 		});
 
 		// it("should return 404 if numberInStock is null", async () => {
-		//   const res = await exec();
-		//   expect(res.status).toBe(404);
-		//   expect(res.body).toMatch(/no movie found/i);
+		// 	movie1.numberInStock = 0;
+		// 	const res = await exec();
+		// 	expect(res.status).toBe(404);
+		// 	expect(res.body).toMatch(/stock for this movie is empty/i);
 		// });
+
+		it("should return 400 if user is not found", async () => {
+			userId = "61df00dd7facff58c1a80e94";
+			const res = await exec();
+			expect(res.status).toBe(400);
+			expect(res.body).toMatch(/user not found/i);
+		});
+
+		it("should return 400 if no payment was found", async () => {
+			paymentIntentId = "payment_intent_id";
+			const res = await exec();
+			expect(res.status).toBe(400);
+			expect(res.body).toMatch(/no payment was found/i);
+		});
 
 		it("should return 200 if rental is valid", async () => {
 			const res = await exec();
-			console.log("POST /api/rentals", res.body);
 			expect(res.status).toBe(200);
-			// expect(res.body.customer).toMatchObject(customer1);
-			// expect(res.body.movie).toHaveProperty("title", "Avengers");
+			expect(res.body).toMatch(/successfully rented/);
 		});
 	});
 });

@@ -6,61 +6,48 @@ import { UserType } from "../../../types/UserType";
 
 const request = supertest(app);
 
-/**
- * @route /api/auth
- * @method POST
- * @access Public
- *
- * Return 400 if user is invalid
- * Return 400 if user not found
- * Return 400 if password is invalid
- * Return jwt if user is logged in
- */
-
 describe("ROUTE /api/auth", () => {
 	let user: UserType;
 
+	afterEach(async () => await User.deleteMany({}));
 	beforeEach(async () => {
 		await User.create({
-			name: "Takanome",
-			email: "takanome@gmail.com",
-			hash: "$2a$10$LK8evu7yGG3HjbgdA3UmvukrumFqsrLplh.gWo2YoecAj4ylX2pUm",
+			name: "User1",
+			email: "user1@gmail.com",
+			hash: "$2a$10$bHBjONSBdNxaBzrcDXVweuihdtbRi8xyJihBOYPM9u6J1oCjv5rBe",
 		});
 
 		user = {
-			email: "takanome@gmail.com",
-			password: "takanome",
+			email: "user1@gmail.com",
+			password: "12345678",
 		};
 	});
 
-	afterEach(async () => await User.deleteMany({}));
-
 	const exec = () => request.post("/api/auth").send(user);
 
-	it("should return 400 if user is invalid", async () => {
-		user.email = "takanomegmail.com";
-		// user.password = "taka";
+	it("should return 400 if email is invalid", async () => {
+		user.email = "user1@gmail.co";
+		user.password = "12345679";
 		const res = await exec();
 		expect(res.status).toBe(400);
-		expect(res.body).toMatch(/must be a valid email/i);
-		// expect(res.body).toMatch(/must be at least 8/i);
+		expect(res.body).toMatch(/invalid email or password/i);
 	});
 
 	it("should return 400 if user not found", async () => {
-		user.email = "takanom@gmail.com";
+		user.email = "user@gmail.com";
 		const res = await exec();
 		expect(res.status).toBe(400);
 		expect(res.body).toMatch(/invalid email or password/i);
 	});
 
 	it("should return 400 if password is invalid", async () => {
-		user.password = "takanomer";
+		user.password = "12345679";
 		const res = await exec();
 		expect(res.status).toBe(400);
 		expect(res.body).toMatch(/invalid email or password/i);
 	});
 
-	it("should return jwt if user is logged in", async () => {
+	it("should return jwt if user is info is correct", async () => {
 		const res = await exec();
 		const isValid = verifyToken(res.body as string);
 		expect(res.status).toBe(200);

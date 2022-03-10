@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import cloudinary from "cloudinary";
 import express, { Request, Response } from "express";
-import { dataUri } from "../helpers/auth";
+import { dataUri, getToken, verifyToken } from "../helpers/auth";
 import { asyncMiddleware } from "../middleware/async";
 import {
 	cloudinaryConfig,
@@ -9,6 +9,7 @@ import {
 	requireAuth,
 } from "../middleware/auth";
 import { User } from "../models/user";
+import { JwtPayload } from "../types/JwtPayload";
 
 const router = express.Router();
 
@@ -16,15 +17,16 @@ router.post(
 	"/",
 	[requireAuth, handleValidateImage, cloudinaryConfig],
 	asyncMiddleware(async (req: Request, res: Response) => {
-		const id = req.header("X-User-Id");
+		const token = getToken(req);
+		const decoded = verifyToken(token as string) as JwtPayload;
 		const file = dataUri(req).content;
-		const userInDb = await User.findById(id);
+		const userInDb = await User.findById(decoded._id);
 		await cloudinary.v2.uploader.destroy(userInDb!.imageId!);
 		const image = await cloudinary.v2.uploader.upload(file!, {
 			folder: "vidly/profile",
 		});
 		const updatedUser = await User.findByIdAndUpdate(
-			id,
+			decoded._id,
 			{
 				$set: { imageUrl: image.secure_url, imageId: image.public_id },
 			},

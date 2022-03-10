@@ -1,4 +1,4 @@
-import Joi from "joi";
+import { boolean, object, string } from "joi";
 import { model, Schema } from "mongoose";
 import { CustomerType } from "../types/CustomerType";
 
@@ -26,10 +26,10 @@ export const Customer = model(
 );
 
 export const validateCustomer = (customer: CustomerType) => {
-	const schema = Joi.object({
-		name: Joi.string().trim().min(5).max(50).required(),
-		phone: Joi.string().min(8).max(50).required(),
-		isGold: Joi.boolean(),
+	const schema = object({
+		name: string().trim().min(5).max(50).required(),
+		phone: string().min(8).max(50).required(),
+		isGold: boolean(),
 	});
 
 	return schema.validate(customer);

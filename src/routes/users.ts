@@ -8,7 +8,7 @@ import {
 	handleUpdateUser,
 } from "../controllers/users";
 import { requireAdmin, requireAuth } from "../middleware/auth";
-import { validateId } from "../middleware/validateObjectId";
+import { validateId } from "../middleware/validateId";
 import { validateRequest } from "../middleware/validateRequest";
 import { validateUser } from "../models/user";
 

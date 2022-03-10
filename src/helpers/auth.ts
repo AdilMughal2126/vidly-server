@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import bcrypt from "bcryptjs";
 import DataURIParser from "datauri/parser";
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 import { Request } from "express";
 import jwt from "jsonwebtoken";
 import path from "path";
+import { JwtPayload } from "../types/JwtPayload";
 import { UserType } from "../types/UserType";
 
-// dotenv.config();
+dotenv.config();
 
 export const generateAuthToken = (user: UserType) => {
 	const token = jwt.sign(
@@ -25,8 +26,8 @@ export const generateAuthToken = (user: UserType) => {
 
 export const getToken = (req: Request) => req.header("X-Auth-Token");
 
-export const verifyToken = (token: string) =>
-	jwt.verify(token, process.env.JWT_PRIVATE_KEY as string);
+export const verifyToken = (token: string): string | JwtPayload =>
+	jwt.verify(token, process.env.JWT_PRIVATE_KEY!);
 
 export const generateHash = async (password: string) => {
 	const salt = await bcrypt.genSalt(10);
