@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import bcrypt from "bcryptjs";
 import DataURIParser from "datauri/parser";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import { Request } from "express";
 import jwt from "jsonwebtoken";
 import path from "path";
 import { JwtPayload } from "../types/JwtPayload";
 import { UserType } from "../types/UserType";
 
-dotenv.config();
+// dotenv.config();
 
 export const generateAuthToken = (user: UserType) => {
 	const token = jwt.sign(

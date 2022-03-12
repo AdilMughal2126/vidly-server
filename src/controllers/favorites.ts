@@ -26,11 +26,13 @@ export const handlePostFavorite = asyncMiddleware(
 	) => {
 		const { userId, movieId } = req.body;
 		const user = await User.findById(userId);
+		if(!user) return res.status(400).json("User not found")
 		const movie = await Movie.findByIdAndUpdate(
 			movieId,
 			{ $set: { likes: { _id: userId } } },
 			{ new: true }
-		);
+			);
+			if(!movie) return res.status(400).json("Movie not found")
 		await Favorite.create({
 			user: {
 				_id: user?._id,

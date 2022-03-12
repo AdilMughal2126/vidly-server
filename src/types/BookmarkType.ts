@@ -5,7 +5,7 @@ export type BookmarkType = {
 		title: string;
 		url: string;
 		voteAverage: number;
-		bookmarks: { userId: string }[];
+		bookmarks: { _id: string }[];
 	};
 	date: Date;
 };

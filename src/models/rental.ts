@@ -1,4 +1,4 @@
-import { date, object, string } from "joi";
+import Joi from "joi";
 import { model, Schema } from "mongoose";
 import { RentalRequestType, RentalType } from "../types/RentalType";
 
@@ -46,15 +46,15 @@ const rentalSchema = new Schema<RentalType>({
 export const Rental = model("Rental", rentalSchema);
 
 export const validateRental = (rental: RentalRequestType) => {
-	const schema = object({
-		returnedDate: date().required(),
-		movieId: string()
+	const schema = Joi.object({
+		returnedDate: Joi.date().required(),
+		movieId: Joi.string()
 			.regex(/^[0-9a-fA-F]{24}$/, "ObjectId")
 			.required(),
-		userId: string()
+		userId: Joi.string()
 			.regex(/^[0-9a-fA-F]{24}$/, "ObjectId")
 			.required(),
-		paymentIntentId: string().required(),
+		paymentIntentId: Joi.string().required(),
 	});
 
 	return schema.validate(rental);

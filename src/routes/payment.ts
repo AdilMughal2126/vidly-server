@@ -7,6 +7,7 @@ import { asyncMiddleware } from "../middleware/async";
 import { requireAuth } from "../middleware/auth";
 import { Movie } from "../models/movie";
 import { Payment } from "../models/payment";
+import { User } from "../models/user";
 import { PaymentRequestType } from "../types/PaymentType";
 
 const router = express.Router();
@@ -21,6 +22,8 @@ const handleCreatePayment = asyncMiddleware(
 	async (req: Request<unknown, unknown, PaymentRequestType>, res: Response) => {
 		const { userId, movieId, returnedDate } = req.body;
 
+		const user = await User.findById(userId);
+		if (!user) return res.status(400).json("User not found");
 		const movie = await Movie.findById(movieId);
 		if (!movie) return res.status(400).json("Movie not found");
 

@@ -34,7 +34,6 @@ describe("Route /api/users", () => {
 	});
 
 	/**
-	 * @route /api/users
 	 * @method GET
 	 * @access Public
 	 * @return all users
@@ -52,7 +51,6 @@ describe("Route /api/users", () => {
 	});
 
 	/**
-	 * @route /api/users/:id
 	 * @method GET/:id
 	 * @access Public
 	 * @return 404 if ID is invalid
@@ -94,7 +92,6 @@ describe("Route /api/users", () => {
 	});
 
 	/**
-	 * @route /api/users
 	 * @method POST
 	 * @access Public
 	 * @return 400 if user name is less than 5
@@ -164,7 +161,6 @@ describe("Route /api/users", () => {
 	});
 
 	/**
-	 * @route /api/users/:id
 	 * @method PUT
 	 * @access Private
 	 * @return 404 if ID is invalid
@@ -235,7 +231,6 @@ describe("Route /api/users", () => {
 	});
 
 	/**
-	 * @route /api/users/reset/:id
 	 * @method PUT
 	 * @access Private
 	 * @return 404 if ID is invalid
@@ -314,7 +309,7 @@ describe("Route /api/users", () => {
 	});
 
 	/**
-	 *  @method DELETE
+	 * @method DELETE
 	 * @access Private
 	 * @return 404 if ID is invalid
 	 * @return 403 if user is not admin

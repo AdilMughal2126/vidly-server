@@ -1,4 +1,4 @@
-import { number, object, string } from "joi";
+import Joi from "joi";
 import { model, Schema } from "mongoose";
 import { MovieType } from "../types/MovieType";
 import { genreSchema } from "./genre";
@@ -60,13 +60,13 @@ export const Movie = model(
 );
 
 export const validateMovie = (movie: MovieType) => {
-	const schema = object({
-		title: string().trim().min(5).max(50).required(),
-		genreId: string()
+	const schema = Joi.object({
+		title: Joi.string().trim().min(5).max(50).required(),
+		genreId: Joi.string()
 			.regex(/^[0-9a-fA-F]{24}$/, "ObjectId")
 			.required(),
-		numberInStock: number().min(0).max(100).required(),
-		dailyRentalRate: number().min(0).max(10).required(),
+		numberInStock: Joi.number().min(0).max(100).required(),
+		dailyRentalRate: Joi.number().min(0).max(10).required(),
 	});
 
 	return schema.validate(movie);

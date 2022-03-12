@@ -16,7 +16,6 @@ const request = supertest(app);
 
 describe("ROUTE /api/rentals", () => {
 	let user5: Omit<UserType, "password">;
-	// let user6: Omit<UserType, "password">;
 	let movie1: MovieType;
 	let movie2: MovieType;
 
@@ -27,11 +26,6 @@ describe("ROUTE /api/rentals", () => {
 			name: "User5",
 			email: "user5@gmail.com",
 		};
-		// user6 = {
-		// 	_id: new mongoose.Types.ObjectId(),
-		// 	name: "User6",
-		// 	email: "user6@gmail.com",
-		// };
 		movie1 = {
 			title: "Avengers",
 			genre: { name: "Action" },
@@ -41,7 +35,7 @@ describe("ROUTE /api/rentals", () => {
 			overview: "",
 			category: "popular",
 			dateRelease: "",
-			url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1643970505/vidly/spider-man_no-way-home_s60wqy.jpg",
+			url: "movie1_url",
 			likes: [],
 			bookmarks: [],
 			rentals: [],
@@ -55,7 +49,7 @@ describe("ROUTE /api/rentals", () => {
 			overview: "",
 			category: "popular",
 			dateRelease: "",
-			url: "https://res.cloudinary.com/dafwzsod0/image/upload/v1643970505/vidly/spider-man_no-way-home_s60wqy.jpg",
+			url: "movie2_url",
 			likes: [],
 			bookmarks: [],
 			rentals: [],

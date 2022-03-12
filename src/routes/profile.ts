@@ -21,7 +21,9 @@ router.post(
 		const decoded = verifyToken(token as string) as JwtPayload;
 		const file = dataUri(req).content;
 		const userInDb = await User.findById(decoded._id);
-		await cloudinary.v2.uploader.destroy(userInDb!.imageId!);
+		if (!userInDb) return res.status(400).json("User not found");
+
+		await cloudinary.v2.uploader.destroy(userInDb.imageId!);
 		const image = await cloudinary.v2.uploader.upload(file!, {
 			folder: "vidly/profile",
 		});
@@ -37,4 +39,4 @@ router.post(
 	})
 );
 
-export { router as image };
+export { router as profile };
