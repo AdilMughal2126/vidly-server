@@ -67,6 +67,7 @@ describe("Route /api/payment", () => {
 	 * @return 401 if user is not logged in
 	 * @return 400 if user is not found
 	 * @return 400 if movie is not found
+	 * @return 400 if movie already rented
 	 * @should save payment intent is created
 	 * @return 200 if payment created
 	 */
@@ -90,6 +91,13 @@ describe("Route /api/payment", () => {
 		const res = await exec();
 		expect(res.status).toBe(400);
 		expect(res.body).toMatch(/movie not found/i);
+	});
+
+	it("should return 400 if movie already rented", async () => {
+		await Payment.create({paymentId: "payment_id", userId, movieId, amount: 100, status: "pending",  client_secret: "client_secret", createAt: +new Date()})
+		const res = await exec();
+		expect(res.status).toBe(400);
+		expect(res.body).toMatch(/movie already rented/i);
 	});
 
 	it("should save payment intent is created", async () => {

@@ -26,6 +26,8 @@ const handleCreatePayment = asyncMiddleware(
 		if (!user) return res.status(400).json("User not found");
 		const movie = await Movie.findById(movieId);
 		if (!movie) return res.status(400).json("Movie not found");
+		const isRented = await Payment.findOne({ userId, movieId });
+		if (isRented) return res.status(400).json("Movie already rented!");
 
 		const days = numberOfDays(new Date(returnedDate), new Date());
 		const rentalFee = Math.round(days * movie.dailyRentalRate);

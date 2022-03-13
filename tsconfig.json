@@ -10,15 +10,11 @@
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
 		"strictNullChecks": true,
-		// "allowJs": true,
-		// "checkJs": true,
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
 		"noImplicitThis": true,
 		// "noUnusedParameters": true,
-		"skipLibCheck": true,
-		"emitDeclarationOnly": true,
-		"declaration": true
+		"skipLibCheck": true
 	}
 }
