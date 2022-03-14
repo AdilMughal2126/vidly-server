@@ -19,6 +19,7 @@ router.post(
 	asyncMiddleware(async (req: Request, res: Response) => {
 		const token = getToken(req);
 		const decoded = verifyToken(token as string) as JwtPayload;
+		if (!req.file) return res.status(400).json("Only image files are allowed!");
 		const file = dataUri(req).content;
 		const userInDb = await User.findById(decoded._id);
 		if (!userInDb) return res.status(400).json("User not found");

@@ -2,7 +2,7 @@
 /node_modules
 
 # folder
-# /src
+/dist
 
 # misc
 .env

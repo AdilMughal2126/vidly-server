@@ -24,7 +24,7 @@ export const logger = createLogger({
 		}),
 		new transports.MongoDB({
 			level: "error",
-			db: "mongodb://localhost/vidly",
+			db: process.env.MONGO_URI!,
 			storeHost: true,
 			tryReconnect: true,
 			collection: "logs",

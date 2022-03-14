@@ -5,12 +5,12 @@
 		"node": "^16.13.2"
 	},
 	"description": "",
-	"main": "server.ts",
+	"main": "server.js",
 	"scripts": {
-		"start": "node ./src/server",
-		"dev": "nodemon ./src/server",
+		"start": "node ./dist/server",
+		"dev": "nodemon ./dist/server",
 		"test": "jest --verbose --coverage --detectOpenHandles --forceExit",
-		"seed": "node ./src/seed-data/index.js",
+		"seed": "node ./dist/seed-data/index.js",
 		"build": "tsc",
 		"lint": "eslint . --ext .ts"
 	},

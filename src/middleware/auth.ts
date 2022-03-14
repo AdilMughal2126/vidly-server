@@ -43,7 +43,7 @@ const upload = multer({
 	storage,
 	fileFilter: (req, file, cb) => {
 		if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
-			cb(new Error("Only image files are allowed"), false);
+			cb(null, false);
 		}
 		return cb(null, true);
 	},
