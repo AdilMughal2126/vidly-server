@@ -1,12 +1,24 @@
 # dependencies
 /node_modules
 
+# dockerfile
+Dockerfile
+Dockerfile.dev
+docker-compose.yml
+docker-compose.dev.yml
+docker-compose.prod.yml
+docker-compose.backup.yml
+
+# git
+.git 
+.gitignore
+
 # misc
-# .env
+.env
 
 # log files
-# logfile.log
-# exceptions.log
+logfile.log
+exceptions.log
 
 # snyk cache
 .dccache

@@ -4,11 +4,11 @@
 # folder
 /dist
 
+# dockerfile
+docker-compose.backup.yml
+
 # misc
 .env
-
-# config
-# tsconfig.json
 
 # log files
 logfile.log

@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/app
+    environment:
+      NODE_ENV: development
+
+  db:
+    image: mongo:4.0.28-rc0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:

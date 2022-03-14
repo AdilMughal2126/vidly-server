@@ -2,13 +2,11 @@ version: "3.8"
 
 services:
   server:
-    build: ./
-    ports:
-      - 3001:3001
-    volumes:
-      - ./:/app
+    build: .
     depends_on:
       - db
+    ports:
+      - 3001:3001
     healthcheck:
       # test: ["ping", "database"]
       test: wget --no-verbose --tries=1 --spider http://localhost || exit 1
@@ -16,17 +14,14 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    command: pnpm start
     # command: pnpm seed && pnpm start
-    # command: ./docker-entrypoint.sh
     environment:
+      PORT: 3001
       MONGO_URI: ${MONGO_URI}
       MONGO_URI_TEST: ${MONGO_URI_TEST}
       CLIENT_ENDPOINT: ${CLIENT_ENDPOINT}
       JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
-      # MONGO_URI: mongodb://db/vidly
-      # MONGO_URI_TEST: mongodb://db/vidly-test
-      # CLIENT_ENDPOINT: http://localhost:3000
-      # JWT_PRIVATE_KEY: thisIsmYFucKingjSonWeBtOkenpRivAtEkEY
 
   db:
     image: mongo:4.0.28-rc0-xenial

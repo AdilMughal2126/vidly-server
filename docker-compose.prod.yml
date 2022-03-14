@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: vidly_server:1
+    restart: always
+    ports:
+      - 3001:3001
+    environment:
+      NODE_ENV: production
+
+  db:
+    image: mongo:4.0.28-rc0-xenial
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+volumes:
+  vidly:
