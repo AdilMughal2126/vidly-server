@@ -1,5 +1,7 @@
+import dotenv from "dotenv";
 import { createLogger, format, transports } from "winston";
 import "winston-mongodb";
+dotenv.config();
 
 export const logger = createLogger({
 	format: format.combine(
@@ -20,14 +22,14 @@ export const logger = createLogger({
 		}),
 		new transports.File({
 			level: "error",
-			filename: "logfile.log",
+			filename: "logFile.log",
 		}),
 		new transports.MongoDB({
 			level: "error",
 			db: process.env.MONGO_URI!,
 			storeHost: true,
 			tryReconnect: true,
-			collection: "logs",
+			collection: "winston_logs",
 		}),
 	],
 	exceptionHandlers: [

@@ -17,7 +17,7 @@ docker-compose.backup.yml
 .env
 
 # log files
-logfile.log
+logFile.log
 exceptions.log
 
 # snyk cache

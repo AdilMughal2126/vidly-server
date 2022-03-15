@@ -13,6 +13,7 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 
 RUN npm i -g pnpm
+RUN pnpm i -g pm2
 
 COPY package.json pnpm-lock.yaml ./
 
@@ -22,4 +23,4 @@ COPY ./dist README.md ./dist/
 
 EXPOSE 3001
 
-CMD ["pnpm", "start"]
+CMD ["pm2-runtime", "process.json"]

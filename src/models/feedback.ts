@@ -17,6 +17,14 @@ export const Feedback = model<FeedbackType>(
 			required: true,
 			maxlength: 500,
 		},
+		username: {
+			type: String,
+			default: null,
+		},
+		email: {
+			type: String,
+			default: null,
+		},
 	})
 );
 

@@ -30,7 +30,7 @@ const userSchema = new Schema<UserType>({
 	imageUrl: {
 		type: String,
 		default:
-			"https://res.cloudinary.com/dafwzsod0/image/upload/v1645876548/vidly/profile/avatar_or2l9m.jpg",
+			"https://res.cloudinary.com/dafwzsod0/image/upload/v1646766184/vidly/profile/cymfcxo7imebgns0rkp4.jpg",
 	},
 	imageId: {
 		type: String,

@@ -1,0 +1,10 @@
+{
+	"apps": [
+		{
+			"script": "./dist/server.js",
+			"name": "vidly_server",
+			"exec_mode": "cluster",
+			"instances": 2
+		}
+	]
+}

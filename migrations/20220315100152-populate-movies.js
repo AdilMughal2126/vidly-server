@@ -7,7 +7,7 @@ const { movies } = require("../dist/seed-data/data");
 
 module.exports = {
 	async up(db, client) {
-		console.log(`🌱 Migrating MongoDb: ${movies.length} Movies`);
+		console.log(`🌱 Inserting: ${movies.length} Movies`);
 		for (const movie of movies) {
 			const { insertedId } = await db.collection("movies").insertOne(movie);
 			const movieInDb = await db
@@ -28,7 +28,7 @@ module.exports = {
 				await db.collection("genres").insertOne(movieInDb.genre);
 			}
 		}
-		console.log(`✅ Migration Done: ${movies.length} Movies Inserted`);
+		console.log(`✅ ${movies.length} Movies Inserted`);
 	},
 
 	async down(db, client) {

@@ -9,6 +9,7 @@ services:
       - 3001:3001
     environment:
       NODE_ENV: production
+    command: pnpm db:up && pm2-runtime process.json
 
   db:
     image: mongo:4.0.28-rc0-xenial

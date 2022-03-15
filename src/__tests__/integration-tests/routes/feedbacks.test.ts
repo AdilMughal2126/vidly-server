@@ -1,11 +1,14 @@
 import supertest from "supertest";
+import { generateAuthToken } from "../../../helpers/auth";
 import { Feedback } from "../../../models/feedback";
+import { User } from "../../../models/user";
 import { app } from "../../../server";
 import { FeedbackType } from "../../../types/FeedbackType";
 
 const request = supertest(app);
 
 describe("Route /api/feedbacks", () => {
+	let token: string;
 	let feedback1: FeedbackType;
 	let feedback2: FeedbackType;
 
@@ -17,18 +20,29 @@ describe("Route /api/feedbacks", () => {
 			message: "Nice tooltip and transition when displaying error messages:)",
 		};
 		await Feedback.create(feedback1, feedback2);
+		token = generateAuthToken(new User());
 	});
 
 	/**
 	 * @route /api/feedbacks
 	 * @method GET
 	 * @access Public
+	 * @return 403 if user is not admin
 	 * @return all the feedbacks
 	 */
 
 	describe("GET /", () => {
+		const exec = () => request.get("/api/feedbacks").set("X-Auth-Token", token);
+
+		it("should return 403 if user is not admin", async () => {
+			const res = await exec();
+			expect(res.status).toBe(403);
+			expect(res.body).toMatch(/access denied/i);
+		});
+
 		it("should return all the feedbacks", async () => {
-			const res = await request.get("/api/feedbacks");
+			token = generateAuthToken(new User({ isAdmin: true }));
+			const res = await exec();
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveLength(2);
 		});
