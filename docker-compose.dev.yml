@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    image: vidly_server_dev
     ports:
       - 3001:3001
     volumes:

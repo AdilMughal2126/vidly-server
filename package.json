@@ -9,9 +9,10 @@
 	"scripts": {
 		"start": "node ./dist/server",
 		"dev": "nodemon ./dist/server",
-		"test": "jest --verbose --coverage --detectOpenHandles --forceExit",
-		"seed": "node ./dist/seed-data/index.js",
+		"db:up": "migrate-mongo up",
 		"build": "tsc",
+		"seed": "node ./dist/seed-data/index.js",
+		"test": "jest --verbose --coverage --detectOpenHandles --forceExit",
 		"lint": "eslint . --ext .ts"
 	},
 	"keywords": [],
@@ -29,6 +30,7 @@
 		"helmet": "5.0.1",
 		"joi": "^17.5.0",
 		"jsonwebtoken": "^8.5.1",
+		"migrate-mongo": "^8.2.3",
 		"mongoose": "^6.1.6",
 		"multer": "^1.4.4",
 		"stripe": "^8.207.0",

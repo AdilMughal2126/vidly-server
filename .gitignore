@@ -5,6 +5,7 @@
 /dist
 
 # dockerfile
+Dockerfile.multi-stage
 docker-compose.backup.yml
 
 # misc
