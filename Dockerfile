@@ -19,7 +19,7 @@ COPY package.json pnpm-lock.yaml ./
 
 RUN pnpm install --prod
 
-COPY ./dist README.md ./dist/
+COPY . /home/node/app
 
 EXPOSE 3001
 

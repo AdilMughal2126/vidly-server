@@ -3,13 +3,14 @@ version: "3.8"
 services:
   server:
     build: .
-    image: vidly_server:1
+    image: vidly_server:1.0.0
     restart: always
     ports:
       - 3001:3001
     environment:
       NODE_ENV: production
-    command: pnpm db:up && pm2-runtime process.json
+    # command: pnpm db:up && pm2-runtime process.json
+    command: pm2-runtime process.json
 
   db:
     image: mongo:4.0.28-rc0-xenial

@@ -1,13 +1,8 @@
 # dependencies
 /node_modules
 
-# dockerfile
-Dockerfile
-Dockerfile.dev
-docker-compose.yml
-docker-compose.dev.yml
-docker-compose.prod.yml
-docker-compose.backup.yml
+# vscode
+.vscode
 
 # git
 .git 
@@ -22,3 +17,16 @@ exceptions.log
 
 # snyk cache
 .dccache
+
+# dockerfile
+Dockerfile
+Dockerfile.dev
+Dockerfile.multi-stage
+docker-compose.yml
+docker-compose.dev.yml
+docker-compose.prod.yml
+docker-compose.backup.yml
+
+# src code
+/src
+tsconfig.json
