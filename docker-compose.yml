@@ -2,9 +2,13 @@ version: "3.8"
 
 services:
   server:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     depends_on:
       - db
+    volumes:
+      - .:/app
     ports:
       - 3001:3001
     healthcheck:
@@ -14,9 +18,10 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-    command: pnpm db:up && pnpm start
+    # command: pnpm db:up && pnpm start
     environment:
       PORT: 3001
+      NODE_ENV: development
       MONGO_URI: ${MONGO_URI}
       MONGO_URL: ${MONGO_URL}
       MONGO_URI_TEST: ${MONGO_URI_TEST}
