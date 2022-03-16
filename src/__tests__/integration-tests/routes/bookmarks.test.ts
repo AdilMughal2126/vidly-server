@@ -225,25 +225,23 @@ describe("Route /api/bookmarks", () => {
 
 	/**
 	 * @method DELETE
-	 * @route /api/bookmarks/clear
+	 * @route /api/bookmarks/userId/clear
 	 * @access Private
 	 * @return 401 if user is not logged in
+	 * @return 400 if user not found
 	 * @should unset userId in movie's bookmarks
-	 * @return 400 if bookmark not found
 	 * @return 200 if movie successfully deleted from bookmarks
 	 */
 
-	/**
-   * @error test fail
-   * @reason unknown
-   * 
-   * describe("DELETE /clear", () => {
+	describe("DELETE /userId/clear", () => {
 		let userId: string;
 
 		beforeEach(() => (userId = user._id!.toHexString()));
 
 		const exec = () =>
-			request.delete("/api/bookmarks/clear").set("X-Auth-Token", token);
+			request
+				.delete(`/api/bookmarks/${userId}/clear`)
+				.set("X-Auth-Token", token);
 
 		it("should return 401 if user is not logged in", async () => {
 			token = "";
@@ -252,20 +250,25 @@ describe("Route /api/bookmarks", () => {
 			expect(res.body).toMatch(/access denied/i);
 		});
 
-		it("should unset userId in movie's bookmarks", async () => {
-			await exec();
-			const movie = await Movie.find({ bookmarks: { _id: userId } });
-			console.log({ movie });
-			// const isDeleted = movie?.bookmarks.includes({ _id: userId });
-			expect(movie).toBeNull();
-		});
-
-		it("should return 400 if bookmark not found", async () => {
+		it("should return 400 if user not found", async () => {
 			userId = "61dea11b934e3d2eba68782f";
 			const res = await exec();
 			expect(res.status).toBe(400);
-			expect(res.body).toMatch(/no movies was found/i);
+			expect(res.body).toMatch(/user not found/i);
 		});
+
+		it("should unset userId in movie's bookmarks", async () => {
+			await exec();
+			const movies = await Movie.find({ bookmarks: { _id: userId } });
+			expect(movies.length).toBe(0);
+		});
+
+		// it("should return 400 if bookmark not found", async () => {
+		// 	userId = "61dea11b934e3d2eba68782f";
+		// 	const res = await exec();
+		// 	expect(res.status).toBe(400);
+		// 	expect(res.body).toMatch(/no movies was found/i);
+		// });
 
 		it("should return 200 if bookmarks is clear", async () => {
 			const res = await exec();
@@ -273,5 +276,4 @@ describe("Route /api/bookmarks", () => {
 			expect(res.body).toMatch(/removed from bookmarks/i);
 		});
 	});
-   */
 });

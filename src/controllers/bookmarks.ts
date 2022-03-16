@@ -72,16 +72,16 @@ export const handleDeleteBookmark = asyncMiddleware(
 
 export const handleDeleteBookmarks = asyncMiddleware(
 	async (req: Request, res: Response) => {
-		const token = getToken(req);
-		const user = verifyToken(token as string) as JwtPayload;
-		await Movie.findOneAndUpdate(
-			{ bookmarks: { _id: user._id } },
-			{
-				$set: { bookmarks: [{ _id: user._id }] },
-			}
-		);
-		const bookmarks = await Bookmark.deleteMany({ "user._id": user._id });
-		if (!bookmarks) return res.status(400).json("No movies was found");
+		const { userId } = req.params;
+		const user = await User.findById(userId);
+		if (!user) return res.status(400).json("User not found");
+
+		await Bookmark.deleteMany({ "user._id": userId });
+
+		const movies = await Movie.find({ bookmarks: { _id: userId } });
+		movies.map(async (m) => {
+			await m.update({ $unset: { bookmarks: { _id: userId } } });
+		});
 		return res.json("Movies removed from bookmarks");
 	}
 );

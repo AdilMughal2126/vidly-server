@@ -60,7 +60,8 @@ describe("ROUTE /api/rentals", () => {
 	 *  @route /api/rentals
 	 * @method GET
 	 * @access Private
-	 * @return 401 if no jwt was provided"
+	 * @return 401 if no jwt was provided
+	 * @return all the rentals if their returned date > today
 	 * @return all the rentals
 	 */
 
@@ -80,7 +81,7 @@ describe("ROUTE /api/rentals", () => {
 					rentals: movie1.rentals,
 				},
 				rentalFee: 0,
-				rentDate: new Date(),
+				rentDate: new Date(new Date().setDate(new Date().getDate() - 1)),
 				returnedDate: new Date(),
 				status: "succeeded",
 			};
@@ -125,18 +126,17 @@ describe("ROUTE /api/rentals", () => {
 			expect(res.body).toMatch(/access denied/i);
 		});
 
-		it("should return all the rentals", async () => {
+		it("should return all the rentals if their returned date > today", async () => {
+			await Rental.insertMany([rental3]);
 			const res = await exec();
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveLength(2);
 		});
 
-		it("should return all the rentals if their returned date > today", async () => {
-			rentals.push(rental3);
+		it("should return all the rentals", async () => {
 			const res = await exec();
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveLength(2);
-			// expect(res.body[0]).toMatchObject(rental1);
 		});
 	});
 

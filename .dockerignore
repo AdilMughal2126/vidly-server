@@ -10,6 +10,8 @@
 
 # misc
 .env
+.env.local
+.env.prod
 
 # log files
 logFile.log

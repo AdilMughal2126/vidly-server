@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import { getToken, verifyToken } from "../helpers/auth";
@@ -16,17 +17,7 @@ export const handleGetRentals = asyncMiddleware(
 		const token = getToken(req);
 		const payload = verifyToken(token as string) as JwtPayload;
 		const rentals = await Rental.find({ userId: payload._id });
-
-		const filterRentals = rentals.filter(async (rental) => {
-			const isExpire = rental.returnedDate <= new Date();
-			if (!isExpire) return rental;
-			await Movie.findByIdAndUpdate(
-				{ _id: rental.movie._id },
-				{ $inc: { numberInStock: 1 } }
-			);
-			return await Rental.findOneAndRemove({ rental });
-		});
-
+		const filterRentals = rentals.filter((r) => r.returnedDate > new Date());
 		return res.json(filterRentals);
 	}
 );

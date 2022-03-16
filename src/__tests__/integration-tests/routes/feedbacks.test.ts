@@ -58,7 +58,8 @@ describe("Route /api/feedbacks", () => {
 	 */
 
 	describe("POST /", () => {
-		const exec = () => request.post("/api/feedbacks").send(feedback1);
+		const exec = () =>
+			request.post("/api/feedbacks").set("X-Auth-Token", token).send(feedback1);
 
 		it("should return 400 if subject if greater than 300 characters", async () => {
 			feedback1.subject = Array(400).join("a");

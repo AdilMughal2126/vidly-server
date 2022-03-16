@@ -74,6 +74,7 @@ describe("Route /api/genres", () => {
 	 * @method POST
 	 * @access Private
 	 * @return 401 user is not logged in
+	 * @return 403 user is not admin
 	 * @return 400 if genre.name is less than 3 characters
 	 * @return 400 if genre.name is greater than 50 characters
 	 * @should save genre if it is valid
@@ -88,7 +89,7 @@ describe("Route /api/genres", () => {
 			request.post("/api/genres").set("X-Auth-Token", token).send({ name });
 
 		beforeEach(() => {
-			token = generateAuthToken(new User());
+			token = generateAuthToken(new User({ isAdmin: true }));
 			name = "Test Genre";
 		});
 
@@ -96,6 +97,13 @@ describe("Route /api/genres", () => {
 			token = "";
 			const res = await exec();
 			expect(res.status).toBe(401);
+			expect(res.body).toMatch(/access denied/i);
+		});
+
+		it("should return 403 user is not admin", async () => {
+			token = generateAuthToken(new User());
+			const res = await exec();
+			expect(res.status).toBe(403);
 			expect(res.body).toMatch(/access denied/i);
 		});
 
@@ -132,7 +140,7 @@ describe("Route /api/genres", () => {
 		let name: string;
 
 		beforeEach(async () => {
-			token = generateAuthToken(new User());
+			token = generateAuthToken(new User({ isAdmin: true }));
 			name = "Test genre";
 			const { _id } = await Genre.create({ name });
 			id = _id!.toHexString();
@@ -144,6 +152,7 @@ describe("Route /api/genres", () => {
 		 * @access Private
 		 * @return 404 if ID is invalid
 		 * @return 401 if user is not logged in
+		 * @return 403 if user is not admin
 		 * @return 400 if genre.name is less than 3 characters
 		 * @return 400 if genre.name is greater than 50 characters
 		 * @should update genre if it is valid
@@ -168,6 +177,13 @@ describe("Route /api/genres", () => {
 				token = "";
 				const res = await exec();
 				expect(res.status).toBe(401);
+				expect(res.body).toMatch(/access denied/i);
+			});
+
+			it("should return 403 if user is not admin", async () => {
+				token = generateAuthToken(new User());
+				const res = await exec();
+				expect(res.status).toBe(403);
 				expect(res.body).toMatch(/access denied/i);
 			});
 
@@ -232,13 +248,13 @@ describe("Route /api/genres", () => {
 			});
 
 			it("should return 403 if user is not admin", async () => {
+				token = generateAuthToken(new User());
 				const res = await exec();
 				expect(res.status).toBe(403);
 				expect(res.body).toMatch(/access denied/i);
 			});
 
 			it("should return 404 if genre is not found", async () => {
-				token = generateAuthToken(new User({ isAdmin: true }));
 				id = "61dbff8ad38ce60479b35a7e";
 				const res = await exec();
 				expect(res.status).toBe(404);
@@ -246,14 +262,12 @@ describe("Route /api/genres", () => {
 			});
 
 			it("should return null if genre is deleted", async () => {
-				token = generateAuthToken(new User({ isAdmin: true }));
 				const res = await exec();
 				const genre = await Genre.findById(res.body._id);
 				expect(genre).toBeNull();
 			});
 
 			it("should return the genre deleted", async () => {
-				token = generateAuthToken(new User({ isAdmin: true }));
 				const res = await exec();
 				expect(res.status).toBe(200);
 				expect(res.body).toMatchObject({ name });

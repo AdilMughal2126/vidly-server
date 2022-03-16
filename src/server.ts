@@ -46,7 +46,7 @@ export const corsOptions: CorsOptions = {
 
 app.use(helmet());
 app.use(compression());
-app.use("/api/webhook", webhook);
+app.use("/api/webhook", cors(), webhook);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/api/auth", auth);

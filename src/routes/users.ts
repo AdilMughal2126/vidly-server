@@ -13,8 +13,8 @@ import { validateRequest } from "../middleware/validateRequest";
 import { validateUser } from "../models/user";
 
 const router = express.Router();
-router.route("/").get(handleGetUsers);
-router.get("/:id", validateId, handleGetUser);
+router.get("/", requireAdmin, handleGetUsers);
+router.get("/:id", [validateId, requireAdmin], handleGetUser);
 router.post("/", validateRequest(validateUser), handleCreateUser);
 router.put("/:id", [validateId, requireAuth], handleUpdateUser);
 router.put("/reset/:id", [validateId, requireAuth], handleUpdatePassword);

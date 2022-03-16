@@ -15,10 +15,12 @@ export const handleGetFeedbacks = asyncMiddleware(
 
 export const handlePostFeedback = asyncMiddleware(
 	async (req: Request<Params, unknown, FeedbackType>, res: Response) => {
-		const token = getToken(req);
 		let user: JwtPayload;
+		const token = getToken(req);
 
-		token ? (user = verifyToken(token) as JwtPayload) : (user = {});
+		token === "null"
+			? (user = {})
+			: (user = verifyToken(token as string) as JwtPayload);
 
 		const { subject, message } = req.body;
 		await Feedback.create({

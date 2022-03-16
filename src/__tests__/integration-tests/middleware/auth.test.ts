@@ -13,7 +13,7 @@ describe("Auth Middleware", () => {
 
 	afterEach(async () => await Genre.deleteMany({}));
 	beforeEach(async () => {
-		token = generateAuthToken(new User());
+		token = generateAuthToken(new User({ isAdmin: true }));
 		name = "Test New Genre";
 		const { _id } = await Genre.create({ name });
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -28,6 +28,13 @@ describe("Auth Middleware", () => {
 			token = "";
 			const res = await exec();
 			expect(res.status).toBe(401);
+			expect(res.body).toMatch(/access denied/i);
+		});
+
+		it("should return 403 if user is not admin", async () => {
+			token = generateAuthToken(new User());
+			const res = await exec();
+			expect(res.status).toBe(403);
 			expect(res.body).toMatch(/access denied/i);
 		});
 
@@ -50,13 +57,13 @@ describe("Auth Middleware", () => {
 			request.delete(`/api/genres/${id}`).set("X-Auth-Token", token);
 
 		it("should return 403 if user is not admin", async () => {
+			token = generateAuthToken(new User());
 			const res = await exec();
 			expect(res.status).toBe(403);
 			expect(res.body).toMatch(/access denied/i);
 		});
 
 		it("should return null if genre is deleted", async () => {
-			token = generateAuthToken(new User({ isAdmin: true }));
 			const res = await exec();
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			const genre = await Genre.findById(res.body._id);

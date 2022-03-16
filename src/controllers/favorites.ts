@@ -26,13 +26,13 @@ export const handlePostFavorite = asyncMiddleware(
 	) => {
 		const { userId, movieId } = req.body;
 		const user = await User.findById(userId);
-		if(!user) return res.status(400).json("User not found")
+		if (!user) return res.status(400).json("User not found");
 		const movie = await Movie.findByIdAndUpdate(
 			movieId,
 			{ $set: { likes: { _id: userId } } },
 			{ new: true }
-			);
-			if(!movie) return res.status(400).json("Movie not found")
+		);
+		if (!movie) return res.status(400).json("Movie not found");
 		await Favorite.create({
 			user: {
 				_id: user?._id,
@@ -70,16 +70,17 @@ export const handleDeleteFavorite = asyncMiddleware(
 
 export const handleDeleteFavorites = asyncMiddleware(
 	async (req: Request, res: Response) => {
-		const token = getToken(req);
-		const user = verifyToken(token as string) as JwtPayload;
-		await Movie.findOneAndUpdate(
-			{ likes: { _id: user._id } },
-			{
-				$unset: { likes: { _id: user._id } },
-			}
-		);
-		const favorites = await Favorite.deleteMany({ "user._id": user._id });
-		if (!favorites) return res.status(400).json("No movies was found");
+		const { userId } = req.params;
+		const user = await User.findById(userId);
+		if (!user) return res.status(400).json("User not found");
+
+		await Favorite.deleteMany({ "user._id": userId });
+
+		const movies = await Movie.find({ likes: { _id: userId } });
+		movies.map(async (m) => {
+			await m.update({ $unset: { likes: { _id: userId } } });
+		});
+
 		return res.json("Movies removed from favorites");
 	}
 );

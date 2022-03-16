@@ -36,15 +36,35 @@ describe("Route /api/users", () => {
 	/**
 	 * @method GET
 	 * @access Public
+	 * @return 401 if user is not logged in
+	 * @return 403 if user is not admin
 	 * @return all users
 	 */
 
 	describe("GET /", () => {
+		let token: string;
 		afterEach(async () => await User.deleteMany({}));
+		beforeEach(() => (token = generateAuthToken(new User())));
 
-		it("should return all the users", async () => {
+		const exec = () => request.get("/api/users").set("X-Auth-Token", token);
+
+		it("should return 401 if user is not logged in", async () => {
+			token = "";
+			const res = await exec();
+			expect(res.status).toBe(401);
+			expect(res.body).toMatch(/access denied/i);
+		});
+
+		it("should return 403 if user is not admin", async () => {
+			const res = await exec();
+			expect(res.status).toBe(403);
+			expect(res.body).toMatch(/access denied/i);
+		});
+
+		it("should return all users", async () => {
+			token = generateAuthToken(new User({ isAdmin: true }));
 			await User.insertMany([user3, user4]);
-			const res = await request.get("/api/users");
+			const res = await exec();
 			expect(res.status).toBe(200);
 			expect(res.body.length).toBe(2);
 		});
@@ -54,20 +74,25 @@ describe("Route /api/users", () => {
 	 * @method GET/:id
 	 * @access Public
 	 * @return 404 if ID is invalid
+	 * @return 401 if is not logged in
+	 * @return 403 if is not admin
 	 * @return 404 if user is not found
 	 * @return user if ID is valid
 	 */
 
 	describe("GET /:id", () => {
 		let id: string;
+		let token: string;
 
 		beforeEach(async () => {
 			const { _id } = await User.create(user3);
 			id = _id!.toHexString();
+			token = generateAuthToken(new User());
 		});
 		afterEach(async () => await User.deleteMany({}));
 
-		const exec = () => request.get(`/api/users/${id}`);
+		const exec = () =>
+			request.get(`/api/users/${id}`).set("X-Auth-Token", token);
 
 		it("should return 404 if ID is invalid", async () => {
 			id = "1";
@@ -76,7 +101,21 @@ describe("Route /api/users", () => {
 			expect(res.body).toMatch(/invalid id/i);
 		});
 
+		it("should return 401 if is not logged in", async () => {
+			token = "";
+			const res = await exec();
+			expect(res.status).toBe(401);
+			expect(res.body).toMatch(/access denied/i);
+		});
+
+		it("should return 403 if is not admin", async () => {
+			const res = await exec();
+			expect(res.status).toBe(403);
+			expect(res.body).toMatch(/access denied/i);
+		});
+
 		it("should return 404 if user is not found", async () => {
+			token = generateAuthToken(new User({ isAdmin: true }));
 			id = "61dd6dd371aa041cf91f7363";
 			const res = await exec();
 			expect(res.status).toBe(404);
@@ -84,6 +123,7 @@ describe("Route /api/users", () => {
 		});
 
 		it("should return user if ID is valid", async () => {
+			token = generateAuthToken(new User({ isAdmin: true }));
 			const res = await exec();
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveProperty("name", user3.name);

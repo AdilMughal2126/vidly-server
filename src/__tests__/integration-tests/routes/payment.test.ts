@@ -94,7 +94,15 @@ describe("Route /api/payment", () => {
 	});
 
 	it("should return 400 if movie already rented", async () => {
-		await Payment.create({paymentId: "payment_id", userId, movieId, amount: 100, status: "pending",  client_secret: "client_secret", createAt: +new Date()})
+		await Payment.create({
+			paymentId: "payment_id",
+			userId,
+			movieId,
+			amount: 100,
+			status: "pending",
+			client_secret: "client_secret",
+			createAt: +new Date(),
+		});
 		const res = await exec();
 		expect(res.status).toBe(400);
 		expect(res.body).toMatch(/movie already rented/i);
