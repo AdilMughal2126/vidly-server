@@ -2,9 +2,7 @@ version: "3.8"
 
 services:
   server:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
+    build: .
     depends_on:
       - db
     volumes:
@@ -18,25 +16,12 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
-    # command: pnpm db:up && pnpm start
-    environment:
-      PORT: 3001
-      NODE_ENV: development
-      MONGO_URI: ${MONGO_URI}
-      MONGO_URL: ${MONGO_URL}
-      MONGO_URI_TEST: ${MONGO_URI_TEST}
-      CLIENT_ENDPOINT: ${CLIENT_ENDPOINT}
-      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
-      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
-      STRIPE_PRIVATE_KEY: ${STRIPE_PRIVATE_KEY}
-      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
-      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
 
   db:
     image: mongo:4.0.28-rc0-xenial
     ports:
       - 27017:27017
+    restart: unless-stopped
     volumes:
       - vidly:/data/db
 

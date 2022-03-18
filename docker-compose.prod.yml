@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  server:
+    build: .
+    restart: unless-stopped
+    # after migrating the db, the server doesn't start
+    # se we need to stop docker-compose, change the cmd and start it again
+    # command: pnpm run db:up && pnpm start
+    command: pnpm start
+    env_file:
+      - .env
+    environment:
+      PORT: 3001
+      MONGO_URI: ${MONGO_URI}
+      MONGO_URL: ${MONGO_URL}
+      CLIENT_ENDPOINT: ${CLIENT_ENDPOINT}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      STRIPE_PRIVATE_KEY: ${STRIPE_PRIVATE_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}

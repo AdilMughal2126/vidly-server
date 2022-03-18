@@ -6,12 +6,18 @@ WORKDIR /home/node/app
 
 USER node
 
-COPY package.json ./
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 
-RUN npm install --only=production
+ENV PATH=$PATH:/home/node/.npm-global/bin
+
+RUN npm i -g pnpm
+
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm install --prod
 
 COPY . /home/node/app
 
 EXPOSE 3001
 
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]

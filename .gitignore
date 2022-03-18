@@ -5,12 +5,11 @@
 /dist
 
 # dockerfile
-Dockerfile.multi-stage
-docker-compose.backup.yml
+Dockerfile.default
 
 # misc
 .env
-.env.local
+.env.dev
 .env.prod
 
 # log files

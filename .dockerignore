@@ -24,13 +24,12 @@ exceptions.log
 .dccache
 
 # dockerfile
-Dockerfile
 Dockerfile.dev
-Dockerfile.multi-stage
-docker-compose.yml
+Dockerfile.default
 docker-compose.dev.yml
-docker-compose.prod.yml
-docker-compose.backup.yml
+# Dockerfile
+# docker-compose.yml
+# docker-compose.prod.yml
 
 # src code
 /src
