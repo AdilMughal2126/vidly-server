@@ -6,8 +6,8 @@ services:
     restart: unless-stopped
     # after migrating the db, the server doesn't start
     # se we need to stop docker-compose, change the cmd and start it again
-    # command: pnpm run db:up && pnpm start
-    command: pnpm start
+    command: pnpm run db:up && pnpm start
+    # command: pnpm start
     env_file:
       - .env
     environment:

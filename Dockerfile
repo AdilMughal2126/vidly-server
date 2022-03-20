@@ -1,7 +1,7 @@
 # Stage 1: Build stage
 FROM node:16.14-alpine3.15 AS build-stage
 
-WORKDIR /home/node/app
+WORKDIR /app
 
 COPY package.json ./
 
@@ -30,9 +30,9 @@ COPY package.json pnpm-lock.yaml ./
 
 RUN pnpm install --prod
 
-COPY --from=build-stage /home/node/app/dist /home/node/app/
+COPY --from=build-stage /app/dist /home/node/app/
 
-COPY . /home/node/app/
+COPY migrate-mongo-config.js migrations /home/node/app/
 
 EXPOSE 3001
 

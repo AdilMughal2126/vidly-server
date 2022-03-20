@@ -30,7 +30,3 @@ docker-compose.dev.yml
 # Dockerfile
 # docker-compose.yml
 # docker-compose.prod.yml
-
-# src code
-/src
-tsconfig.json
