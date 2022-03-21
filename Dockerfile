@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm build
+RUN npm run build
 
 # Stage 2: Production
 FROM node:16.14-alpine3.15
