@@ -28,4 +28,4 @@ COPY --from=build-stage /app/dist /home/node/app/
 
 EXPOSE 3001
 
-CMD ["pnpm", "start"]
+CMD ["npm", "start"]
