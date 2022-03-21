@@ -11,7 +11,11 @@ export const connectDB = async () => {
 		if (process.env.NODE_ENV === "test") {
 			connect = await mongoose.connect(process.env.MONGO_URI_TEST as string);
 		} else {
-			connect = await mongoose.connect(process.env.MONGO_URI as string);
+			connect = await mongoose.connect(
+				`${process.env.MONGO_URI_1}${encodeURIComponent(
+					process.env.MONGO_URI_2!
+				)}${process.env.MONGO_URI_3!}`
+			);
 		}
 
 		const { host, port, name } = connect.connection;

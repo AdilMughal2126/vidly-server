@@ -20,19 +20,11 @@ WORKDIR /home/node/app
 
 USER node
 
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-
-ENV PATH=$PATH:/home/node/.npm-global/bin
-
-RUN npm i -g pnpm
-
 COPY package.json pnpm-lock.yaml ./
 
-RUN pnpm install --prod
+RUN npm install --production
 
 COPY --from=build-stage /app/dist /home/node/app/
-
-COPY migrate-mongo-config.js migrations /home/node/app/
 
 EXPOSE 3001
 

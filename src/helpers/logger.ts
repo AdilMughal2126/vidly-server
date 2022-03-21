@@ -26,7 +26,9 @@ export const logger = createLogger({
 		}),
 		new transports.MongoDB({
 			level: "error",
-			db: process.env.MONGO_URI as string,
+			db: `${process.env.MONGO_URI_1}${encodeURIComponent(
+				process.env.MONGO_URI_2!
+			)}${process.env.MONGO_URI_3!}`,
 			storeHost: true,
 			tryReconnect: true,
 			collection: "winston_logs",

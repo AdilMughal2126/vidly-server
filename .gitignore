@@ -6,6 +6,7 @@
 
 # dockerfile
 Dockerfile.default
+docker-compose.prod.yml
 
 # misc
 .env
