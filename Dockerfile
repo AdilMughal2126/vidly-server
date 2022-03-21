@@ -24,7 +24,7 @@ COPY package.json pnpm-lock.yaml ./
 
 RUN npm install --production
 
-COPY --from=build-stage /app/dist /home/node/app/
+COPY --from=build-stage /app/dist/ /home/node/app/
 
 EXPOSE 3001
 
