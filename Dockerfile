@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm build
 
 # Stage 2: Production
 FROM node:16.14-alpine3.15
@@ -20,11 +20,11 @@ WORKDIR /home/node/app
 
 USER node
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 
 RUN npm install --production
 
-COPY --from=build-stage /app/dist/ /home/node/app/
+COPY --from=build-stage /app/dist /home/node/app/dist
 
 EXPOSE 3001
 
