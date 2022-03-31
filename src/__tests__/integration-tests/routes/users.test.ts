@@ -6,16 +6,16 @@ import {
 	validateHash,
 	verifyToken,
 } from "../../../helpers/auth";
+import { JwtPayloadInt } from "../../../interfaces/JwtPayloadInt";
+import { UpdatePasswordInt, UserInt } from "../../../interfaces/UserInt";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
-import { JwtPayload } from "../../../types/JwtPayload";
-import { UpdatePasswordType, UserType } from "../../../types/UserType";
 
 const request = supertest(app);
 
 describe("Route /api/users", () => {
-	let user3: UserType;
-	let user4: UserType;
+	let user3: UserInt;
+	let user4: UserInt;
 
 	beforeEach(() => {
 		user3 = {
@@ -142,8 +142,8 @@ describe("Route /api/users", () => {
 	 */
 
 	describe("POST /", () => {
-		let user7: Omit<UserType, "password">;
-		let user8: UserType;
+		let user7: Omit<UserInt, "password">;
+		let user8: UserInt;
 
 		afterEach(async () => await User.deleteMany({}));
 		beforeEach(async () => {
@@ -193,7 +193,7 @@ describe("Route /api/users", () => {
 		it("should return token if valid", async () => {
 			const res = await exec();
 			const user = await User.findOne({ name: user8.name, email: user8.email });
-			const decoded = verifyToken(res.body as string) as JwtPayload;
+			const decoded = verifyToken(res.body as string) as JwtPayloadInt;
 			const isValid = decoded?._id === user?._id?.toHexString();
 			expect(res.status).toBe(200);
 			expect(isValid).toBe(true);
@@ -210,8 +210,8 @@ describe("Route /api/users", () => {
 	 */
 
 	describe("PUT /:id", () => {
-		let user8: Omit<UserType, "password">;
-		let user88: Omit<UserType, "password">;
+		let user8: Omit<UserInt, "password">;
+		let user88: Omit<UserInt, "password">;
 		let token: string;
 		let id: string;
 
@@ -263,7 +263,7 @@ describe("Route /api/users", () => {
 				name: user88.name,
 				email: user88.email,
 			});
-			const decoded = verifyToken(res.body as string) as JwtPayload;
+			const decoded = verifyToken(res.body as string) as JwtPayloadInt;
 			const isValid = decoded?._id === user?._id?.toHexString();
 			expect(res.status).toBe(200);
 			expect(isValid).toBe(true);
@@ -281,8 +281,8 @@ describe("Route /api/users", () => {
 	 */
 
 	describe("PUT /reset/:id", () => {
-		let user1: Omit<UserType, "password">;
-		let updateUser8Password: UpdatePasswordType;
+		let user1: Omit<UserInt, "password">;
+		let updateUser8Password: UpdatePasswordInt;
 		let token: string;
 		let id: string;
 

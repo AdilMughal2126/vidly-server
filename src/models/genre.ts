@@ -1,8 +1,8 @@
 import Joi from "joi";
 import { model, Schema } from "mongoose";
-import { GenreType } from "../types/GenreType";
+import { GenreInt } from "../interfaces/GenreInt";
 
-export const genreSchema = new Schema<GenreType>({
+export const genreSchema = new Schema<GenreInt>({
 	name: {
 		type: String,
 		trim: true,
@@ -14,7 +14,7 @@ export const genreSchema = new Schema<GenreType>({
 
 export const Genre = model("Genre", genreSchema);
 
-export const validateGenre = (genre: GenreType) => {
+export const validateGenre = (genre: GenreInt) => {
 	const schema = Joi.object({
 		name: Joi.string().trim().min(3).max(50).required(),
 	});

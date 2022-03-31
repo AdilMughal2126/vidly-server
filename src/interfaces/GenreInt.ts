@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export type GenreType = {
+export interface GenreInt {
 	_id?: mongoose.Types.ObjectId;
 	name: string;
-};
+}

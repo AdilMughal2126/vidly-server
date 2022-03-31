@@ -1,8 +1,8 @@
 import Joi from "joi";
 import { model, Schema } from "mongoose";
-import { UserType } from "../types/UserType";
+import { UserInt } from "../interfaces/UserInt";
 
-const userSchema = new Schema<UserType>({
+const userSchema = new Schema<UserInt>({
 	name: {
 		type: String,
 		trim: true,
@@ -41,9 +41,9 @@ const userSchema = new Schema<UserType>({
 	},
 });
 
-export const User = model<UserType>("User", userSchema);
+export const User = model<UserInt>("User", userSchema);
 
-export const validateUser = (user: UserType) => {
+export const validateUser = (user: UserInt) => {
 	const schema = Joi.object({
 		name: Joi.string().trim().min(5).max(50).required(),
 		password: Joi.string().min(8).max(50).required(),
@@ -53,7 +53,7 @@ export const validateUser = (user: UserType) => {
 	return schema.validate(user);
 };
 
-export const validateUpdatedUser = (user: Pick<UserType, "name" | "email">) => {
+export const validateUpdatedUser = (user: Pick<UserInt, "name" | "email">) => {
 	const schema = Joi.object({
 		name: Joi.string().trim().min(5).max(50).required(),
 		email: Joi.string().email().min(8).max(50).required(),

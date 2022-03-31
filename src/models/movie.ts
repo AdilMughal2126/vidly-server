@@ -1,11 +1,11 @@
 import Joi from "joi";
 import { model, Schema } from "mongoose";
-import { MovieType } from "../types/MovieType";
+import { MovieInt } from "../interfaces/MovieInt";
 import { genreSchema } from "./genre";
 
 export const Movie = model(
 	"Movie",
-	new Schema<MovieType>({
+	new Schema<MovieInt>({
 		genre: {
 			type: genreSchema,
 			required: true,
@@ -47,19 +47,10 @@ export const Movie = model(
 			min: 0,
 			max: 10,
 		},
-		likes: {
-			type: [{ _id: String }],
-		},
-		bookmarks: {
-			type: [{ _id: String }],
-		},
-		rentals: {
-			type: [{ _id: String }],
-		},
 	})
 );
 
-export const validateMovie = (movie: MovieType) => {
+export const validateMovie = (movie: MovieInt) => {
 	const schema = Joi.object({
 		title: Joi.string().trim().min(5).max(50).required(),
 		genreId: Joi.string()

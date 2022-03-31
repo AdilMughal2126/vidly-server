@@ -1,9 +1,9 @@
 import { model, Schema } from "mongoose";
-import { PaymentType } from "../types/PaymentType";
+import { PaymentInt } from "../interfaces/PaymentInt";
 
-export const Payment = model<PaymentType>(
+export const Payment = model<PaymentInt>(
 	"Payment",
-	new Schema<PaymentType>({
+	new Schema<PaymentInt>({
 		paymentId: {
 			type: String,
 			required: true,

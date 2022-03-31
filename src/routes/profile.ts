@@ -2,6 +2,7 @@
 import cloudinary from "cloudinary";
 import express, { Request, Response } from "express";
 import { dataUri, getToken, verifyToken } from "../helpers/auth";
+import { JwtPayloadInt } from "../interfaces/JwtPayloadInt";
 import { asyncMiddleware } from "../middleware/async";
 import {
 	cloudinaryConfig,
@@ -9,7 +10,6 @@ import {
 	requireAuth,
 } from "../middleware/auth";
 import { User } from "../models/user";
-import { JwtPayload } from "../types/JwtPayload";
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.post(
 	[requireAuth, handleValidateImage, cloudinaryConfig],
 	asyncMiddleware(async (req: Request, res: Response) => {
 		const token = getToken(req);
-		const decoded = verifyToken(token as string) as JwtPayload;
+		const decoded = verifyToken(token as string) as JwtPayloadInt;
 		if (!req.file) return res.status(400).json("Only image files are allowed!");
 		const file = dataUri(req).content;
 		const userInDb = await User.findById(decoded._id);

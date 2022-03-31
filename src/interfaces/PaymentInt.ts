@@ -1,16 +1,16 @@
 import Stripe from "stripe";
 
-export type PaymentRequestType = {
+export interface PaymentReqInt {
 	userId: string;
 	movieId: string;
 	returnedDate: string;
-};
+}
 
 export type PaymentIntentConfirmation =
 	| { paymentIntent: Stripe.PaymentIntent; error?: undefined }
 	| { paymentIntent?: undefined; error: Stripe.StripeError };
 
-export type PaymentType = {
+export interface PaymentInt {
 	paymentId: string;
 	userId: string;
 	movieId: string;
@@ -18,4 +18,4 @@ export type PaymentType = {
 	client_secret: string;
 	createAt: number;
 	status: string;
-};
+}

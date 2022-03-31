@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
+import { GenreInt } from "../interfaces/GenreInt";
+import { ParamsInt } from "../interfaces/ParamsInt";
 import { asyncMiddleware } from "../middleware/async";
 import { Genre } from "../models/genre";
-import { GenreType } from "../types/GenreType";
-import { Params } from "../types/ParamsType";
 
 export const handleGetGenres = asyncMiddleware(
 	async (req: Request, res: Response) => {
 		const genres = await Genre.find().sort("name");
-		return res.json(genres);
+		const filteredGenres = genres.filter((g) => g.name);
+		return res.json(filteredGenres);
 	}
 );
 
@@ -20,14 +21,14 @@ export const handleGetGenre = asyncMiddleware(
 );
 
 export const handleCreateGenre = asyncMiddleware(
-	async (req: Request<unknown, unknown, GenreType>, res: Response) => {
+	async (req: Request<unknown, unknown, GenreInt>, res: Response) => {
 		const genre = await Genre.create({ name: req.body.name });
 		return res.json(genre);
 	}
 );
 
 export const handleUpdateGenre = asyncMiddleware(
-	async (req: Request<Params, unknown, GenreType>, res: Response) => {
+	async (req: Request<ParamsInt, unknown, GenreInt>, res: Response) => {
 		const genre = await Genre.findByIdAndUpdate(
 			req.params.id,
 			{ name: req.body.name },

@@ -2,7 +2,6 @@ require("dotenv").config();
 
 const config = {
 	mongodb: {
-		// eslint-disable-next-line no-undef
 		url: process.env.MONGO_URL,
 		databaseName: "vidly",
 

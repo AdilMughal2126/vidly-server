@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import dotenv from "dotenv";
 import { createLogger, format, transports } from "winston";
 import "winston-mongodb";
@@ -26,7 +27,7 @@ export const logger = createLogger({
 		}),
 		new transports.MongoDB({
 			level: "error",
-			db: `${process.env.MONGO_URI_1}${encodeURIComponent(
+			db: `${process.env.MONGO_URI_1!}${encodeURIComponent(
 				process.env.MONGO_URI_2!
 			)}${process.env.MONGO_URI_3!}`,
 			storeHost: true,

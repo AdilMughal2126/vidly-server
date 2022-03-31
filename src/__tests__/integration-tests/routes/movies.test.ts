@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import supertest from "supertest";
+import { MovieInt } from "../../../interfaces/MovieInt";
 import { Movie } from "../../../models/movie";
 import { app } from "../../../server";
-import { MovieType } from "../../../types/MovieType";
 
 const request = supertest(app);
 
 describe("Route /api/movies", () => {
-	let movie1: MovieType;
-	let movie2: MovieType;
+	let movie1: MovieInt;
+	let movie2: MovieInt;
 
 	afterEach(async () => await Movie.deleteMany({}));
 	beforeEach(async () => {
@@ -22,9 +22,6 @@ describe("Route /api/movies", () => {
 			overview: "",
 			dateRelease: "",
 			url: "",
-			likes: [],
-			bookmarks: [],
-			rentals: [],
 		};
 		movie2 = {
 			title: "Fast & Furious",
@@ -36,9 +33,6 @@ describe("Route /api/movies", () => {
 			overview: "",
 			dateRelease: "",
 			url: "",
-			likes: [],
-			bookmarks: [],
-			rentals: [],
 		};
 
 		await Movie.insertMany([movie1, movie2]);
@@ -110,7 +104,7 @@ describe("Route /api/movies", () => {
 
 	// describe("POST /", () => {
 	// 	let token: string;
-	// 	let movie: MovieType;
+	// 	let movie: MovieInt;
 
 	// 	beforeEach(async () => {
 	// 		const genre = await Genre.create({ name: "NewGenre" });

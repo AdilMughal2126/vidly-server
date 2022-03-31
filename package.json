@@ -8,7 +8,7 @@
 	"main": "server.js",
 	"scripts": {
 		"start": "node ./dist/server",
-		"dev": "nodemon ./dist/server",
+		"dev": "nodemon ./src/server.ts",
 		"db:up": "migrate-mongo up",
 		"build": "tsc",
 		"seed": "node ./dist/seed-data/index.js",

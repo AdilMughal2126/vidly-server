@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { getToken, verifyToken } from "../helpers/auth";
+import { FeedbackInt } from "../interfaces/FeedbackInt";
+import { JwtPayloadInt } from "../interfaces/JwtPayloadInt";
+import { ParamsInt } from "../interfaces/ParamsInt";
 import { asyncMiddleware } from "../middleware/async";
 import { Feedback } from "../models/feedback";
-import { FeedbackType } from "../types/FeedbackType";
-import { JwtPayload } from "../types/JwtPayload";
-import { Params } from "../types/ParamsType";
 
 export const handleGetFeedbacks = asyncMiddleware(
 	async (req: Request, res: Response) => {
@@ -14,13 +14,13 @@ export const handleGetFeedbacks = asyncMiddleware(
 );
 
 export const handlePostFeedback = asyncMiddleware(
-	async (req: Request<Params, unknown, FeedbackType>, res: Response) => {
-		let user: JwtPayload;
+	async (req: Request<ParamsInt, unknown, FeedbackInt>, res: Response) => {
+		let user: JwtPayloadInt;
 		const token = getToken(req);
 
 		token === "null"
 			? (user = {})
-			: (user = verifyToken(token as string) as JwtPayload);
+			: (user = verifyToken(token as string) as JwtPayloadInt);
 
 		const { subject, message } = req.body;
 		await Feedback.create({

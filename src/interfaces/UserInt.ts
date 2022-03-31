@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export type UserType = {
+export interface UserInt {
 	_id?: mongoose.Types.ObjectId;
 	name?: string;
 	email: string;
@@ -10,9 +10,9 @@ export type UserType = {
 	imageUrl?: string;
 	imageId?: string;
 	createAt?: Date;
-};
+}
 
-export type UpdatePasswordType = {
+export interface UpdatePasswordInt {
 	currentPassword: string;
 	newPassword: string;
-};
+}

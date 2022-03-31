@@ -3,44 +3,34 @@ import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import { getToken, verifyToken } from "../helpers/auth";
 import { numberOfDays } from "../helpers/numberOfDays";
+import { JwtPayloadInt } from "../interfaces/JwtPayloadInt";
+import { ParamsInt } from "../interfaces/ParamsInt";
+import { RentalReqInt } from "../interfaces/RentalInt";
 import { asyncMiddleware } from "../middleware/async";
 import { Movie } from "../models/movie";
 import { Payment } from "../models/payment";
 import { Rental } from "../models/rental";
 import { User } from "../models/user";
-import { JwtPayload } from "../types/JwtPayload";
-import { Params } from "../types/ParamsType";
-import { RentalRequestType } from "../types/RentalType";
 
 export const handleGetRentals = asyncMiddleware(
 	async (req: Request, res: Response) => {
 		const token = getToken(req);
-		const payload = verifyToken(token as string) as JwtPayload;
-		const rentals = await Rental.find({ userId: payload._id });
-		const filterRentals = rentals.filter((r) => r.returnedDate > new Date());
-		return res.json(filterRentals);
+		const payload = verifyToken(token as string) as JwtPayloadInt;
+		const userRental = await Rental.findOne({ "user._id": payload._id });
+		// const filterRentals = userRental?.rentals.filter(
+		// 	(r) => r.returnedDate > new Date()
+		// );
+		return res.json(userRental);
 	}
 );
 
-// export const handleGetRental = asyncMiddleware(
-// 	async (req: Request, res: Response) => {
-// 		const rental = await Rental.findById(req.params.id);
-// 		if (!rental) return res.status(404).json("Rental Not Found");
-// 		return res.json(rental);
-// 	}
-// );
-
 export const handleCreateRental = async (
-	req: Request<Params, unknown, RentalRequestType>,
+	req: Request<ParamsInt, unknown, RentalReqInt>,
 	res: Response,
 	next: NextFunction
 ) => {
 	const { movieId, userId, returnedDate, paymentIntentId } = req.body;
-	const movie = await Movie.findByIdAndUpdate(
-		movieId,
-		{ $set: { rentals: { _id: userId } } },
-		{ new: true }
-	);
+	const movie = await Movie.findById(movieId);
 	if (!movie) return res.status(400).json("No movie was found");
 	if (movie.numberInStock === 0)
 		return res.status(404).json("The stock for this movie is empty");
@@ -54,23 +44,30 @@ export const handleCreateRental = async (
 	const days = numberOfDays(new Date(returnedDate), new Date());
 	const rentalFee = days * movie.dailyRentalRate;
 
+	const rental = {
+		movieId,
+		rentDate: new Date(),
+		returnedDate,
+		rentalFee,
+		status: payment?.status,
+	};
+	const userInRental = await Rental.findOne({ "user._id": userId });
+
 	try {
 		const session = await mongoose.startSession();
 		await session.withTransaction(async () => {
-			await Rental.create({
-				userId: user._id,
-				movie: {
-					_id: movie._id,
-					title: movie.title,
-					url: movie.url,
-					voteAverage: movie.voteAverage,
-					rentals: movie.rentals,
-				},
-				rentDate: new Date(),
-				returnedDate,
-				rentalFee,
-				status: payment?.status,
-			});
+			if (userInRental) {
+				userInRental.rentals.push(rental);
+				await userInRental.save();
+			} else {
+				await Rental.create({
+					user: {
+						_id: user._id,
+						name: user.name,
+					},
+					rentals: [rental],
+				});
+			}
 
 			movie.numberInStock--;
 			await movie.save();

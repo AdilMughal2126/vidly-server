@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
+import { GenreInt } from "../../../interfaces/GenreInt";
 import { Genre } from "../../../models/genre";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
-import { GenreType } from "../../../types/GenreType";
 
 const request = supertest(app);
 
@@ -21,7 +21,7 @@ describe("Route /api/genres", () => {
 
 	describe("GET /", () => {
 		it("should return all the genres", async () => {
-			const genres: GenreType[] = [{ name: "Genre1" }, { name: "Genre2" }];
+			const genres: GenreInt[] = [{ name: "Genre1" }, { name: "Genre2" }];
 			await Genre.create(genres);
 			const res = await request.get("/api/genres");
 			expect(res.status).toBe(200);

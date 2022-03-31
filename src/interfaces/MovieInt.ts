@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import { GenreType } from "./GenreType";
+import { GenreInt } from "./GenreInt";
 
-export type MovieType = {
-	// _id?: string;
+export interface MovieInt {
 	_id?: mongoose.Types.ObjectId | undefined;
-	genre: GenreType;
+	genre: GenreInt;
 	title: string;
 	overview: string;
 	dateRelease: string;
@@ -14,7 +13,4 @@ export type MovieType = {
 	dailyRentalRate: number;
 	voteAverage: number;
 	category: "trending" | "popular";
-	likes: { _id: string }[];
-	bookmarks: { _id: string }[];
-	rentals: { _id: string }[];
-};
+}

@@ -1,9 +1,9 @@
 import { model, Schema } from "mongoose";
-import { FavoriteType } from "../types/FavoriteType";
+import { FavoriteInt } from "../interfaces/FavoriteInt";
 
-export const Favorite = model<FavoriteType>(
+export const Favorite = model<FavoriteInt>(
 	"Favorite",
-	new Schema<FavoriteType>({
+	new Schema<FavoriteInt>({
 		user: {
 			type: new Schema({
 				name: {
@@ -13,29 +13,18 @@ export const Favorite = model<FavoriteType>(
 			}),
 			required: true,
 		},
-		movie: {
-			type: new Schema({
-				title: {
-					type: String,
-					required: true,
+		favorites: {
+			type: [
+				{
+					_id: false,
+					movieId: String,
+					date: {
+						type: Date,
+						default: Date.now,
+					},
 				},
-				url: {
-					type: String,
-					required: true,
-				},
-				voteAverage: {
-					type: String,
-					required: true,
-				},
-				likes: {
-					type: [{ _id: String }],
-				},
-			}),
+			],
 			required: true,
-		},
-		date: {
-			type: Date,
-			default: Date.now,
 		},
 	})
 );

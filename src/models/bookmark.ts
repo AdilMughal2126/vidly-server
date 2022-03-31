@@ -1,9 +1,9 @@
 import { model, Schema } from "mongoose";
-import { BookmarkType } from "../types/BookmarkType";
+import { BookmarkInt } from "../interfaces/BookmarkInt";
 
-export const Bookmark = model<BookmarkType>(
+export const Bookmark = model<BookmarkInt>(
 	"Bookmark",
-	new Schema<BookmarkType>({
+	new Schema<BookmarkInt>({
 		user: {
 			type: new Schema({
 				name: {
@@ -13,29 +13,18 @@ export const Bookmark = model<BookmarkType>(
 			}),
 			required: true,
 		},
-		movie: {
-			type: new Schema({
-				title: {
-					type: String,
-					required: true,
+		bookmarks: {
+			type: [
+				{
+					_id: false,
+					movieId: String,
+					date: {
+						type: Date,
+						default: Date.now,
+					},
 				},
-				url: {
-					type: String,
-					required: true,
-				},
-				voteAverage: {
-					type: String,
-					required: true,
-				},
-				bookmarks: {
-					type: [{ _id: String }],
-				},
-			}),
+			],
 			required: true,
-		},
-		date: {
-			type: Date,
-			default: Date.now,
 		},
 	})
 );

@@ -3,21 +3,21 @@
 import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
+import { MovieInt } from "../../../interfaces/MovieInt";
+import { RentalInt } from "../../../interfaces/RentalInt";
+import { UserInt } from "../../../interfaces/UserInt";
 import { Movie } from "../../../models/movie";
 import { Payment } from "../../../models/payment";
 import { Rental } from "../../../models/rental";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
-import { MovieType } from "../../../types/MovieType";
-import { RentalType } from "../../../types/RentalType";
-import { UserType } from "../../../types/UserType";
 
 const request = supertest(app);
 
 describe("ROUTE /api/rentals", () => {
-	let user5: Omit<UserType, "password">;
-	let movie1: MovieType;
-	let movie2: MovieType;
+	let user5: Omit<UserInt, "password">;
+	let movie1: MovieInt;
+	let movie2: MovieInt;
 
 	afterEach(async () => await Rental.deleteMany({}));
 	beforeEach(() => {
@@ -27,6 +27,7 @@ describe("ROUTE /api/rentals", () => {
 			email: "user5@gmail.com",
 		};
 		movie1 = {
+			_id: new mongoose.Types.ObjectId(),
 			title: "Avengers",
 			genre: { name: "Action" },
 			numberInStock: 2,
@@ -36,11 +37,9 @@ describe("ROUTE /api/rentals", () => {
 			category: "popular",
 			dateRelease: "",
 			url: "movie1_url",
-			likes: [],
-			bookmarks: [],
-			rentals: [],
 		};
 		movie2 = {
+			_id: new mongoose.Types.ObjectId(),
 			title: "GAME OF THRONE",
 			genre: { name: "Adventure" },
 			numberInStock: 3,
@@ -50,9 +49,6 @@ describe("ROUTE /api/rentals", () => {
 			category: "popular",
 			dateRelease: "",
 			url: "movie2_url",
-			likes: [],
-			bookmarks: [],
-			rentals: [],
 		};
 	});
 
@@ -67,53 +63,53 @@ describe("ROUTE /api/rentals", () => {
 
 	describe("GET /", () => {
 		let token: string;
-		let rentals: RentalType[];
-		let rental3: RentalType;
+		let rental1: RentalInt;
+		let rental3: RentalInt;
 
 		afterEach(async () => await Rental.deleteMany({}));
 		beforeEach(async () => {
 			rental3 = {
-				userId: user5._id!.toHexString(),
-				movie: {
-					title: movie1.title,
-					url: movie1.url,
-					voteAverage: movie1.voteAverage,
-					rentals: movie1.rentals,
+				user: {
+					_id: user5._id!.toHexString(),
+					name: user5.name!,
 				},
-				rentalFee: 0,
-				rentDate: new Date(new Date().setDate(new Date().getDate() - 1)),
-				returnedDate: new Date(),
-				status: "succeeded",
+				rentals: [
+					{
+						movieId: movie1._id!.toHexString(),
+						rentalFee: 0,
+						rentDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+						returnedDate: new Date(),
+						status: "succeeded",
+					},
+				],
 			};
-			rentals = [
-				{
-					userId: user5._id!.toHexString(),
-					movie: {
-						title: movie1.title,
-						url: movie1.url,
-						voteAverage: movie1.voteAverage,
-						rentals: movie1.rentals,
-					},
-					rentalFee: 0,
-					rentDate: new Date(),
-					returnedDate: new Date(new Date().setDate(new Date().getDate() + 1)),
-					status: "succeeded",
+			rental1 = {
+				user: {
+					_id: user5._id!.toHexString(),
+					name: user5.name!,
 				},
-				{
-					userId: user5._id!.toHexString(),
-					movie: {
-						title: movie2.title,
-						url: movie2.url,
-						voteAverage: movie2.voteAverage,
-						rentals: movie2.rentals,
+				rentals: [
+					{
+						movieId: movie1._id!.toHexString(),
+						rentalFee: 0,
+						rentDate: new Date(),
+						returnedDate: new Date(
+							new Date().setDate(new Date().getDate() + 1)
+						),
+						status: "succeeded",
 					},
-					rentalFee: 0,
-					rentDate: new Date(),
-					returnedDate: new Date(new Date().setDate(new Date().getDate() + 2)),
-					status: "succeeded",
-				},
-			];
-			await Rental.insertMany(rentals);
+					{
+						movieId: movie2._id!.toHexString(),
+						rentalFee: 0,
+						rentDate: new Date(),
+						returnedDate: new Date(
+							new Date().setDate(new Date().getDate() + 2)
+						),
+						status: "succeeded",
+					},
+				],
+			};
+			await Rental.create(rental1);
 			token = generateAuthToken(new User(user5));
 		});
 
@@ -130,13 +126,13 @@ describe("ROUTE /api/rentals", () => {
 			await Rental.insertMany([rental3]);
 			const res = await exec();
 			expect(res.status).toBe(200);
-			expect(res.body).toHaveLength(2);
+			expect(res.body.rentals).toHaveLength(2);
 		});
 
 		it("should return all the rentals", async () => {
 			const res = await exec();
 			expect(res.status).toBe(200);
-			expect(res.body).toHaveLength(2);
+			expect(res.body.rentals).toHaveLength(2);
 		});
 	});
 
@@ -150,7 +146,7 @@ describe("ROUTE /api/rentals", () => {
 
 	// describe("GET /:id", () => {
 	// 	let id: string;
-	// 	let rental: mongoose.Document<unknown, unknown, RentalType> & {
+	// 	let rental: mongoose.Document<unknown, unknown, RentalInt> & {
 	// 		_id: mongoose.Types.ObjectId;
 	// 	};
 
@@ -199,7 +195,7 @@ describe("ROUTE /api/rentals", () => {
 	 */
 
 	describe("POST /", () => {
-		let user: UserType;
+		let user: UserInt;
 		let movieId: string;
 		let userId: string;
 		let token: string;

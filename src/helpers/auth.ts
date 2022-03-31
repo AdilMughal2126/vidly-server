@@ -5,12 +5,12 @@ import dotenv from "dotenv";
 import { Request } from "express";
 import jwt from "jsonwebtoken";
 import path from "path";
-import { JwtPayload } from "../types/JwtPayload";
-import { UserType } from "../types/UserType";
+import { JwtPayloadInt } from "../interfaces/JwtPayloadInt";
+import { UserInt } from "../interfaces/UserInt";
 
 dotenv.config();
 
-export const generateAuthToken = (user: UserType) => {
+export const generateAuthToken = (user: UserInt) => {
 	const token = jwt.sign(
 		{
 			_id: user._id,
@@ -26,7 +26,7 @@ export const generateAuthToken = (user: UserType) => {
 
 export const getToken = (req: Request) => req.header("X-Auth-Token");
 
-export const verifyToken = (token: string): string | JwtPayload =>
+export const verifyToken = (token: string): string | JwtPayloadInt =>
 	jwt.verify(token, process.env.JWT_PRIVATE_KEY!);
 
 export const generateHash = async (password: string) => {

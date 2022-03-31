@@ -3,12 +3,12 @@ import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import { Stripe } from "stripe";
 import { numberOfDays } from "../helpers/numberOfDays";
+import { PaymentReqInt } from "../interfaces/PaymentInt";
 import { asyncMiddleware } from "../middleware/async";
 import { requireAuth } from "../middleware/auth";
 import { Movie } from "../models/movie";
 import { Payment } from "../models/payment";
 import { User } from "../models/user";
-import { PaymentRequestType } from "../types/PaymentType";
 
 const router = express.Router();
 dotenv.config();
@@ -19,7 +19,7 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY!, {
 });
 
 const handleCreatePayment = asyncMiddleware(
-	async (req: Request<unknown, unknown, PaymentRequestType>, res: Response) => {
+	async (req: Request<unknown, unknown, PaymentReqInt>, res: Response) => {
 		const { userId, movieId, returnedDate } = req.body;
 
 		const user = await User.findById(userId);

@@ -2,7 +2,7 @@ import cloudinary from "cloudinary";
 import { NextFunction, Request, Response } from "express";
 import multer from "multer";
 import { getToken, verifyToken } from "../helpers/auth";
-import { JwtPayload } from "../types/JwtPayload";
+import { JwtPayloadInt } from "../interfaces/JwtPayloadInt";
 
 export const requireAuth = (
 	req: Request,
@@ -13,7 +13,7 @@ export const requireAuth = (
 	if (!token) return res.status(401).json("Access denied. No token provided");
 
 	try {
-		const payload = verifyToken(token) as JwtPayload;
+		const payload = verifyToken(token) as JwtPayloadInt;
 		if (payload?._id) return next();
 	} catch (err) {
 		return res.status(400).json("Invalid token");
@@ -29,7 +29,7 @@ export const requireAdmin = (
 	if (!token) return res.status(401).json("Access denied. No token provided");
 
 	try {
-		const decoded = verifyToken(token) as JwtPayload;
+		const decoded = verifyToken(token) as JwtPayloadInt;
 		if (!decoded?.isAdmin) return res.status(403).json("Access denied.");
 		return next();
 	} catch (err) {

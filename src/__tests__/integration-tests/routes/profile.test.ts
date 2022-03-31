@@ -2,9 +2,9 @@
 import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
+import { UserInt } from "../../../interfaces/UserInt";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
-import { UserType } from "../../../types/UserType";
 
 // const imagePath = `${__dirname}/../../../assets/images/nodejs.png`;
 // const gifPath = `${__dirname}/nodejs.gif`;
@@ -12,7 +12,7 @@ const request = supertest(app);
 
 describe("Route /api/profile", () => {
 	let token: string;
-	let user: Omit<UserType, "password">;
+	let user: Omit<UserInt, "password">;
 	// let image: string;
 
 	beforeEach(() => {

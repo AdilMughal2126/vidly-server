@@ -2,19 +2,19 @@
 import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
+import { MovieInt } from "../../../interfaces/MovieInt";
+import { UserInt } from "../../../interfaces/UserInt";
 import { Movie } from "../../../models/movie";
 import { Payment } from "../../../models/payment";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
-import { MovieType } from "../../../types/MovieType";
-import { UserType } from "../../../types/UserType";
 
 const request = supertest(app);
 
 describe("Route /api/payment", () => {
 	let token: string;
-	let user: Omit<UserType, "password">;
-	let movie: MovieType;
+	let user: Omit<UserInt, "password">;
+	let movie: MovieInt;
 	let userId: string;
 	let movieId: string;
 	let returnedDate: number;
@@ -43,9 +43,6 @@ describe("Route /api/payment", () => {
 			overview: "",
 			dateRelease: "",
 			url: "movie_url",
-			likes: [],
-			bookmarks: [],
-			rentals: [],
 		};
 
 		userId = user._id!.toHexString();

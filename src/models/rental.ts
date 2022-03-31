@@ -1,51 +1,45 @@
 import Joi from "joi";
 import { model, Schema } from "mongoose";
-import { RentalRequestType, RentalType } from "../types/RentalType";
+import { RentalInt, RentalReqInt } from "../interfaces/RentalInt";
 
-const rentalSchema = new Schema<RentalType>({
-	userId: {
-		type: String,
-		required: true,
-	},
-	movie: {
+const rentalSchema = new Schema<RentalInt>({
+	user: {
 		type: new Schema({
-			title: {
+			name: {
 				type: String,
 				required: true,
-			},
-			url: {
-				type: String,
-				required: true,
-			},
-			voteAverage: {
-				type: String,
-				required: true,
-			},
-			rentals: {
-				type: [{ _id: String }],
 			},
 		}),
 		required: true,
 	},
-	rentDate: {
-		type: Date,
-	},
-	returnedDate: {
-		type: Date,
-	},
-	rentalFee: {
-		type: Number,
-		min: 0,
-	},
-	status: {
-		type: String,
+	rentals: {
+		type: [
+			{
+				_id: false,
+				movieId: String,
+				rentDate: {
+					type: Date,
+				},
+				returnedDate: {
+					type: Date,
+				},
+				rentalFee: {
+					type: Number,
+					min: 0,
+				},
+				status: {
+					type: String,
+					required: true,
+				},
+			},
+		],
 		required: true,
 	},
 });
 
 export const Rental = model("Rental", rentalSchema);
 
-export const validateRental = (rental: RentalRequestType) => {
+export const validateRental = (rental: RentalReqInt) => {
 	const schema = Joi.object({
 		returnedDate: Joi.date().required(),
 		movieId: Joi.string()

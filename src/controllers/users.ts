@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { generateAuthToken, generateHash, validateHash } from "../helpers/auth";
+import { ParamsInt } from "../interfaces/ParamsInt";
+import { UpdatePasswordInt, UserInt } from "../interfaces/UserInt";
 import { asyncMiddleware } from "../middleware/async";
 import { User } from "../models/user";
-import { Params } from "../types/ParamsType";
-import { UpdatePasswordType, UserType } from "../types/UserType";
 
 export const handleGetUsers = asyncMiddleware(
 	async (req: Request, res: Response) => {
@@ -21,7 +21,7 @@ export const handleGetUser = asyncMiddleware(
 );
 
 export const handleCreateUser = asyncMiddleware(
-	async (req: Request<unknown, unknown, UserType>, res: Response) => {
+	async (req: Request<unknown, unknown, UserInt>, res: Response) => {
 		const { name, email } = req.body;
 		const isEmail = await User.findOne({ email });
 		if (isEmail)
@@ -34,7 +34,7 @@ export const handleCreateUser = asyncMiddleware(
 );
 
 export const handleUpdateUser = asyncMiddleware(
-	async (req: Request<Params, unknown, UserType>, res: Response) => {
+	async (req: Request<ParamsInt, unknown, UserInt>, res: Response) => {
 		const { name, email } = req.body;
 		const user = await User.findByIdAndUpdate(
 			req.params.id,
@@ -48,7 +48,10 @@ export const handleUpdateUser = asyncMiddleware(
 );
 
 export const handleUpdatePassword = asyncMiddleware(
-	async (req: Request<Params, unknown, UpdatePasswordType>, res: Response) => {
+	async (
+		req: Request<ParamsInt, unknown, UpdatePasswordInt>,
+		res: Response
+	) => {
 		const { currentPassword, newPassword } = req.body;
 		const user = await User.findById(req.params.id);
 		if (!user) return res.status(400).json("User not found");

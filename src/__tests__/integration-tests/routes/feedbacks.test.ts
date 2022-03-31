@@ -1,16 +1,16 @@
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
+import { FeedbackInt } from "../../../interfaces/FeedbackInt";
 import { Feedback } from "../../../models/feedback";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
-import { FeedbackType } from "../../../types/FeedbackType";
 
 const request = supertest(app);
 
 describe("Route /api/feedbacks", () => {
 	let token: string;
-	let feedback1: FeedbackType;
-	let feedback2: FeedbackType;
+	let feedback1: FeedbackInt;
+	let feedback2: FeedbackInt;
 
 	afterEach(async () => await Feedback.deleteMany({}));
 	beforeEach(async () => {

@@ -1,24 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import mongoose from "mongoose";
 import supertest from "supertest";
 import { generateAuthToken } from "../../../helpers/auth";
+import { FavoriteInt } from "../../../interfaces/FavoriteInt";
+import { MovieInt } from "../../../interfaces/MovieInt";
+import { UserInt } from "../../../interfaces/UserInt";
 import { Favorite } from "../../../models/favorite";
 import { Movie } from "../../../models/movie";
 import { User } from "../../../models/user";
 import { app } from "../../../server";
-import { FavoriteType } from "../../../types/FavoriteType";
-import { MovieType } from "../../../types/MovieType";
-import { UserType } from "../../../types/UserType";
 
 const request = supertest(app);
 
 describe("Route /api/favorites", () => {
 	let token: string;
-	let movie1: MovieType;
-	let movie2: MovieType;
-	let fav1: FavoriteType;
-	let fav2: FavoriteType;
-	let user: Omit<UserType, "password">;
+	let movie1: MovieInt;
+	let movie2: MovieInt;
+	let fav: FavoriteInt;
+	let user: Omit<UserInt, "password">;
 
 	afterEach(async () => {
 		await Promise.all([
@@ -47,9 +47,6 @@ describe("Route /api/favorites", () => {
 			overview: "",
 			dateRelease: "",
 			url: "movie_url",
-			likes: [{ _id: user._id!.toHexString() }],
-			bookmarks: [],
-			rentals: [],
 		};
 		movie2 = {
 			_id: new mongoose.Types.ObjectId(),
@@ -62,37 +59,19 @@ describe("Route /api/favorites", () => {
 			overview: "",
 			dateRelease: "",
 			url: "movie_url",
-			likes: [{ _id: user._id!.toHexString() }],
-			bookmarks: [],
-			rentals: [],
 		};
-		fav1 = {
+		fav = {
 			user: { _id: user._id!.toHexString(), name: user.name! },
-			movie: {
-				_id: movie1._id!.toHexString(),
-				title: movie1.title,
-				url: movie1.url,
-				voteAverage: movie1.voteAverage,
-				likes: movie1.likes,
-			},
-			date: new Date(),
-		};
-		fav2 = {
-			user: { _id: user._id!.toHexString(), name: user.name! },
-			movie: {
-				_id: movie2._id!.toHexString(),
-				title: movie2.title,
-				url: movie2.url,
-				voteAverage: movie2.voteAverage,
-				likes: movie2.likes,
-			},
-			date: new Date(),
+			favorites: [
+				{ movieId: movie2._id!.toHexString() },
+				{ movieId: movie1._id!.toHexString() },
+			],
 		};
 
 		await Promise.all([
 			await User.create(user),
-			await Movie.create(movie1, movie2),
-			await Favorite.create(fav1, fav2),
+			await Movie.insertMany([movie1, movie2]),
+			await Favorite.create(fav),
 		]);
 	});
 
@@ -116,7 +95,7 @@ describe("Route /api/favorites", () => {
 		it("should return 200 if valid", async () => {
 			const res = await exec();
 			expect(res.status).toBe(200);
-			expect(res.body).toHaveLength(2);
+			expect(res.body.favorites).toHaveLength(2);
 		});
 	});
 
@@ -167,11 +146,6 @@ describe("Route /api/favorites", () => {
 
 		it("should return 200 if movie successfully added to favorites", async () => {
 			const res = await exec();
-			const fav = await Favorite.findOne({
-				"user._id": userId,
-				"movie._id": movieId,
-			});
-			expect(fav).not.toBeNull();
 			expect(res.status).toBe(200);
 			expect(res.body).toMatch(/added to favorites/i);
 		});
@@ -182,8 +156,6 @@ describe("Route /api/favorites", () => {
 	 * @route /api/favorites/:movieId
 	 * @access Private
 	 * @return 401 if user is not logged in
-	 * @should unset userId in movie's likes
-	 * @return 400 if favorite's movie not found
 	 * @return 200 if movie successfully deleted from favorites
 	 */
 
@@ -207,17 +179,10 @@ describe("Route /api/favorites", () => {
 			expect(res.body).toMatch(/access denied/i);
 		});
 
-		it("should unset userId in movie's favorites", async () => {
-			await exec();
-			const movie = await Movie.findById(movieId);
-			const isDeleted = movie?.likes.includes({
-				_id: user._id!.toHexString(),
-			});
-			expect(isDeleted).toBe(false);
-		});
-
 		it("should return 200 if movie successfully deleted from favorites", async () => {
 			const res = await exec();
+			const fav = await Favorite.findOne({ favorites: [{ movieId }] });
+			expect(fav).toBeNull();
 			expect(res.status).toBe(200);
 			expect(res.body).toMatch(/removed from favorites/i);
 		});
@@ -228,9 +193,7 @@ describe("Route /api/favorites", () => {
 	 * @route /api/favorites/userId/clear
 	 * @access Private
 	 * @return 401 if user is not logged in
-	 * @return 400 if user not found
-	 * @should unset userId in movie's favorites
-	 * @return 200 if movie successfully deleted from favorites
+	 * @return 200 if movies successfully deleted from favorites
 	 */
 
 	describe("DELETE /userId/clear", () => {
@@ -250,27 +213,10 @@ describe("Route /api/favorites", () => {
 			expect(res.body).toMatch(/access denied/i);
 		});
 
-		it("should return 400 if user not found", async () => {
-			userId = "61dea11b934e3d2eba68782f";
-			const res = await exec();
-			expect(res.status).toBe(400);
-			expect(res.body).toMatch(/user not found/i);
-		});
-
-		// it("should return 400 if favorite not found", async () => {
-		// 	const res = await exec();
-		// 	expect(res.status).toBe(400);
-		// 	expect(res.body).toMatch(/no movies was found/i);
-		// });
-
-		it("should unset userId in movie's favorites", async () => {
-			await exec();
-			const movies = await Movie.find({ likes: { _id: userId } });
-			expect(movies.length).toBe(0);
-		});
-
 		it("should return 200 if favorites is clear", async () => {
 			const res = await exec();
+			const fav = await Favorite.findOne({ "user._id": userId });
+			expect(fav).toBeNull();
 			expect(res.status).toBe(200);
 			expect(res.body).toMatch(/removed from favorites/i);
 		});

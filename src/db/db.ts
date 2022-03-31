@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { logger } from "../helpers/logger";
@@ -12,7 +13,7 @@ export const connectDB = async () => {
 			connect = await mongoose.connect(process.env.MONGO_URI_TEST as string);
 		} else {
 			connect = await mongoose.connect(
-				`${process.env.MONGO_URI_1}${encodeURIComponent(
+				`${process.env.MONGO_URI_1!}${encodeURIComponent(
 					process.env.MONGO_URI_2!
 				)}${process.env.MONGO_URI_3!}`
 			);
